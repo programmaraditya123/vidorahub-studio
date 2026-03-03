@@ -1,0 +1,47 @@
+.card {
+  padding: clamp(14px, 2vw, 20px);
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #23102f 0%,
+    #2a1436 100%
+  );
+
+  border: 1px solid rgba(168, 85, 247, 0.2);
+
+  position: relative;
+  overflow: hidden;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+
+  /* Purple accent strip */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(#a855f7, #9333ea);
+  }
+}
+
+.label {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.value {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 700;
+  color: #ffffff;
+}

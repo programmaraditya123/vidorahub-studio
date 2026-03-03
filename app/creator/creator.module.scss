@@ -1,0 +1,13 @@
+.scrollContainer{
+    overflow-y: scroll;
+    height: calc(100vh - 3rem);
+    background :   #140a1f;
+    // padding: 2rem;
+    scrollbar-width: none;
+    
+}
+
+.main{
+    height: 100vh;
+    overflow: hidden;
+}
