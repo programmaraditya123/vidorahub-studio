@@ -1,0 +1,237 @@
+/* ================= ROOT LAYOUT ================= */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #0b0714;
+  color: #ffffff;
+  position: relative;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ================= MOBILE HEADER ================= */
+
+.mobileHeader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(18, 10, 31, 0.85);
+  backdrop-filter: blur(12px);
+  align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  h2 {
+    margin-left: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+}
+
+.hamburger {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  max-width: 260px;
+  background: linear-gradient(
+    180deg,
+    #140b22 0%,
+    #0a0613 100%
+  );
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  z-index: 200;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.open {
+  transform: translateX(0);
+}
+
+/* ================= SIDEBAR HEADER ================= */
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+
+  span {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(
+      90deg,
+      #7a4fff,
+      #b56cff
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-left: 12px;
+  }
+}
+
+.closeBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+/* ================= NAVIGATION ================= */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Nav Button Item */
+.navItem {
+  position: relative;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 12px 14px; 
+  font-size: 14px;
+  color: #a0a0b5;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  &:hover {
+    color: #ffffff;
+    background: rgba(181, 108, 255, 0.08);
+  }
+}
+
+/* ================= ACTIVE STATE ================= */
+
+.active {
+  color: #ffffff;
+  background: rgba(181, 108, 255, 0.12);
+}
+
+/* Animated Underline */
+.active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: 6px;
+  width: calc(100% - 28px);
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #7a4fff,
+    #b56cff
+  );
+  border-radius: 4px;
+  animation: slideIn 0.25s ease forwards;
+}
+
+/* Underline animation */
+@keyframes slideIn {
+  from {
+    width: 0%;
+    opacity: 0;
+  }
+  to {
+    width: calc(100% - 28px);
+    opacity: 1;
+  }
+}
+
+/* ================= SECTION LABEL ================= */
+
+.sectionLabel {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #6f6f88;
+}
+
+/* ================= OVERLAY ================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ================= CONTENT AREA ================= */
+
+.content {
+  flex: 1;
+  padding: 32px;
+  margin-left: 260px;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    padding: 80px 16px 24px;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .mobileHeader {
+    display: flex;
+  }
+}
