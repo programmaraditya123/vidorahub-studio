@@ -1,0 +1,141 @@
+.card {
+  position: relative;
+
+  background: #ffffff;
+
+  padding: 30px;
+
+  border-radius: 18px;
+
+  margin: 30px 4rem;
+
+  border: 1px solid #f1f1f1;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+/* EDIT BUTTON */
+
+.editBtn {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: #f3f4f6;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+/* WATERMARK */
+
+.watermark {
+  position: absolute;
+
+  top: 20px;
+  right: 80px;
+
+  width: 90px;
+  height: 90px;
+
+  background: #ede9fe;
+
+  opacity: .4;
+
+  border-radius: 30px;
+
+  transform: rotate(20deg);
+}
+
+/* CONTENT */
+
+.content {
+  max-width: 600px;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  margin-bottom: 16px;
+}
+
+.content h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.category {
+  color: #7c3aed;
+
+  font-size: 13px;
+
+  margin-top: 4px;
+}
+
+.description {
+  margin-top: 12px;
+
+  font-size: 14px;
+
+  color: #6b7280;
+
+  line-height: 1.6;
+}
+
+/* BADGES */
+
+.badges {
+  margin-top: 16px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.established {
+  background: #ede9fe;
+  color: #7c3aed;
+
+  font-size: 11px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+}
+
+.verified {
+  background: #dcfce7;
+  color: #16a34a;
+
+  font-size: 11px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+}
+
+/* MOBILE */
+
+@media (max-width:900px){
+
+.card{
+margin:20px;
+}
+
+}

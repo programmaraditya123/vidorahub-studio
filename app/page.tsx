@@ -8,8 +8,8 @@ import Footer from "@/src/components/Home/Footer/Footer";
 
 export default function Home() {
   return (
-    <div className={styles.main}>
-    <Navbar/>
+     
+    <>
     <div className={styles.page}>
       <Hero/>
       <TrustedBrands/>
@@ -19,6 +19,7 @@ export default function Home() {
         
       
     </div>
-    </div>
+    </>
+     
   );
 }

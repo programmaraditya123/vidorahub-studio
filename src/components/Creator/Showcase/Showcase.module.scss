@@ -1,0 +1,155 @@
+.wrapper {
+  margin: 40px 4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 16px;
+}
+
+.header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ADD BUTTON */
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color: white;
+
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}
+
+/* CARD */
+
+.card {
+  position: relative;
+  height: 110px;
+
+  border-radius: 14px;
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* DELETE ICON */
+
+.delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  border: none;
+  background: rgba(0,0,0,.5);
+
+  color: white;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+/* OVERLAY TEXT */
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 10px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.65),
+    transparent
+  );
+
+  color: white;
+}
+
+.overlay h4 {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.overlay p {
+  font-size: 11px;
+  opacity: .9;
+}
+
+/* ADD CARD */
+
+.addCard {
+  border: 2px dashed #d1d5db;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  height: 110px;
+
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:900px){
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:600px){
+
+.wrapper{
+margin:20px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}

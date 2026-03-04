@@ -2,12 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.scss";
-import { Bell, Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   const toggleMenu = () => setOpen(!open);
 
@@ -30,7 +32,6 @@ export default function Navbar() {
       {/* LEFT */}
       <div className={styles.left}>
         <div className={styles.logo}>
-          {/* <span className={styles.logoIcon}>✦</span> */}
           <span className={styles.logoText}>VidoraHub Studio</span>
         </div>
       </div>
@@ -45,17 +46,18 @@ export default function Navbar() {
 
       {/* RIGHT DESKTOP */}
       <div className={styles.right}>
+        <Link href={'https://about.vidorahub.com/'} target="_blank">
         <button className={styles.iconBtn}>
-          <Bell size={18} />
+          {/* <Bell size={18} /> */}
+          About
         </button>
+        </Link>
 
-        <div className={styles.avatar}>
+        <div className={styles.avatar} onClick={toggleMenu}>
           <Image src="/avatar.png" alt="avatar" width={36} height={36} />
         </div>
 
-        <button className={styles.hamburger} onClick={toggleMenu}>
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        
       </div>
 
       {/* MOBILE MENU */}
@@ -63,15 +65,15 @@ export default function Navbar() {
         ref={menuRef}
         className={`${styles.mobileMenu} ${open ? styles.open : ""}`}
       >
-        <input
-          className={styles.mobileSearch}
-          placeholder="Search creators or brands..."
-        />
-
-        <button className={styles.mobileItem}>Dashboard</button>
+         
+        <Link href={`/dashboard/${"abcd"}`}>
+        <button className={`${styles.mobileItem} ${
+      pathname === `/dashboard/${"abcd"}` ? styles.active : ""
+    }`}>Dashboard</button>
+        </Link>
         <button className={styles.mobileItem}>Creators</button>
         <button className={styles.mobileItem}>Brands</button>
-        {/* <button className={styles.mobileItem}>Requests</button> */}
+        <button className={styles.mobileItem}>Logout</button>
       </div>
     </header>
   );

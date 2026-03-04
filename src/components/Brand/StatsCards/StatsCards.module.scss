@@ -1,0 +1,70 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+
+  margin: 30px 4rem;
+}
+
+/* CARD */
+
+.card {
+  background: #f8fafc;
+
+  padding: 18px 20px;
+
+  border-radius: 14px;
+
+  border: 1px solid #f1f5f9;
+}
+
+/* LABEL */
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #6b7280;
+
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* VALUE ROW */
+
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 6px;
+}
+
+.valueRow h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* GROWTH */
+
+.growth {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #16a34a;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:900px){
+
+.grid{
+grid-template-columns:1fr;
+margin:20px;
+}
+
+}
