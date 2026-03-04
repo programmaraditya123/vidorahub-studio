@@ -1,4 +1,4 @@
-import BrandDashBoard from "@/src/pages/BrandDashboard/BrandDashBoard";
+import BrandDashBoard from "@/src/sections/BrandDashboard/BrandDashBoard";
 import styles from "./page.module.css";
 // import CreatorDashBoard from "@/src/pages/CreatorDashboard/CreatorDashBoard";
 
