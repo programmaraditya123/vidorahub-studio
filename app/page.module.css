@@ -1,4 +1,10 @@
 .page{
-    height: 100vh;
+    height: 85vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.main{
+    height : 100vh;
     overflow: hidden;
 }

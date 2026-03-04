@@ -1,0 +1,202 @@
+.hero {
+  width: 100%;
+  padding: 80px 40px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+ 
+}
+
+/* LEFT */
+
+.badge {
+  background: #efe8ff;
+  color: #7c3aed;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0f172a;
+
+  span {
+    background: linear-gradient(90deg,#7c3aed,#a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.desc {
+  margin-top: 18px;
+  font-size: 16px;
+  color: #6b7280;
+  max-width: 480px;
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+}
+
+.primary {
+  background: linear-gradient(90deg,#7c3aed,#a855f7);
+  color: white;
+
+  border: none;
+  padding: 12px 22px;
+
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondary {
+  border: 1px solid #d1d5db;
+  background: white;
+
+  padding: 12px 22px;
+  border-radius: 999px;
+
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* RIGHT */
+
+.right {
+  display: flex;
+  justify-content: center;
+}
+
+.imageCard {
+  position: relative;
+
+  width: 100%;
+  max-width: 420px;
+  height: 320px;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: #ddd;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* FLOATING JOIN BADGE */
+
+.joinBadge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+
+  padding: 10px 14px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+  color: #374151;
+}
+
+.avatars {
+  display: flex;
+
+  span {
+    width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+    background: #cbd5f5;
+
+    border: 2px solid white;
+    margin-left: -6px;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+.hero{
+  grid-template-columns: 1fr;
+  text-align: center;
+  gap: 40px;
+}
+
+.desc{
+  margin-inline:auto;
+}
+
+.actions{
+  justify-content:center;
+}
+
+.right{
+  order:-1;
+}
+
+.imageCard{
+  max-width: 380px;
+  height: 260px;
+}
+
+.title{
+  font-size:36px;
+}
+
+}
+
+@media (max-width: 600px){
+
+.hero{
+  padding:20px 20px;
+}
+
+.title{
+  font-size:28px;
+}
+
+.desc{
+  font-size:14px;
+}
+
+.actions{
+  flex-direction:column;
+  gap:12px;
+}
+
+.primary,
+.secondary{
+  width:100%;
+}
+
+.imageCard{
+  height:220px;
+}
+
+.joinBadge{
+  font-size:12px;
+}
+
+}
