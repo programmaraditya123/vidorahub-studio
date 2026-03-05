@@ -271,3 +271,20 @@
   border-radius: 8px;
   color: #7c3aed;
 }
+
+.activeTab {
+  color: #7c3aed;
+  transform: scale(1.05);
+  transition: all 0.25s ease;
+
+  svg {
+    filter:
+      drop-shadow(0 0 6px rgba(124, 58, 237, 0.8))
+      drop-shadow(0 0 12px rgba(124, 58, 237, 0.6))
+      drop-shadow(0 0 18px rgba(124, 58, 237, 0.4));
+  }
+
+  span {
+    font-weight: 600;
+  }
+}

@@ -120,7 +120,7 @@ export default function Navbar() {
         <Link
           href={`/dashboard/${"abcd"}`}
           className={`${styles.bottomItem} ${
-            pathname === `/dashboard/${"abcd"}` ? styles.activeTab : ""
+            pathname.startsWith("/dashboard") ? styles.activeTab : ""
           }`}
         >
           <LayoutDashboard size={20} />
@@ -130,7 +130,7 @@ export default function Navbar() {
         <Link
           href="/search"
           className={`${styles.bottomItem} ${
-            pathname === "/search" ? styles.activeTab : ""
+            pathname.startsWith("/search") ? styles.activeTab : ""
           }`}
         >
           <Search size={20} />
@@ -140,7 +140,7 @@ export default function Navbar() {
         <Link
           href="/brand"
           className={`${styles.bottomItem} ${
-            pathname === "/brand" ? styles.activeTab : ""
+            pathname.startsWith("/brand") ? styles.activeTab : ""
           }`}
         >
           <Building2 size={20} />
@@ -148,9 +148,9 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href="/profile"
+          href="/signup"
           className={`${styles.bottomItem} ${
-            pathname === "/profile" ? styles.activeTab : ""
+            pathname.startsWith("/signup") ? styles.activeTab : ""
           }`}
         >
           <User size={20} />

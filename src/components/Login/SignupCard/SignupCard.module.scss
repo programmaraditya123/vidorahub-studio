@@ -1,0 +1,207 @@
+.wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border-radius: 18px;
+  overflow: hidden;
+
+  background: white;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  margin-top: 5rem;
+}
+
+/* LEFT PANEL */
+
+.left {
+  padding: 48px;
+
+  color: white;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed,#5b21b6);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.logo {
+  font-size: 18px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* avatars */
+
+.users {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatars {
+  display: flex;
+}
+
+.avatars img {
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-left: -8px;
+}
+
+/* RIGHT PANEL */
+
+.right {
+  padding: 48px;
+}
+
+.right h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* role switch */
+
+.roleSwitch {
+  display: flex;
+
+  background: #dcdae2; /* darker than before */
+
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 20px;
+
+  transition: all 0.2s ease;
+}
+
+.roleSwitch button {
+  flex: 1;
+  padding: 8px;
+
+  border-radius: 999px;
+  border: none;
+
+  background: transparent;
+  cursor: pointer;
+
+  font-weight: 500;
+  color: #6b7280;
+
+  transition: all 0.2s ease;
+}
+
+.activeRole {
+  background: white;
+  color: #7c3aed;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.06),
+    0 0 10px rgba(124,58,237,0.15);
+}
+
+/* inputs */
+
+.form label {
+  font-size: 12px;
+  color: #374151;
+  margin-top: 12px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #f9fafb;
+
+  border-radius: 999px;
+  padding: 10px 14px;
+  margin-top: 6px;
+}
+
+.input input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+}
+
+/* terms */
+
+.terms {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  margin-top: 16px;
+}
+
+.terms a {
+  color: #7c3aed;
+}
+
+/* button */
+
+.cta {
+  margin-top: 18px;
+
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 999px;
+  border: none;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+  color: white;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.login {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.login a {
+  color: #7c3aed;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    display: none;
+  }
+}

@@ -1,0 +1,204 @@
+.wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: white;
+  border-radius: 20px;
+
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  margin-top: 6rem;
+}
+
+/* LEFT SIDE */
+
+.left {
+  background: #ede7f6;
+  padding: 50px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+}
+
+.hero h1 {
+  font-size: 34px;
+  font-weight: 700;
+
+  margin-top: 40px;
+}
+
+.hero p {
+  margin-top: 14px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* IMAGE CARD */
+
+.imageCard {
+  position: relative;
+  height: 190px;
+
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.quote {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+
+  color: white;
+  font-size: 13px;
+  max-width: 260px;
+}
+
+/* RIGHT SIDE */
+
+.right {
+  padding: 50px;
+}
+
+.right h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+
+.form label {
+  font-size: 13px;
+  margin-top: 14px;
+  display: block;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #f9fafb;
+  border-radius: 999px;
+
+  padding: 12px 16px;
+  margin-top: 6px;
+}
+
+.input input {
+  border: none;
+  outline: none;
+  background: transparent;
+
+  flex: 1;
+}
+
+.eye {
+  cursor: pointer;
+}
+
+/* OPTIONS */
+
+.options {
+  margin-top: 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+}
+
+.remember {
+  display: flex;
+  gap: 6px;
+}
+
+.forgot {
+  color: #7c3aed;
+  cursor: pointer;
+}
+
+/* LOGIN BUTTON */
+
+.loginBtn {
+  margin-top: 18px;
+
+  width: 100%;
+  padding: 14px;
+
+  border: none;
+  border-radius: 999px;
+
+  font-weight: 600;
+  font-size: 15px;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color: white;
+
+  cursor: pointer;
+}
+
+/* SIGNUP */
+
+.signup {
+  margin-top: 20px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.signup a {
+  color: #7c3aed;
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    display: none;
+  }
+}
