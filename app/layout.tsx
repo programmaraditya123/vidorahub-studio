@@ -1,5 +1,4 @@
  
-// import Navbar from "@/src/components/Home/Navbar/Navbar";
 import Navbar from "@/components/Home/Navbar/Navbar";
 import "./globals.css";
 
