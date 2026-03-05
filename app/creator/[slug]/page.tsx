@@ -1,8 +1,12 @@
-import CreatorProfileCard from "@/src/components/CreatorProfile/CreatorProfileCard/CreatorProfileCard";
-import BrandExperience from "@/src/components/CreatorProfile/FeaturedContent/BrandExperience";
-import FeaturedContent from "@/src/components/CreatorProfile/FeaturedContent/FeaturedContent";
+// import CreatorProfileCard from "@/src/components/CreatorProfile/CreatorProfileCard/CreatorProfileCard";
+// import BrandExperience from "@/src/components/CreatorProfile/FeaturedContent/BrandExperience";
+// import FeaturedContent from "@/src/components/CreatorProfile/FeaturedContent/FeaturedContent";
+import CreatorProfileCard from '@/components/CreatorProfile/CreatorProfileCard/CreatorProfileCard';
 import styles from '../../page.module.css'
-import Footer from "@/src/components/Creator/Footer/Footer";
+import FeaturedContent from '@/components/CreatorProfile/FeaturedContent/FeaturedContent';
+import BrandExperience from '@/components/CreatorProfile/FeaturedContent/BrandExperience';
+import Footer from '@/components/Creator/Footer/Footer';
+// import Footer from "@/src/components/Creator/Footer/Footer";
 
 const page = () => {
   return (
