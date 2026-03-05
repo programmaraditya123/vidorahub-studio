@@ -1,4 +1,4 @@
-import DiscoverBrands from "@/src/components/brand/DiscoverBrands/DiscoverBrands";
+import DiscoverBrands from "@/components/brand/DiscoverBrands/DiscoverBrands";
 import styles from "../page.module.css";
 
 const page = () => {
