@@ -1,8 +1,20 @@
+import CreatorFilters from "@/src/components/search/CreatorFilters/CreatorFilters"
+import CreatorsGrid from "@/src/components/search/CreatorsGrid/CreatorsGrid"
+import styles from '../page.module.css'
+
+ 
+
  
 
 const page = () => {
   return (
-    <div>this is the search page</div>
+     <>
+     <div className={styles.page}>
+     <CreatorFilters/>
+     <CreatorsGrid/>
+     </div>
+     
+     </>
   )
 }
 

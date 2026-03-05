@@ -1,8 +1,13 @@
+import BrandProfile from "@/src/components/brand/BrandProfile/BrandProfile";
+import Footer from "@/src/components/Creator/Footer/Footer";
 
 const page = () => {
   return (
-    <div>This is the public brand page</div>
+    <>
+    <BrandProfile/>
+    <Footer/>
+    </>
   )
 }
 
-export default page
+export default page;

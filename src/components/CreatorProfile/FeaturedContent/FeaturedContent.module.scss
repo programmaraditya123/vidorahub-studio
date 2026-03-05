@@ -1,0 +1,141 @@
+.wrapper {
+  margin-top: 40px;
+}
+
+/* title */
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* grid */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+  gap: 20px;
+}
+
+/* card */
+
+.card {
+  background: white;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  border: 1px solid #e8e8ef;
+}
+
+/* image */
+
+.imageWrapper {
+  position: relative;
+  height: 170px;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* body */
+
+.body {
+  padding: 16px;
+
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+}
+
+/* stats */
+
+.stats {
+  margin-top: 12px;
+
+  display: flex;
+  gap: 16px;
+
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ================= BRAND EXPERIENCE ================= */
+
+.brandBox {
+  margin-top: 28px;
+
+  background: #f3f0ff;
+
+  padding: 24px;
+
+  border-radius: 16px;
+}
+
+/* logos */
+
+.brandLogos {
+  display: flex;
+  gap: 16px;
+
+  margin-top: 14px;
+}
+
+.brandLogos span {
+  background: white;
+
+  padding: 10px 18px;
+
+  border-radius: 12px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #6b7280;
+}
+
+/* collaborations */
+
+.collab {
+  margin-top: 18px;
+}
+
+.collab h4 {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.collabItem {
+  margin-bottom: 10px;
+
+  strong {
+    font-size: 13px;
+  }
+
+  p {
+    font-size: 12px;
+    color: #6b7280;
+  }
+}
+
+/* responsive */
+
+@media (max-width: 768px) {
+
+  .brandLogos {
+    flex-wrap: wrap;
+  }
+
+}

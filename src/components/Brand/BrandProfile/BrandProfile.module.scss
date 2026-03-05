@@ -1,0 +1,214 @@
+.wrapper {
+  width: 100%;
+  background: #f7f8fc;
+}
+
+/* ================= COVER ================= */
+
+.cover {
+  height: 200px;
+  width: 100%;
+  background: linear-gradient(180deg, #d7ccff 0%, #e9e4ff 100%);
+}
+
+/* ================= MAIN CONTAINER ================= */
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 24px 60px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-top: -60px;
+}
+
+/* brand info */
+
+.brandInfo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* logo */
+
+.logoWrapper {
+  position: relative;
+}
+
+.logo {
+  border-radius: 14px;
+  border: 6px solid white;
+  background: white;
+}
+
+.verify {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+
+  color: #3b82f6;
+  background: white;
+  border-radius: 50%;
+}
+
+/* brand title */
+
+.brandInfo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.tagline {
+  font-size: 13px;
+  color: #8b5cf6;
+  margin-top: 4px;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contactBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+  border: none;
+
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 14px rgba(124, 58, 237, 0.25);
+}
+
+.shareBtn {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 48px;
+
+  margin-top: 40px;
+}
+
+/* ================= MISSION ================= */
+
+.mission h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.mission p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* ================= CARD ================= */
+
+.card {
+  background: white;
+
+  padding: 22px;
+
+  border-radius: 16px;
+
+  border: 1px solid #e5e7eb;
+}
+
+.card h4 {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #8b5cf6;
+
+  margin-bottom: 20px;
+}
+
+/* card rows */
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  margin-bottom: 18px;
+}
+
+.item svg {
+  color: #8b5cf6;
+}
+
+.item span {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.item strong {
+  font-size: 14px;
+  color: #111827;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .brandInfo h1 {
+    font-size: 22px;
+  }
+
+}

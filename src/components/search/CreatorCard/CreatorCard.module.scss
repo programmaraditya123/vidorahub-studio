@@ -1,0 +1,115 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 22px;
+
+  border: 1px solid #e6e8ef;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 12px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  background: #f0eaff;
+  color: #7a5cff;
+}
+
+/* name */
+
+.name {
+  font-size: 16px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verify {
+  color: #3b82f6;
+}
+
+/* location */
+
+.location {
+  font-size: 13px;
+  color: #6b7280;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* platforms */
+
+.platforms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.platform {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #f8f9fc;
+
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  font-size: 13px;
+}
+
+.platform img {
+  width: 16px;
+  margin-right: 6px;
+}
+
+/* button */
+
+.button {
+  margin-top: 10px;
+
+  background: #0f172a;
+  color: white;
+
+  border: none;
+  border-radius: 999px;
+
+  padding: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.platformLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

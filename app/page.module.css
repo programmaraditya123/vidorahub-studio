@@ -8,3 +8,29 @@
     height : 100vh;
     overflow: hidden;
 }
+
+.ProfileContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 4rem;
+    
+}
+
+.secondContainer{
+    width: 100%;
+}
+.brandsContainer{
+    padding: 4rem;
+}
+
+@media (max-width : 600px){
+    .ProfileContainer{
+        display: inline;
+        margin: 0.5rem;
+    }
+    .brandsContainer{
+        padding: 0.5rem;
+    }
+
+}

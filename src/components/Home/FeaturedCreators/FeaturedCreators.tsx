@@ -7,6 +7,7 @@ import {
   Youtube,
   MessageCircle,
 } from "lucide-react";
+import Link from "next/link";
 
 const creators = [
   {
@@ -72,8 +73,10 @@ export default function FeaturedCreators() {
           <h2>Featured Creators</h2>
           <p>Discover the top trending voices on VidoraHub</p>
         </div>
-
+        
+        <Link href={'/search'}>
         <button className={styles.viewAll}>View All →</button>
+        </Link>
       </div>
 
       <div className={styles.grid}>
@@ -120,8 +123,10 @@ export default function FeaturedCreators() {
                   <span>{creator.socials.whatsapp}</span>
                 </div>
               </div>
-
+              
+              <Link href={`/creator/${creator.name}`}>
               <button className={styles.profileBtn}>View Profile</button>
+              </Link> 
             </div>
           </div>
         ))}

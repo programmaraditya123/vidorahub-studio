@@ -1,0 +1,164 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+//   margin: 2rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* ================= DESKTOP ================= */
+
+.desktopFilters {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+/* field */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #8f8fa3;
+  }
+}
+
+/* inputs */
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #f4f5fb;
+  border: 1px solid #e7e7f3;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  svg {
+    color: #a0a0b5;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    width: 180px;
+  }
+}
+
+/* select */
+
+.select {
+  background: #f4f5fb;
+  border: 1px solid #e7e7f3;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+/* apply button */
+
+.apply {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  border: none;
+  color: white;
+
+  padding: 10px 24px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+
+.mobileButton {
+  display: none;
+
+  align-items: center;
+  gap: 6px;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  border: none;
+
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: white;
+
+  font-weight: 600;
+}
+
+/* panel */
+
+.mobilePanel {
+  position: fixed;
+
+//   bottom: 0;
+ 
+  left: 0;
+  right: 0;
+
+  background: white;
+
+  padding: 24px;
+
+  border-radius: 20px 20px 0 0;
+
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+
+  z-index: 100;
+}
+
+/* vertical layout */
+
+.mobileFilters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applyMobile {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  border: none;
+  color: white;
+
+  padding: 12px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  .desktopFilters {
+    display: none;
+  }
+
+  .mobileButton {
+    display: flex;
+  }
+
+  .input input {
+    width: 100%;
+  }
+
+}

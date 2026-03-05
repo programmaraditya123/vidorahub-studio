@@ -4,9 +4,10 @@ import SocialAudience from "@/src/components/Creator/SocialAudience/SocialAudien
 import styles from '../../page.module.css'
 import BrandExperience from "@/src/components/Creator/BrandExperience/BrandExperience"
 import Footer from "@/src/components/Creator/Footer/Footer"
-import PageHeader from "@/src/components/Brand/PageHeader/PageHeader"
-import BrandProfileCard from "@/src/components/Brand/BrandProfileCard/BrandProfileCard"
-import StatsCards from "@/src/components/Brand/StatsCards/StatsCards"
+import PageHeader from "@/src/components/brand/PageHeader/PageHeader"
+import BrandProfileCard from "@/src/components/brand/BrandProfileCard/BrandProfileCard"
+import StatsCards from "@/src/components/brand/StatsCards/StatsCards"
+ 
 
 
 

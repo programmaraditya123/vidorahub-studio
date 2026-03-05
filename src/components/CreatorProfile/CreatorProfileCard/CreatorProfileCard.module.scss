@@ -1,0 +1,176 @@
+.card {
+  width: 100%;
+  max-width: 360px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 28px 24px;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* avatar */
+
+.avatarWrapper {
+  position: relative;
+  width: fit-content;
+  margin: auto;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.online {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+
+  width: 12px;
+  height: 12px;
+
+  background: #22c55e;
+  border-radius: 50%;
+
+  border: 3px solid white;
+}
+
+/* name */
+
+.name {
+  margin-top: 14px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.role {
+  color: #8b5cf6;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* location */
+
+.location {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6b7280;
+
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* bio */
+
+.bio {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* proposal button */
+
+.proposalBtn {
+  margin-top: 18px;
+
+  width: 100%;
+
+  padding: 12px;
+
+  border-radius: 999px;
+
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  background: linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* links */
+
+.links {
+  margin-top: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkBtn {
+  width: 100%;
+
+  padding: 10px;
+
+  border-radius: 999px;
+
+  border: 1px solid #eee;
+
+  background: #f9fafb;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+/* stats */
+
+.stats {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #f9fafb;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+.stat span {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.stat strong {
+  display: block;
+  font-size: 16px;
+}
+
+/* responsive */
+
+@media (max-width: 768px) {
+
+  .card {
+    max-width: 100%;
+  }
+
+}
