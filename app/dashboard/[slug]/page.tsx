@@ -6,7 +6,7 @@ import BrandExperience from "@/src/components/Creator/BrandExperience/BrandExper
 import Footer from "@/src/components/Creator/Footer/Footer"
 import PageHeader from "@/src/components/brand/PageHeader/PageHeader"
 import BrandProfileCard from "@/src/components/brand/BrandProfileCard/BrandProfileCard"
-import StatsCards from "@/src/components/brand/StatsCards/StatsCards"
+// import StatsCards from "@/src/components/brand/StatsCards/StatsCards"
  
 
 
@@ -29,7 +29,7 @@ const page = () => {
                     subtitle="Manage your studio's brand identity and assets."
                 />
                 <BrandProfileCard/>
-                <StatsCards/>
+                {/* <StatsCards/> */}
                 <Footer />
 
             </div>
