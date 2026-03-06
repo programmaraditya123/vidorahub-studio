@@ -5,6 +5,7 @@ import styles from "./Navbar.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import a from '../../../images/heroimage.png'
 
 import { Home, LayoutDashboard, Search, Building2, User } from "lucide-react";
 
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const [name,setName] = useState("")
 
   const toggleMenu = () => setOpen(!open);
 
@@ -25,6 +27,12 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const username = localStorage.getItem("username")
+    setName(username!)
+
+  },[])
 
   return (
     <>
@@ -53,7 +61,7 @@ export default function Navbar() {
           </Link>
 
           <div className={styles.avatar} onClick={toggleMenu}>
-            <Image src="/avatar.png" alt="avatar" width={36} height={36} />
+            <Image src={a} alt="avatar" width={36} height={36} />
           </div>
         </div>
 
@@ -72,10 +80,10 @@ export default function Navbar() {
             </button>
           </Link>
 
-          <Link href={`/dashboard/${"abcd"}`}>
+          <Link href={`/dashboard/${name}`}>
             <button
               className={`${styles.mobileItem} ${
-                pathname === `/dashboard/${"abcd"}` ? styles.active : ""
+                pathname === `/dashboard/${name}` ? styles.active : ""
               }`}
             >
               Dashboard
@@ -118,7 +126,7 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href={`/dashboard/${"abcd"}`}
+          href={`/dashboard/${name}`}
           className={`${styles.bottomItem} ${
             pathname.startsWith("/dashboard") ? styles.activeTab : ""
           }`}

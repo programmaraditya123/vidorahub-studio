@@ -1,6 +1,9 @@
+ 
 import SignupCard from "@/components/Login/SignupCard/SignupCard"
+ 
 
 const page = () => {
+ 
   return (
      <>
      <SignupCard/>
@@ -8,4 +11,4 @@ const page = () => {
   )
 }
 
-export default page
+export default page;

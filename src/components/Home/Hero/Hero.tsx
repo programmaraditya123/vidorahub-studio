@@ -2,6 +2,8 @@
 
 import styles from "./Hero.module.scss";
 import Image from "next/image";
+import a from '../../../images/heroimage.png'
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -19,21 +21,25 @@ export default function Hero() {
         </p>
 
         <div className={styles.actions}>
+          <Link href={'/search'}>
           <button className={styles.primary}>Find Creators</button>
+          </Link>
+          <Link href={'/signup'}>
           <button className={styles.secondary}>Register as Creator</button>
+          </Link>
         </div>
       </div>
 
       <div className={styles.right}>
         <div className={styles.imageCard}>
           <Image
-            src="/hero-image.jpg"
+            src={a}
             alt="creator workspace"
             fill
             className={styles.image}
           />
 
-          <div className={styles.joinBadge}>
+          {/* <div className={styles.joinBadge}>
             <div className={styles.avatars}>
               <span />
               <span />
@@ -41,7 +47,7 @@ export default function Hero() {
             </div>
 
             <p>Joined by 12,000+ creators this week</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

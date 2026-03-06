@@ -126,11 +126,17 @@
 }
 
 /* inputs */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .form label {
   font-size: 12px;
   color: #374151;
-  margin-top: 12px;
+  margin-top: 18px;
+   
 }
 
 .input {
