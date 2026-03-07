@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { userLogin } from "@/lib/LoginRegisterApis";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/Context/AuthContext";
 
 export default function LoginCard() {
   // console.log("SignupCard component rendered");
@@ -16,6 +17,7 @@ export default function LoginCard() {
   const [password,setPassword] = useState("")
   const {showToast} = useToast()
   const router = useRouter()
+  const { setToken } = useAuth();
 
 
   const handleLogin = async () => {
@@ -28,11 +30,12 @@ export default function LoginCard() {
 
       if(user?.success){
         showToast("Loggedin Successfully","info")
+        setToken(user.token); 
         localStorage.setItem("token",user?.token)
         router.replace('/')
       } 
        
-      showToast(user?.message!,"info")
+      showToast(user?.message ?? "Login failed", "info");
          
     
 

@@ -4,20 +4,25 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import a from '../../../images/heroimage.png'
 
 import { Home, LayoutDashboard, Search, Building2, User } from "lucide-react";
+import { useAuth } from "@/Context/AuthContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const [name,setName] = useState("")
+  const { username } = useAuth();
+  const [picUrl,setPicUrl] = useState("");
+  const [token,setToken] = useState("");
+  const router = useRouter();
 
   const toggleMenu = () => setOpen(!open);
 
   useEffect(() => {
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -29,10 +34,13 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const username = localStorage.getItem("username")
-    setName(username!)
+    const url = localStorage.getItem("profilePicUrl");
+    const token = localStorage.getItem("token");
+    setToken(token ?? "")
+    setPicUrl(url ?? "")
+  },[]);
 
-  },[])
+  
 
   return (
     <>
@@ -61,7 +69,7 @@ export default function Navbar() {
           </Link>
 
           <div className={styles.avatar} onClick={toggleMenu}>
-            <Image src={a} alt="avatar" width={36} height={36} />
+            <Image src={picUrl || a} alt="avatar" width={36} height={36} />
           </div>
         </div>
 
@@ -80,10 +88,10 @@ export default function Navbar() {
             </button>
           </Link>
 
-          <Link href={`/dashboard/${name}`}>
+          <Link href={`/dashboard/${username}`}>
             <button
               className={`${styles.mobileItem} ${
-                pathname === `/dashboard/${name}` ? styles.active : ""
+                pathname === `/dashboard/${username}` ? styles.active : ""
               }`}
             >
               Dashboard
@@ -109,7 +117,18 @@ export default function Navbar() {
               Brands
             </button>
           </Link>
-          <button className={styles.mobileItem}>Logout</button>
+          <button className={styles.mobileItem} onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userid");
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+            localStorage.removeItem("email");
+            localStorage.removeItem("profilePicUrl");
+            router.replace("/login");
+            
+          }}>
+            {token ? "Logout" : "Login"}
+          </button>
         </div>
       </header>
 
@@ -126,7 +145,7 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href={`/dashboard/${name}`}
+          href={`/dashboard/${username}`}
           className={`${styles.bottomItem} ${
             pathname.startsWith("/dashboard") ? styles.activeTab : ""
           }`}

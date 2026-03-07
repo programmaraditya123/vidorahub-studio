@@ -34,6 +34,7 @@ export type Sessionresponse = {
        email?: string
        name?:string
        role?:number
+       profilePicUrl?: string
     }
 }
 
