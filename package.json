@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor/cli": "^7.6.0",
+    "@capacitor/core": "^8.2.0",
     "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.13.6",
     "lucide-react": "^0.576.0",
