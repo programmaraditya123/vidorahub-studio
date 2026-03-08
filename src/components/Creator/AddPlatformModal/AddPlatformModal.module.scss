@@ -1,68 +1,226 @@
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
+/* ================= OVERLAY ================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+
+  z-index: 1000;
+
+  padding: 20px;
 }
 
-.modal{
-  background:white;
-  padding:24px;
-  border-radius:16px;
-  width:400px;
-  max-width:90%;
-  box-shadow:0 20px 50px rgba(0,0,0,.15);
+/* ================= MODAL ================= */
+
+.modal {
+  width: 420px;
+  max-width: 95%;
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 26px;
+
+  border: 1px solid rgba(0,0,0,0.05);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.18),
+    0 8px 20px rgba(124,58,237,0.18);
+
+  animation: modalOpen .28s cubic-bezier(.16,1,.3,1);
 }
 
-.modal h3{
-  font-size:18px;
-  margin-bottom:16px;
+.modal h3 {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin-bottom: 18px;
+
+  color: #111827;
 }
 
-.form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+/* ================= FORM ================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  border-radius: 8px;
+/* field */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.field label{
-  font-size:13px;
-  
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: .03em;
+
+  color: #6b7280;
 }
+
+/* inputs */
 
 .field input,
-.field select{
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #e5e7eb;
-  font-size:14px;
+.field select {
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  padding: 11px 14px;
+
+  font-size: 14px;
+
+  background: #fafafa;
+
+  transition:
+    border .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
 }
 
-.actions{
-  margin-top:16px;
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
+/* focus */
+
+.field input:focus,
+.field select:focus {
+  border-color: #8b5cf6;
+
+  background: white;
+
+  box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+
+  outline: none;
 }
 
-.actions button{
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  cursor:pointer;
+/* disabled select */
+
+.field select:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
 }
 
-.save{
-  background:#7c3aed;
-  color:white;
+/* ================= ACTIONS ================= */
+
+.actions {
+  margin-top: 22px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* cancel */
+
+.actions button {
+  border: none;
+
+  padding: 9px 16px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  // background: #f4f5fb;
+
+  transition: background .2s ease;
+}
+
+.actions button:hover {
+  background: #e5e7eb;
+}
+
+/* save */
+
+.save {
+  background: #7c3aed;   /* solid purple */
+
+  color: white;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 999px;
+
+  padding: 9px 18px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.save:hover {
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 24px rgba(124,58,237,.45);
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes modalOpen {
+
+  from {
+    transform: translateY(25px) scale(.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 640px) {
+
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: 100%;
+
+    border-radius: 20px 20px 0 0;
+
+    padding: 24px;
+
+    animation: slideUp .28s ease;
+  }
+
+}
+
+/* bottom sheet animation */
+
+@keyframes slideUp {
+
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+
+}
+
+.error {
+  font-size: 13px;
+  color: #ef4444;
+  margin-top: 4px;
 }

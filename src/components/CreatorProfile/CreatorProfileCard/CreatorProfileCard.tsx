@@ -12,86 +12,139 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-export default function CreatorProfileCard() {
+type Props = {
+  name?: string;
+  avatar?: string;
+  role?: string;
+  location?: string;
+  bio?: string;
+  instagram?: string;
+  whatsapp?: string;
+  igFollowers?: string | number;
+  ytSubs?: string | number;
+  engagementRate?: string | number;
+};
+
+export default function CreatorProfileCard({
+  name,
+  avatar,
+  role,
+  location,
+  bio,
+  instagram,
+  whatsapp,
+  igFollowers,
+  ytSubs,
+  engagementRate,
+}: Props) {
   return (
     <div className={styles.card}>
       {/* Avatar */}
 
-      <div className={styles.avatarWrapper}>
-        <Image
-          src="/creator.png"
-          alt="creator"
-          width={110}
-          height={110}
-          className={styles.avatar}
-        />
+      {avatar && (
+        <div className={styles.avatarWrapper}>
+          <Image
+            src={avatar}
+            alt={name || "creator"}
+            width={110}
+            height={110}
+            className={styles.avatar}
+          />
 
-        <span className={styles.online}></span>
-      </div>
+          <span className={styles.online}></span>
+        </div>
+      )}
 
       {/* Name */}
 
-      <h2 className={styles.name}>Alex Rivers</h2>
+      {name && <h2 className={styles.name}>{name}</h2>}
 
-      <p className={styles.role}>Tech & Lifestyle Creator</p>
+      {role && <p className={styles.role}>{role}</p>}
 
-      <p className={styles.location}>
-        <MapPin size={14} /> San Francisco, CA
-      </p>
+      {/* Location */}
 
-      <p className={styles.bio}>
-        Helping brands reach Gen-Z through authentic storytelling,
-        high-end cinematography, and deep-tech reviews.
-      </p>
+      {location && (
+        <p className={styles.location}>
+          <MapPin size={14} /> {location}
+        </p>
+      )}
 
-      {/* Proposal Button */}
+      {/* Bio */}
 
-      <button className={styles.proposalBtn}>
-        <Send size={16} />
-        Send Proposal
-      </button>
+      {bio && <p className={styles.bio}>{bio}</p>}
+
+      {/* Proposal */}
+
+      {name && (
+        <button className={styles.proposalBtn}>
+          <Send size={16} />
+          Send Proposal
+        </button>
+      )}
 
       {/* Social Links */}
 
-      <div className={styles.links}>
-        <button className={styles.linkBtn}>
-          <Instagram size={16} />
-          Instagram Portfolio
-        </button>
+      {(instagram || whatsapp) && (
+        <div className={styles.links}>
+          {instagram && (
+            <a
+              href={instagram}
+              target="_blank"
+              className={styles.linkBtn}
+            >
+              <Instagram size={16} />
+              Instagram Portfolio
+            </a>
+          )}
 
-        <button className={styles.linkBtn}>
-          <MessageSquare size={16} />
-          WhatsApp Business
-        </button>
-      </div>
+          {whatsapp && (
+            <a
+              href={whatsapp}
+              target="_blank"
+              className={styles.linkBtn}
+            >
+              <MessageSquare size={16} />
+              WhatsApp Business
+            </a>
+          )}
+        </div>
+      )}
 
       {/* Stats */}
 
-      <div className={styles.stats}>
-        <div className={styles.stat}>
-          <Users size={18} />
-          <div>
-            <span>IG FOLLOWERS</span>
-            <strong>120K</strong>
-          </div>
-        </div>
+      {(igFollowers || ytSubs || engagementRate) && (
+        <div className={styles.stats}>
+          {igFollowers && (
+            <div className={styles.stat}>
+              <Users size={18} />
+              <div>
+                <span>IG FOLLOWERS</span>
+                <strong>{igFollowers}</strong>
+              </div>
+            </div>
+          )}
 
-        <div className={styles.stat}>
-          <Youtube size={18} />
-          <div>
-            <span>YT SUBS</span>
-            <strong>85K</strong>
-          </div>
-        </div>
+          {ytSubs && (
+            <div className={styles.stat}>
+              <Youtube size={18} />
+              <div>
+                <span>YT SUBS</span>
+                <strong>{ytSubs}</strong>
+              </div>
+            </div>
+          )}
 
-        <div className={styles.stat}>
-          <TrendingUp size={18} />
-          <div>
-            <span>ENG. RATE</span>
-            <strong>4.2%</strong>
-          </div>
+          {engagementRate && (
+            <div className={styles.stat}>
+              <TrendingUp size={18} />
+              <div>
+                <span>ENG. RATE</span>
+                <strong>{engagementRate}</strong>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

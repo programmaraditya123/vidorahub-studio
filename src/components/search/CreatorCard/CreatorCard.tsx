@@ -1,16 +1,18 @@
 "use client";
 
 import styles from "./CreatorCard.module.scss";
-import { MapPin, CheckCircle, Instagram, Youtube, Music } from "lucide-react";
+import { MapPin, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { platformConfig } from "@/components/utils/platformConfig";
 
 type Platform = {
-  name: "Instagram" | "TikTok" | "YouTube";
-  followers: string;
+  platform: string;
+  audience: number;
 };
 
 type Props = {
+  id : string
   name: string;
   avatar: string;
   niche: string;
@@ -18,15 +20,16 @@ type Props = {
   platforms: Platform[];
 };
 
-/* icon mapping */
+/* audience formatter */
 
-const platformIcons = {
-  Instagram: Instagram,
-  TikTok: Music,
-  YouTube: Youtube,
-};
+function formatAudience(num: number) {
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + "K";
+  return num?.toString();
+}
 
 export default function CreatorCard({
+  id,
   name,
   avatar,
   niche,
@@ -58,23 +61,33 @@ export default function CreatorCard({
       </p>
 
       <div className={styles.platforms}>
-        {platforms.map((p) => {
-          const Icon = platformIcons[p.name];
+        {platforms?.map((p, i) => {
+          const config = platformConfig[p.platform];
+
+          if (!config) return null;
+
+          const Icon = config.icon;
 
           return (
-            <div key={p.name} className={styles.platform}>
+            <div key={i} className={styles.platform}>
               <div className={styles.platformLeft}>
-                <Icon size={16} />
-                <span>{p.name}</span>
+                {config.isImage ? (
+                  <Image src={Icon} alt={p.platform} width={16} height={16} />
+                ) : (
+                  <Icon size={16} />
+                )}
+
+                <span>{p.platform}</span>
               </div>
 
-              <strong>{p.followers}</strong>
+              <strong>{formatAudience(p.audience)}</strong>
             </div>
           );
         })}
       </div>
-     <Link href={`/creator/${name}`}>
-      <button className={styles.button}>View Profile</button>
+
+      <Link href={`/creator/${id}`}>
+        <button className={styles.button}>View Profile</button>
       </Link>
     </div>
   );

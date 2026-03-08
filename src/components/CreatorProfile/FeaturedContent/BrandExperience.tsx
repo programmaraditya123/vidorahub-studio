@@ -2,36 +2,54 @@
 
 import styles from "./FeaturedContent.module.scss";
 
-export default function BrandExperience() {
+type Collaboration = {
+  title: string;
+  description: string;
+};
+
+type Props = {
+  brandExperienceTitle?: string;
+  brands?: string[];
+  collaborationsTitle?: string;
+  collaborations?: Collaboration[];
+};
+
+export default function BrandExperience({
+  brandExperienceTitle,
+  brands,
+  collaborationsTitle,
+  collaborations,
+}: Props) {
   return (
     <div className={styles.brandBox}>
-      <h3>Brand Experience</h3>
+      
+      {/* Brand Experience */}
 
-      <div className={styles.brandLogos}>
-        <span>TECHNI</span>
-        <span>LUMINA</span>
-        <span>CORE</span>
-        <span>VIVID</span>
-      </div>
+      {brandExperienceTitle && <h3>{brandExperienceTitle}</h3>}
 
-      <div className={styles.collab}>
-        <h4>Previous Collaborations</h4>
-
-        <div className={styles.collabItem}>
-          <strong>Lumina Smart Home (2023)</strong>
-          <p>
-            Product launch campaign resulting in 15% conversion lift
-            on TikTok.
-          </p>
+      {brands && brands.length > 0 && (
+        <div className={styles.brandLogos}>
+          {brands.map((brand, i) => (
+            <span key={i}>{brand}</span>
+          ))}
         </div>
+      )}
 
-        <div className={styles.collabItem}>
-          <strong>Techni Gear Pro (2024)</strong>
-          <p>
-            Long-term brand ambassadorship and monthly video reviews.
-          </p>
+      {/* Collaborations */}
+
+      {collaborations && collaborations.length > 0 && (
+        <div className={styles.collab}>
+          
+          {collaborationsTitle && <h4>{collaborationsTitle}</h4>}
+
+          {collaborations.map((item, i) => (
+            <div key={i} className={styles.collabItem}>
+              <strong>{item.title}</strong>
+              <p>{item.description}</p>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

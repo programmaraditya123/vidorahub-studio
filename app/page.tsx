@@ -24,7 +24,7 @@ export default function Home() {
 
     try {
       const session = await CheckSession();
-      console.log("session", session);
+      // console.log("session", session);
 
       if (session?.ok) {
 

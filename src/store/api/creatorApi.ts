@@ -1,6 +1,23 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "./axiosBaseQuery";
-import { Delete } from "lucide-react";
+
+type Creator = {
+  name: string;
+  profilePicUrl?: string;
+  location?: string;
+  tags: string[];
+  bio?: string;
+};
+
+type CreatorResponse = {
+  creators: Creator[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+};
 
 export const creatorApi = createApi({
   reducerPath: "creatorApi",
@@ -39,7 +56,7 @@ export const creatorApi = createApi({
       invalidatesTags: ["Creator"],
     }),
 
-    addShowcaseContent : builder.mutation({
+    addShowcaseContent: builder.mutation({
       query: (form) => ({
         url: "/api/v1/addShowcaseContent",
         method: "POST",
@@ -47,30 +64,117 @@ export const creatorApi = createApi({
       }),
       invalidatesTags: ["Creator"],
     }),
-    deleteShowcaseContent : builder.mutation({
+    deleteShowcaseContent: builder.mutation({
       query: (id) => ({
-        url: `/api/v1/deleteShowcaseContent/${id}`, 
-        method: "DELETE"
+        url: `/api/v1/deleteShowcaseContent/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Creator"],
     }),
-    AddExperience : builder.mutation({
+    AddExperience: builder.mutation({
       query: (form) => ({
-        url: "/api/v1/addExperience",       
+        url: "/api/v1/addExperience",
         method: "POST",
         data: form,
       }),
-        invalidatesTags: ["Creator"],
+      invalidatesTags: ["Creator"],
     }),
-    DeleteExperience : builder.mutation({
+    DeleteExperience: builder.mutation({
       query: (id) => ({
-        url: `/api/v1/deleteExperience/${id}`,  
-        method: "DELETE"
-        }),
-        invalidatesTags: ["Creator"],
-        }),
+        url: `/api/v1/deleteExperience/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Creator"],
+    }),
+    getAllCreators: builder.query<
+      CreatorResponse,
+      {
+        page?: number;
+        limit?: number;
+        name?: string;
+        niche?: string;
+        location?: string;
+      }
+    >({
+      query: ({ page = 1, limit = 10, name, niche, location }) => {
+        const params = new URLSearchParams();
 
+        params.set("page", String(page));
+        params.set("limit", String(limit));
+
+        if (name) params.set("name", name);
+        if (niche && niche !== "All Niches") params.set("niche", niche);
+        if (location) params.set("location", location);
+
+        return {
+          url: `/api/v1/getAllCreators?${params.toString()}`,
+        };
+      },
+
+      /* keep one cache for pagination */
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+
+      merge: (currentCache, newItems, { arg }) => {
+        /* reset list when page = 1 (new filters) */
+        if (arg.page === 1) {
+          currentCache.creators = newItems.creators;
+        } else {
+          /* remove duplicates using _id */
+          const existingIds = new Set(
+            currentCache.creators.map((c: any) => c._id),
+          );
+
+          const filtered = newItems.creators.filter(
+            (c: any) => !existingIds.has(c._id),
+          );
+
+          currentCache.creators.push(...filtered);
+        }
+
+        currentCache.pagination = newItems.pagination;
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return (
+          currentArg?.page !== previousArg?.page ||
+          currentArg?.name !== previousArg?.name ||
+          currentArg?.niche !== previousArg?.niche ||
+          currentArg?.location !== previousArg?.location
+        );
+      },
+
+      providesTags: ["Creator"],
+    }),
+    addBrand: builder.mutation({
+      query: (form) => ({
+        url: "/api/v1/addBrand",
+        method: "POST",
+        data: form,
+      }),
+
+      invalidatesTags: ["Creator"],
+    }),
+    getAllBrands: builder.query({
+      query: () => ({
+        url: "/api/v1/allBrands",
+      }),
+      providesTags: ["Creator"],
+    }),
+    getBrandById: builder.query({
+      query: (id) => ({
+        url: `/api/v1/getBrand/${id}`,
+      }),
+      providesTags: ["Creator"],
+    }),
+    getCreatorById: builder.query({
+      query: (id) => ({
+        url: `/api/v1/getOneCreator/${id}`,
+      }),
+      providesTags: ["Creator"],
+    })
+  
   }),
+  
 });
 
 export const {
@@ -80,5 +184,10 @@ export const {
   useAddShowcaseContentMutation,
   useDeleteShowcaseContentMutation,
   useAddExperienceMutation,
-  useDeleteExperienceMutation
+  useDeleteExperienceMutation,
+  useGetAllCreatorsQuery,
+  useAddBrandMutation,
+  useGetAllBrandsQuery,
+  useGetBrandByIdQuery,
+  useGetCreatorByIdQuery
 } = creatorApi;

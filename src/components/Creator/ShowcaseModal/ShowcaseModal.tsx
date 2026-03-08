@@ -20,16 +20,33 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
   const handleSubmit = async () => {
 
     if (!thumbnail) {
-      setError("Thumbnail required");
+      setError("Thumbnail is required");
       return;
     }
 
     if (!title.trim()) {
-      setError("Title required");
+      setError("Title is required");
+      return;
+    }
+
+    if (!platform.trim()) {
+      setError("Platform is required");
+      return;
+    }
+
+    if (!link.trim()) {
+      setError("Content link is required");
+      return;
+    }
+
+    if (!views.trim()) {
+      setError("Views count is required");
       return;
     }
 
     try {
+
+      setError("");
 
       const formData = new FormData();
 
@@ -50,10 +67,8 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
 
   return (
     <div className={styles.overlay} onClick={close}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+
         <div className={styles.header}>
           <h3>Add Portfolio Item</h3>
 
@@ -63,8 +78,9 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
         </div>
 
         <div className={styles.form}>
+
           <div className={styles.field}>
-            <label>Thumbnail</label>
+            <label>Thumbnail *</label>
 
             <input
               type="file"
@@ -76,7 +92,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
           </div>
 
           <div className={styles.field}>
-            <label>Title</label>
+            <label>Title *</label>
 
             <input
               value={title}
@@ -86,7 +102,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
           </div>
 
           <div className={styles.field}>
-            <label>Platform</label>
+            <label>Platform *</label>
 
             <select
               value={platform}
@@ -102,7 +118,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
           </div>
 
           <div className={styles.field}>
-            <label>Content Link</label>
+            <label>Content Link *</label>
 
             <input
               value={link}
@@ -112,7 +128,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
           </div>
 
           <div className={styles.field}>
-            <label>Views</label>
+            <label>Views *</label>
 
             <input
               value={views}
@@ -121,16 +137,12 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
             />
           </div>
 
-          {error && (
-            <p className={styles.error}>{error}</p>
-          )}
+          {error && <p className={styles.error}>{error}</p>}
+
         </div>
 
         <div className={styles.actions}>
-          <button
-            className={styles.cancel}
-            onClick={close}
-          >
+          <button className={styles.cancel} onClick={close}>
             Cancel
           </button>
 
@@ -142,6 +154,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
             {isLoading ? "Adding..." : "Add Showcase"}
           </button>
         </div>
+
       </div>
     </div>
   );

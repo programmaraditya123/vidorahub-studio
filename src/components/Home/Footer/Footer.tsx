@@ -59,7 +59,7 @@ export default function Footer() {
 
       {/* BOTTOM */}
       <div className={styles.bottom}>
-        © 2024 VidoraHub Studio. All rights reserved. Made for the creator economy.
+        © 2026 VidoraHub Studio. All rights reserved. Made for the creator economy.
       </div>
     </footer>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./FeaturedCreators.module.scss";
 import Image from "next/image";
 import {
@@ -5,67 +7,24 @@ import {
   Facebook,
   Linkedin,
   Youtube,
-  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
-
-const creators = [
-  {
-    name: "Arjun Mehta",
-    desc: "Tech & Gadgets Reviewer",
-    tag: "TECH",
-    image: "/creators/1.jpg",
-    socials: {
-      instagram: "320K",
-      youtube: "420K",
-      linkedin: "80K",
-      facebook: "150K",
-      whatsapp: "25K",
-    },
-  },
-  {
-    name: "Priya Sharma",
-    desc: "Sustainable Fashion Expert",
-    tag: "FASHION",
-    image: "/creators/2.jpg",
-    socials: {
-      instagram: "820K",
-      youtube: "150K",
-      linkedin: "90K",
-      facebook: "200K",
-      whatsapp: "60K",
-    },
-  },
-  {
-    name: "Chef Kabir",
-    desc: "Traditional Indian Fusion",
-    tag: "FOOD",
-    image: "/creators/3.jpg",
-    socials: {
-      instagram: "250K",
-      youtube: "120K",
-      linkedin: "20K",
-      facebook: "100K",
-      whatsapp: "15K",
-    },
-  },
-  {
-    name: "Rohan Das",
-    desc: "Solo Travel Adventure",
-    tag: "TRAVEL",
-    image: "/creators/4.jpg",
-    socials: {
-      instagram: "640K",
-      youtube: "310K",
-      linkedin: "40K",
-      facebook: "180K",
-      whatsapp: "35K",
-    },
-  },
-  
-];
+import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
+import vidoraicon from '../../../../app/favicon.ico'
 
 export default function FeaturedCreators() {
+
+  const { data, isLoading } = useGetAllCreatorsQuery({
+    page: 1,
+    limit: 4
+  });
+
+  const creators = data?.creators || [];
+
+  if (isLoading) {
+    return <p className={styles.loading}>Loading creators...</p>;
+  }
+
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -73,63 +32,99 @@ export default function FeaturedCreators() {
           <h2>Featured Creators</h2>
           <p>Discover the top trending voices on VidoraHub</p>
         </div>
-        
-        <Link href={'/search'}>
-        <button className={styles.viewAll}>View All →</button>
+
+        <Link href="/search">
+          <button className={styles.viewAll}>View All →</button>
         </Link>
       </div>
 
       <div className={styles.grid}>
-        {creators.map((creator) => (
-          <div key={creator.name} className={styles.card}>
-            <div className={styles.imageBox}>
-              <Image
-                src={creator.image}
-                alt={creator.name}
-                fill
-                className={styles.image}
-              />
+        {creators.map((creator: any) => {
 
-              <span className={styles.tag}>{creator.tag}</span>
-            </div>
+          const instagram = creator.platforms?.find(
+            (p: any) => p.platform === "Instagram"
+          )?.audience;
 
-            <div className={styles.content}>
-              <h3>{creator.name}</h3>
-              <p>{creator.desc}</p>
+          const youtube = creator.platforms?.find(
+            (p: any) => p.platform === "YouTube"
+          )?.audience;
 
-              <div className={styles.socials}>
-                <div>
-                  <Instagram size={14} />
-                  <span>{creator.socials.instagram}</span>
-                </div>
+          const linkedin = creator.platforms?.find(
+            (p: any) => p.platform === "LinkedIn"
+          )?.audience;
 
-                <div>
-                  <Youtube size={14} />
-                  <span>{creator.socials.youtube}</span>
-                </div>
+          const facebook = creator.platforms?.find(
+            (p: any) => p.platform === "Facebook"
+          )?.audience;
 
-                <div>
-                  <Linkedin size={14} />
-                  <span>{creator.socials.linkedin}</span>
-                </div>
+          const vidorahub = creator.platforms?.find(
+            (p: any) => p.platform === "VidoraHub"
+          )?.audience;
 
-                <div>
-                  <Facebook size={14} />
-                  <span>{creator.socials.facebook}</span>
-                </div>
+          return (
+            <div key={creator._id} className={styles.card}>
+              <div className={styles.imageBox}>
+                <Image
+                  src={creator.profilePicUrl || "/creators/default.jpg"}
+                  alt={creator.name}
+                  fill
+                  className={styles.image}
+                />
 
-                <div>
-                  <MessageCircle size={14} />
-                  <span>{creator.socials.whatsapp}</span>
-                </div>
+                <span className={styles.tag}>
+                  {creator.tags?.[0] || "CREATOR"}
+                </span>
               </div>
-              
-              <Link href={`/creator/${creator.name}`}>
-              <button className={styles.profileBtn}>View Profile</button>
-              </Link> 
+
+              <div className={styles.content}>
+                <h3>{creator.name}</h3>
+                <p>{creator.bio}</p>
+
+                <div className={styles.socials}>
+                  {instagram && (
+                    <div>
+                      <Instagram size={14} />
+                      <span>{instagram}</span>
+                    </div>
+                  )}
+
+                  {youtube && (
+                    <div>
+                      <Youtube size={14} />
+                      <span>{youtube}</span>
+                    </div>
+                  )}
+
+                  {linkedin && (
+                    <div>
+                      <Linkedin size={14} />
+                      <span>{linkedin}</span>
+                    </div>
+                  )}
+
+                  {facebook && (
+                    <div>
+                      <Facebook size={14} />
+                      <span>{facebook}</span>
+                    </div>
+                  )}
+                  {vidorahub && (
+                    <div>
+                      <Image src={vidoraicon} alt="VidoraHub" width={14} height={14} />
+                      <span>{vidorahub}</span>
+                    </div>
+                  )}
+                </div>
+
+                <Link href={`/creator/${creator._id}`}>
+                  <button className={styles.profileBtn}>
+                    View Profile
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

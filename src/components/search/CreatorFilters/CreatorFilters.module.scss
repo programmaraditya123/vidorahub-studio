@@ -162,3 +162,44 @@
   }
 
 }
+
+.mobilePanel {
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* close button */
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 5px;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+  border: 1px solid #e7e7f3;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all .2s ease;
+}
+
+.closeBtn:hover {
+  background: #f4f5fb;
+}

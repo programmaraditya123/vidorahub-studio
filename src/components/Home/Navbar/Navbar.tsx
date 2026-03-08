@@ -55,12 +55,12 @@ export default function Navbar() {
         </div>
 
         {/* CENTER SEARCH */}
-        <div className={styles.center}>
+        {/* <div className={styles.center}>
           <input
             className={styles.search}
             placeholder="Search creators or brands..."
           />
-        </div>
+        </div> */}
 
         {/* RIGHT */}
         <div className={styles.right}>

@@ -1,13 +1,46 @@
 "use client";
 
+import { useAddBrandMutation } from "@/store/api/creatorApi";
 import styles from "./EditBrandModal.module.scss";
 import { X } from "lucide-react";
+import { useState } from "react";
 
 type Props = {
   close: () => void;
+  name: string;
+  category: string;
+  description: string;
+  established: number;
 };
 
-export default function EditBrandModal({ close }: Props) {
+export default function EditBrandModal({
+  close,
+  name,
+  category,
+  description,
+  established,
+}: Props) {
+
+  const [brandName, setBrandName] = useState(name);
+  const [brandCategory, setBrandCategory] = useState(category);
+  const [brandDescription, setBrandDescription] = useState(description);
+  const [brandEstablished, setBrandEstablished] = useState(established);
+ const [addBrand, { isLoading }] = useAddBrandMutation();
+
+  const handleSave = async () => {
+    const payload = {
+      name: brandName,
+      category: brandCategory,
+      bio : brandDescription,
+      established: brandEstablished,
+    };
+
+    // console.log("Updated brand:", payload);
+    await addBrand(payload).unwrap();
+
+    close();
+  };
+
   return (
     <div className={styles.overlay} onClick={close}>
       <div
@@ -23,22 +56,42 @@ export default function EditBrandModal({ close }: Props) {
         </div>
 
         <div className={styles.form}>
-          <input placeholder="Brand Name" />
+          <input
+            value={brandName}
+            onChange={(e) => setBrandName(e.target.value)}
+            placeholder="Brand Name"
+          />
 
-          <input placeholder="Category" />
+          <input
+            value={brandCategory}
+            onChange={(e) => setBrandCategory(e.target.value)}
+            placeholder="Category"
+          />
 
           <textarea
             rows={4}
+            value={brandDescription}
+            onChange={(e) => setBrandDescription(e.target.value)}
             placeholder="Brand Description"
           />
 
-          <input placeholder="Established Year" />
+          <input
+            type="number"
+            value={brandEstablished}
+            onChange={(e) =>
+              setBrandEstablished(Number(e.target.value))
+            }
+            placeholder="Established Year"
+          />
         </div>
 
         <div className={styles.actions}>
           <button onClick={close}>Cancel</button>
 
-          <button className={styles.save}>
+          <button
+            className={styles.save}
+            onClick={handleSave}
+          >
             Save Changes
           </button>
         </div>

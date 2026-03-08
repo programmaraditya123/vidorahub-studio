@@ -28,7 +28,6 @@ type CreatorInfo = {
 };
 const page = () => {
   const { data: creator, isLoading } = useGetCreatorQuery();
-  console.log("creator", creator);
   // const [creatorInfo, setCreatorInfo] = useState<CreatorInfo | null>(null);
   const [role, setRole] = useState("0");
   useEffect(() => {
@@ -56,9 +55,7 @@ const page = () => {
             />
             <SocialAudience data={creator?.creator?.platforms ?? []} />
             <Showcase data={creator?.creator?.showCaseContent ?? []} />
-            <BrandExperience
-              data={creator?.creator?.experience ?? []}
-            />
+            <BrandExperience data={creator?.creator?.experience ?? []} />
           </>
         )}
         {role === "3" && (
@@ -67,8 +64,14 @@ const page = () => {
               title="Brand Dashboard"
               subtitle="Manage your studio's brand identity and assets."
             />
-            <BrandProfileCard />
-            <StatsCards />
+            <BrandProfileCard
+              name={creator?.creator?.name}
+              category={creator?.creator?.category}
+              description={creator?.creator?.bio}
+              established={creator?.creator?.established}
+              logo={creator?.creator?.profilePicUrl}
+            />
+            {/* <StatsCards /> */}
           </>
         )}
 

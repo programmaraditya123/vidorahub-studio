@@ -1,9 +1,8 @@
 "use client";
 
-import { addCreatorPlatform } from "@/lib/CreatorInfo";
 import styles from "./AddPlatformModal.module.scss";
 import { useState, useEffect } from "react";
-import { useAddCreatorPlatformMutation } from '@/store/api/creatorApi';
+import { useAddCreatorPlatformMutation } from "@/store/api/creatorApi";
 
 export default function AddPlatformModal({
   close,
@@ -15,6 +14,9 @@ export default function AddPlatformModal({
   const [platform, setPlatform] = useState("VidoraHub");
   const [link, setLink] = useState("");
   const [audience, setAudience] = useState("");
+
+  const [error, setError] = useState("");
+
   const [addPlatform] = useAddCreatorPlatformMutation();
 
   useEffect(() => {
@@ -25,25 +27,39 @@ export default function AddPlatformModal({
     }
   }, [editData]);
 
-  // console.log("88888888",{
-  //     platform,
-  //     link,
-  //     audience,
-  //   })
-
   const handleSave = async () => {
-    const payload = {
-      platform,
-      link,
-      audience,
-    };
 
-    // console.log(payload);
-    // await addCreatorPlatform(payload);
-    
-    await addPlatform(payload);
+    if (!platform.trim()) {
+      setError("Platform is required");
+      return;
+    }
 
-    close();
+    if (!link.trim()) {
+      setError("Profile link is required");
+      return;
+    }
+
+    if (!audience.trim()) {
+      setError("Audience count is required");
+      return;
+    }
+
+    try {
+      setError("");
+
+      const payload = {
+        platform,
+        link,
+        audience,
+      };
+
+      await addPlatform(payload);
+
+      close();
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong");
+    }
   };
 
   return (
@@ -53,7 +69,7 @@ export default function AddPlatformModal({
 
         <div className={styles.form}>
           <div className={styles.field}>
-            <label>Platform</label>
+            <label>Platform *</label>
 
             <select
               value={platform}
@@ -71,7 +87,7 @@ export default function AddPlatformModal({
           </div>
 
           <div className={styles.field}>
-            <label>Profile Link</label>
+            <label>Profile Link *</label>
 
             <input
               value={link}
@@ -81,7 +97,7 @@ export default function AddPlatformModal({
           </div>
 
           <div className={styles.field}>
-            <label>Audience Count</label>
+            <label>Audience Count *</label>
 
             <input
               value={audience}
@@ -89,6 +105,8 @@ export default function AddPlatformModal({
               placeholder="120K / 2.3M"
             />
           </div>
+
+          {error && <p className={styles.error}>{error}</p>}
         </div>
 
         <div className={styles.actions}>
