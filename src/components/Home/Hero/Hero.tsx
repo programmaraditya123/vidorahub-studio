@@ -24,9 +24,13 @@ export default function Hero() {
           <Link href={'/search'}>
           <button className={styles.primary}>Find Creators</button>
           </Link>
+           <Link href={'/brand'}>
+          <button className={styles.primary}>Find Brands</button>
+          </Link>
           <Link href={'/signup'}>
           <button className={styles.secondary}>Register as Creator</button>
           </Link>
+         
         </div>
       </div>
 
