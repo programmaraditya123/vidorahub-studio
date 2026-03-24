@@ -1,7 +1,10 @@
+import LoginSlug from "@/components/Login/LoginSlug/LoginSlug"
 
 const page = () => {
   return (
-    <div>This is the login page</div>
+     <>
+     <LoginSlug/>
+     </>
   )
 }
 
