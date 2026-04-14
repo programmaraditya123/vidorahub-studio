@@ -1,148 +1,271 @@
+// ─── Tokens ───────────────────────────────────────────────────────────────────
+
+$purple:       #7c3aed;
+$purple-light: #ede9fe;
+$purple-mid:   #8b5cf6;
+$text-main:    #111827;
+$text-muted:   #6b7280;
+$border:       #e5e7eb;
+$bg-page:      #f8f7ff;
+$bg-card:      #ffffff;
+$image-h:      180px;
+$radius:       14px;
+$transition:   0.22s ease;
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+
 .section {
-  padding: 60px 40px;
-  background: #fafafa;
+  padding: 64px 40px;
+  background: $bg-page;
 }
 
-/* header */
+// ─── Header ───────────────────────────────────────────────────────────────────
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  gap: 16px;
+}
 
-  h2 {
-    font-size: 22px;
-    font-weight: 700;
-  }
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: $text-main;
+  letter-spacing: -0.4px;
+  margin: 0 0 4px;
+}
 
-  p {
-    font-size: 13px;
-    color: #6b7280;
-  }
+.subtitle {
+  font-size: 13px;
+  color: $text-muted;
+  margin: 0;
 }
 
 .viewAll {
-  border: none;
-  background: none;
-  color: #8b5cf6;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
+  color: $purple-mid;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid $purple-mid;
+  transition: background $transition, color $transition;
+
+  &:hover {
+    background: $purple-mid;
+    color: #fff;
+  }
 }
 
-/* grid */
+// ─── Grid ─────────────────────────────────────────────────────────────────────
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 420px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* card */
+// ─── Card ─────────────────────────────────────────────────────────────────────
 
 .card {
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #eee;
+  background: $bg-card;
+  border-radius: $radius;
+  border: 1px solid $border;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform $transition, box-shadow $transition, border-color $transition;
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(124, 58, 237, 0.12);
+    border-color: lighten($purple, 30%);
+  }
 }
 
-/* image */
+// ─── Image ────────────────────────────────────────────────────────────────────
 
 .imageBox {
   position: relative;
-  height: 130px;
+  height: $image-h;
+  background: #f3f0ff;   // soft neutral so letterbox areas don't look broken
+  flex-shrink: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    rgba(17, 8, 34, 0.35) 100%
+  );
+  z-index: 1;
 }
 
 .image {
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
-/* tag */
+// ─── Tag ──────────────────────────────────────────────────────────────────────
 
 .tag {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
 
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 
-  padding: 4px 8px;
+  padding: 3px 8px;
   border-radius: 999px;
-
-  background: #ede9fe;
-  color: #7c3aed;
+  background: rgba(255, 255, 255, 0.9);
+  color: $purple;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-/* content */
+// ─── Content ──────────────────────────────────────────────────────────────────
 
 .content {
-  padding: 12px;
-
-  h3 {
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  p {
-    font-size: 12px;
-    color: #6b7280;
-    margin-bottom: 10px;
-  }
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-/* socials */
+.name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: $text-main;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bio {
+  font-size: 11.5px;
+  color: $text-muted;
+  line-height: 1.5;
+  margin: 0 0 10px;
+  flex: 1;
+}
+
+// ─── Socials ──────────────────────────────────────────────────────────────────
 
 .socials {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 6px 12px;
-  font-size: 11px;
-  color: #374151;
-  margin-bottom: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
 
-  div {
+  li {
     display: flex;
     align-items: center;
     gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: $text-main;
+  }
+
+  svg {
+    color: $text-muted;
+    flex-shrink: 0;
   }
 }
 
-/* button */
+// ─── Profile Link ─────────────────────────────────────────────────────────────
 
-.profileBtn {
-  width: 100%;
-  border: none;
-  background: #f3e8ff;
-  color: #7c3aed;
-
-  padding: 6px;
+.profileLink {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: $purple-light;
+  color: $purple;
+  padding: 7px;
   border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: background $transition, color $transition;
+  margin-top: auto;
 
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* responsive */
-
-@media (max-width: 1100px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  &:hover {
+    background: $purple;
+    color: #fff;
   }
 }
+
+// ─── Skeleton / Shimmer ───────────────────────────────────────────────────────
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #ede9fe 25%,
+    #f5f3ff 50%,
+    #ede9fe 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonLine {
+  border-radius: 4px;
+  display: block;
+}
+
+// ─── Misc ─────────────────────────────────────────────────────────────────────
+
+.errorMsg {
+  text-align: center;
+  color: #ef4444;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+// ─── Mobile ───────────────────────────────────────────────────────────────────
 
 @media (max-width: 600px) {
   .section {
-    padding: 40px 20px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
+    padding: 40px 16px;
   }
 
   .imageBox {
-    height: 120px;
+    height: 160px;
   }
 }

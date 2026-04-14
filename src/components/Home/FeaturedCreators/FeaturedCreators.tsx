@@ -2,129 +2,185 @@
 
 import styles from "./FeaturedCreators.module.scss";
 import Image from "next/image";
-import {
-  Instagram,
-  Facebook,
-  Linkedin,
-  Youtube,
-} from "lucide-react";
+import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
 import Link from "next/link";
 import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
-import vidoraicon from '../../../../app/favicon.ico'
+import vidoraicon from "../../../../app/favicon.ico";
+import { useMemo, memo } from "react";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface CreatorPlatform {
+  platform: string;
+  audience: string | number;
+}
+
+interface CreatorData {
+  _id?: string;
+  id?: string;
+  name?: string;
+  bio?: string;
+  profilePicUrl?: string;
+  tags?: string[];
+  platforms?: CreatorPlatform[];
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function getPlatform(platforms: CreatorPlatform[] | undefined, name: string) {
+  return platforms?.find((p) => p.platform === name)?.audience;
+}
+
+// audience can be a number (e.g. 12000) or a string (e.g. "12K") from the API
+function formatAudience(value: string | number | undefined): string {
+  if (value === undefined || value === null || value === "") return "";
+  const num = typeof value === "number" ? value : parseInt(String(value).replace(/[^0-9]/g, ""), 10);
+  if (isNaN(num)) return String(value);
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
+  return String(num);
+}
+
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+
+function SkeletonCard() {
+  return (
+    <div className={styles.card} aria-hidden="true">
+      <div className={`${styles.imageBox} ${styles.shimmer}`} />
+      <div className={styles.content}>
+        <div className={`${styles.skeletonLine} ${styles.shimmer}`} style={{ width: "60%", height: 14 }} />
+        <div className={`${styles.skeletonLine} ${styles.shimmer}`} style={{ width: "90%", height: 10, marginTop: 6 }} />
+        <div className={`${styles.skeletonLine} ${styles.shimmer}`} style={{ width: "75%", height: 10, marginTop: 4 }} />
+        <div className={`${styles.skeletonLine} ${styles.shimmer}`} style={{ width: "100%", height: 28, marginTop: 14, borderRadius: 999 }} />
+      </div>
+    </div>
+  );
+}
+
+// ─── Creator Card ─────────────────────────────────────────────────────────────
+
+const CreatorCard = memo(function CreatorCard({
+  creator,
+  priority,
+}: {
+  creator: CreatorData;
+  priority: boolean;
+}) {
+  const socials = useMemo(() => {
+    const p = creator.platforms;
+    return {
+      instagram: getPlatform(p, "Instagram"),
+      youtube: getPlatform(p, "YouTube"),
+      linkedin: getPlatform(p, "LinkedIn"),
+      facebook: getPlatform(p, "Facebook"),
+      vidorahub: getPlatform(p, "VidoraHub"),
+    };
+  }, [creator.platforms]);
+
+  const tag = creator.tags?.[0] || "CREATOR";
+  const bio = (creator.bio?.length ?? 0) > 72
+    ? creator.bio!.slice(0, 72).trimEnd() + "…"
+    : creator.bio;
+
+  return (
+    <article className={styles.card}>
+      <div className={styles.imageBox}>
+        <Image
+          src={creator.profilePicUrl || "/creators/default.jpg"}
+          alt={`${creator.name} profile photo`}
+          fill
+          sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1400px) 25vw, 20vw"
+          className={styles.image}
+          priority={priority}
+          quality={80}
+        />
+        <span className={styles.tag}>{tag}</span>
+      </div>
+
+      <div className={styles.content}>
+        <h3 className={styles.name}>{creator.name}</h3>
+        {bio && <p className={styles.bio}>{bio}</p>}
+
+        <ul className={styles.socials} aria-label="Social platforms">
+          {socials.instagram && (
+            <li>
+              <Instagram size={12} aria-label="Instagram" />
+              <span>{formatAudience(socials.instagram)}</span>
+            </li>
+          )}
+          {socials.youtube && (
+            <li>
+              <Youtube size={12} aria-label="YouTube" />
+              <span>{formatAudience(socials.youtube)}</span>
+            </li>
+          )}
+          {socials.linkedin && (
+            <li>
+              <Linkedin size={12} aria-label="LinkedIn" />
+              <span>{formatAudience(socials.linkedin)}</span>
+            </li>
+          )}
+          {socials.facebook && (
+            <li>
+              <Facebook size={12} aria-label="Facebook" />
+              <span>{formatAudience(socials.facebook)}</span>
+            </li>
+          )}
+          {socials.vidorahub && (
+            <li>
+              <Image src={vidoraicon} alt="VidoraHub" width={12} height={12} />
+              <span>{formatAudience(socials.vidorahub)}</span>
+            </li>
+          )}
+        </ul>
+
+        <Link href={`/creator/${creator._id ?? creator.id}`} className={styles.profileLink}>
+          View Profile
+        </Link>
+      </div>
+    </article>
+  );
+});
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function FeaturedCreators() {
-
-  const { data, isLoading } = useGetAllCreatorsQuery({
+  const { data, isLoading, isError } = useGetAllCreatorsQuery({
     page: 1,
-    limit: 4
+    limit: 10,
   });
 
-  const creators = data?.creators || [];
-
-  if (isLoading) {
-    return <p className={styles.loading}>Loading creators...</p>;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const creators = (data?.creators || []) as any[];
 
   return (
     <section className={styles.section}>
       <div className={styles.header}>
         <div>
-          <h2>Featured Creators</h2>
-          <p>Discover the top trending voices on VidoraHub</p>
+          <h2 className={styles.title}>Featured Creators</h2>
+          <p className={styles.subtitle}>Discover the top trending voices on VidoraHub</p>
         </div>
-
-        <Link href="/search">
-          <button className={styles.viewAll}>View All →</button>
+        <Link href="/search" className={styles.viewAll}>
+          View All <span aria-hidden="true">→</span>
         </Link>
       </div>
 
-      <div className={styles.grid}>
-        {creators.map((creator: any) => {
+      {isError && (
+        <p className={styles.errorMsg} role="alert">
+          Failed to load creators. Please try again.
+        </p>
+      )}
 
-          const instagram = creator.platforms?.find(
-            (p: any) => p.platform === "Instagram"
-          )?.audience;
-
-          const youtube = creator.platforms?.find(
-            (p: any) => p.platform === "YouTube"
-          )?.audience;
-
-          const linkedin = creator.platforms?.find(
-            (p: any) => p.platform === "LinkedIn"
-          )?.audience;
-
-          const facebook = creator.platforms?.find(
-            (p: any) => p.platform === "Facebook"
-          )?.audience;
-
-          const vidorahub = creator.platforms?.find(
-            (p: any) => p.platform === "VidoraHub"
-          )?.audience;
-
-          return (
-            <div key={creator._id} className={styles.card}>
-              <div className={styles.imageBox}>
-                <Image
-                  src={creator.profilePicUrl || "/creators/default.jpg"}
-                  alt={creator.name}
-                  fill
-                  className={styles.image}
-                />
-
-                <span className={styles.tag}>
-                  {creator.tags?.[0] || "CREATOR"}
-                </span>
-              </div>
-
-              <div className={styles.content}>
-                <h3>{creator.name}</h3>
-                <p>{creator.bio}</p>
-
-                <div className={styles.socials}>
-                  {instagram && (
-                    <div>
-                      <Instagram size={14} />
-                      <span>{instagram}</span>
-                    </div>
-                  )}
-
-                  {youtube && (
-                    <div>
-                      <Youtube size={14} />
-                      <span>{youtube}</span>
-                    </div>
-                  )}
-
-                  {linkedin && (
-                    <div>
-                      <Linkedin size={14} />
-                      <span>{linkedin}</span>
-                    </div>
-                  )}
-
-                  {facebook && (
-                    <div>
-                      <Facebook size={14} />
-                      <span>{facebook}</span>
-                    </div>
-                  )}
-                  {vidorahub && (
-                    <div>
-                      <Image src={vidoraicon} alt="VidoraHub" width={14} height={14} />
-                      <span>{vidorahub}</span>
-                    </div>
-                  )}
-                </div>
-
-                <Link href={`/creator/${creator._id}`}>
-                  <button className={styles.profileBtn}>
-                    View Profile
-                  </button>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+      <div className={styles.grid} aria-busy={isLoading}>
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)
+          : creators.map((creator, i) => (
+              <CreatorCard
+                key={creator._id ?? creator.id ?? i}
+                creator={creator}
+                priority={i < 4}
+              />
+            ))}
       </div>
     </section>
   );
