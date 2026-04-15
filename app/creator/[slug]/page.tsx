@@ -44,6 +44,7 @@ export default function Page() {
       image: item.thumbnailUrl,
       views: item.views,
       likes: "",
+      link : item?.link
     })) || [];
 
   /* ================= BRAND EXPERIENCE ================= */
@@ -74,6 +75,7 @@ export default function Page() {
           igFollowers={instagram?.audience}
           ytSubs={youtube?.audience}
           // engagementRate={null}
+          platforms={creator?.platforms || []}
         />
 
         <div className={styles.secondContainer}>
