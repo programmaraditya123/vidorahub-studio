@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
 import vidoraicon from "../../../../app/favicon.ico";
 import { useMemo, memo } from "react";
+import { useRouter } from "next/navigation";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -81,9 +82,17 @@ const CreatorCard = memo(function CreatorCard({
   const bio = (creator.bio?.length ?? 0) > 72
     ? creator.bio!.slice(0, 72).trimEnd() + "…"
     : creator.bio;
+  
+
+  const Router = useRouter()
+  const handleNavigate = () => {
+    const path =  `/creator/${creator._id ?? creator.id}`
+    Router.push(path);
+
+  }
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onClick={handleNavigate}>
       <div className={styles.imageBox}>
         <Image
           src={creator.profilePicUrl || "/creators/default.jpg"}

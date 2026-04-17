@@ -1,18 +1,21 @@
 // ─── Tokens ───────────────────────────────────────────────────────────────────
 
-$ink:          #0d0f1a;
-$ink-mid:      #374151;
-$ink-soft:     #6b7280;
-$border:       #eaecf2;
-$surface:      #ffffff;
-$surface-alt:  #f6f7fb;
-$accent:       #5b45f5;
-$accent-soft:  #ede9ff;
-$accent-text:  #4f38d9;
-$verified:     #2563eb;
-$radius-card:  18px;
-$radius-sm:    8px;
-$transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$ink:           #0d0f1a;
+$ink-mid:       #374151;
+$ink-soft:      #6b7280;
+$border:        #eaecf2;
+$border-hover:  rgba(91, 69, 245, 0.18);
+$surface:       #ffffff;
+$surface-alt:   #f6f7fb;
+$accent:        #5b45f5;
+$accent-hover:  #4835d4;
+$accent-soft:   #edeaff;
+$accent-text:   #4f38d9;
+$verified:      #2563eb;
+$radius-card:   20px;
+$radius-row:    10px;
+$radius-icon:   8px;
+$transition:    0.22s cubic-bezier(0.4, 0, 0.2, 1);
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
@@ -21,75 +24,117 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: $surface;
   border-radius: $radius-card;
   border: 1px solid $border;
-  padding: 0 20px 20px;
   display: flex;
   flex-direction: column;
-  gap: 0;
   overflow: hidden;
-  transition: transform $transition, box-shadow $transition, border-color $transition;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   will-change: transform;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 40px rgba(91, 69, 245, 0.1), 0 2px 8px rgba(0,0,0,0.06);
-    border-color: rgba(91, 69, 245, 0.25);
+  // Slide-in accent bar on hover
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $accent 0%, #a78bfa 55%, #38bdf8 100%);
+    opacity: 0;
+    transition: opacity $transition;
+    border-radius: $radius-card $radius-card 0 0;
+    z-index: 2;
+  }
 
-    .accentBar {
-      opacity: 1;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 24px 56px rgba(91, 69, 245, 0.13),
+      0 0 0 1px $border-hover;
+    border-color: $border-hover;
+
+    &::before { opacity: 1; }
+
+    .platform {
+      background: $accent-soft;
+      border-color: rgba($accent, 0.12);
     }
 
     .button {
       background: $accent;
-      letter-spacing: 0.3px;
+      box-shadow: 0 8px 24px rgba(91, 69, 245, 0.4);
+      letter-spacing: 0.12em;
     }
   }
 }
 
-// ─── Accent bar (top) ─────────────────────────────────────────────────────────
+// ─── Identity Banner ──────────────────────────────────────────────────────────
+// Sits at the top of the card — replaced the old flat header
 
-.accentBar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, $accent 0%, #a78bfa 100%);
-  opacity: 0;
-  transition: opacity $transition;
-  border-radius: $radius-card $radius-card 0 0;
+.banner {
+  height: 88px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    135deg,
+    #0d0a2e 0%,
+    #2d1b69 45%,
+    $accent 80%,
+    #818cf8 100%
+  );
+  position: relative;
+  overflow: hidden;
+
+  // Subtle grid texture
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
 }
 
-// ─── Header ───────────────────────────────────────────────────────────────────
+// ─── Avatar Anchor ────────────────────────────────────────────────────────────
+// Straddles banner and body — avatar bleeds upward out of the card body
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding-top: 22px;
-  margin-bottom: 14px;
+  align-items: flex-end;
+  padding: 0 18px;
+  // margin-top: -32px;    // pull up into banner
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 3;
+  margin-top: 4px;
 }
 
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
 .avatarWrap {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
 }
 
 .avatar {
-  border-radius: 14px;
+  border-radius: 16px !important;
   object-fit: cover;
-  width: 60px !important;
-  height: 60px !important;
-  border: 2px solid $border;
+  width: 64px !important;
+  height: 64px !important;
+  border: 3px solid $surface;
+  box-shadow: 0 8px 20px rgba(91, 69, 245, 0.3);
 }
 
 .verifiedBadge {
   position: absolute;
-  bottom: -4px;
-  right: -4px;
+  bottom: -5px;
+  right: -5px;
   width: 20px;
   height: 20px;
   background: $verified;
@@ -98,41 +143,44 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid $surface;
-  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3);
+  border: 2.5px solid $surface;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
 
-// ─── Niche tag ────────────────────────────────────────────────────────────────
+// ─── Niche Tag ────────────────────────────────────────────────────────────────
 
 .tag {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 4px 11px;
   border-radius: 999px;
   background: $accent-soft;
   color: $accent-text;
+  border: 1px solid rgba($accent, 0.18);
   white-space: nowrap;
-  max-width: 110px;
+  max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
+  align-self: center;
+  margin-bottom: 4px; // align with bottom of avatar
 }
 
-// ─── Meta (name + location) ───────────────────────────────────────────────────
+// ─── Meta ─────────────────────────────────────────────────────────────────────
 
 .meta {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 16px;
+  padding: 0 18px 14px;
 }
 
 .name {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   color: $ink;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -147,18 +195,23 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   color: $ink-soft;
   margin: 0;
 
-  svg {
-    flex-shrink: 0;
-    color: $ink-soft;
-  }
+  svg { flex-shrink: 0; color: $ink-soft; }
 }
 
 // ─── Divider ──────────────────────────────────────────────────────────────────
 
 .divider {
   border: none;
-  border-top: 1px solid $border;
-  margin: 0 0 14px;
+  border-top: 1px solid transparent;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    $border 20%,
+    $border 80%,
+    transparent
+  );
+  height: 1px;
+  margin: 0 18px 14px;
 }
 
 // ─── Platforms ────────────────────────────────────────────────────────────────
@@ -167,6 +220,7 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 7px;
+  padding: 0 18px;
   margin-bottom: 16px;
   flex: 1;
 }
@@ -176,34 +230,38 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   align-items: center;
   justify-content: space-between;
   background: $surface-alt;
-  padding: 8px 11px;
-  border-radius: $radius-sm;
+  padding: 9px 12px;
+  border-radius: $radius-row;
   border: 1px solid transparent;
-  transition: border-color $transition, background $transition;
+  transition: background $transition, border-color $transition;
 
+  // Individual hover (in addition to card-level)
   &:hover {
     background: $accent-soft;
-    border-color: rgba(91, 69, 245, 0.15);
+    border-color: rgba($accent, 0.15);
   }
 }
 
 .platformLeft {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
 }
 
 .platformIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-icon;
+  background: $surface;
+  border: 1px solid $border;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid $border;
   flex-shrink: 0;
   color: $ink-mid;
+
+  // Platform brand tints via global classes from platformConfig
+  // Each icon inherits color from the SVG stroke/fill
 }
 
 .platformName {
@@ -213,23 +271,26 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .platformAudience {
-  font-size: 12.5px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
   color: $ink;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
 }
 
 .morePlatforms {
   font-size: 11px;
   color: $ink-soft;
   text-align: center;
-  margin: 2px 0 0;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
 }
 
 // ─── CTA Button ───────────────────────────────────────────────────────────────
 
 .button {
   display: block;
+  margin: 0 18px 18px;
   text-align: center;
   text-decoration: none;
   background: $ink;
@@ -237,13 +298,268 @@ $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 999px;
   padding: 11px 16px;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1px;
-  transition: background $transition, letter-spacing $transition, box-shadow $transition;
-  box-shadow: 0 2px 8px rgba(13, 15, 26, 0.15);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  box-shadow: 0 2px 10px rgba(13, 15, 26, 0.18);
+  transition:
+    background $transition,
+    box-shadow $transition,
+    letter-spacing $transition;
 
   &:hover {
     background: $accent;
-    box-shadow: 0 4px 16px rgba(91, 69, 245, 0.35);
+    box-shadow: 0 8px 24px rgba(91, 69, 245, 0.4);
   }
 }
+
+
+
+// // ─── Tokens ───────────────────────────────────────────────────────────────────
+
+// $ink:          #0d0f1a;
+// $ink-mid:      #374151;
+// $ink-soft:     #6b7280;
+// $border:       #eaecf2;
+// $surface:      #ffffff;
+// $surface-alt:  #f6f7fb;
+// $accent:       #5b45f5;
+// $accent-soft:  #ede9ff;
+// $accent-text:  #4f38d9;
+// $verified:     #2563eb;
+// $radius-card:  18px;
+// $radius-sm:    8px;
+// $transition:   0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+// // ─── Card ─────────────────────────────────────────────────────────────────────
+
+// .card {
+//   position: relative;
+//   background: $surface;
+//   border-radius: $radius-card;
+//   border: 1px solid $border;
+//   padding: 0 20px 20px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0;
+//   overflow: hidden;
+//   transition: transform $transition, box-shadow $transition, border-color $transition;
+//   will-change: transform;
+
+//   &:hover {
+//     transform: translateY(-5px);
+//     box-shadow: 0 16px 40px rgba(91, 69, 245, 0.1), 0 2px 8px rgba(0,0,0,0.06);
+//     border-color: rgba(91, 69, 245, 0.25);
+
+//     .accentBar {
+//       opacity: 1;
+//     }
+
+//     .button {
+//       background: $accent;
+//       letter-spacing: 0.3px;
+//     }
+//   }
+// }
+
+// // ─── Accent bar (top) ─────────────────────────────────────────────────────────
+
+// .accentBar {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   height: 3px;
+//   background: linear-gradient(90deg, $accent 0%, #a78bfa 100%);
+//   opacity: 0;
+//   transition: opacity $transition;
+//   border-radius: $radius-card $radius-card 0 0;
+// }
+
+// // ─── Header ───────────────────────────────────────────────────────────────────
+
+// .header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+//   padding-top: 22px;
+//   margin-bottom: 14px;
+// }
+
+// // ─── Avatar ───────────────────────────────────────────────────────────────────
+
+// .avatarWrap {
+//   position: relative;
+//   width: 60px;
+//   height: 60px;
+//   flex-shrink: 0;
+// }
+
+// .avatar {
+//   border-radius: 14px;
+//   object-fit: cover;
+//   width: 60px !important;
+//   height: 60px !important;
+//   border: 2px solid $border;
+// }
+
+// .verifiedBadge {
+//   position: absolute;
+//   bottom: -4px;
+//   right: -4px;
+//   width: 20px;
+//   height: 20px;
+//   background: $verified;
+//   color: white;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border: 2px solid $surface;
+//   box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3);
+// }
+
+// // ─── Niche tag ────────────────────────────────────────────────────────────────
+
+// .tag {
+//   font-size: 10.5px;
+//   font-weight: 700;
+//   letter-spacing: 0.3px;
+//   text-transform: uppercase;
+//   padding: 4px 10px;
+//   border-radius: 999px;
+//   background: $accent-soft;
+//   color: $accent-text;
+//   white-space: nowrap;
+//   max-width: 110px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
+
+// // ─── Meta (name + location) ───────────────────────────────────────────────────
+
+// .meta {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 5px;
+//   margin-bottom: 16px;
+// }
+
+// .name {
+//   font-size: 16px;
+//   font-weight: 700;
+//   color: $ink;
+//   letter-spacing: -0.3px;
+//   margin: 0;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
+
+// .location {
+//   display: flex;
+//   align-items: center;
+//   gap: 5px;
+//   font-size: 12px;
+//   color: $ink-soft;
+//   margin: 0;
+
+//   svg {
+//     flex-shrink: 0;
+//     color: $ink-soft;
+//   }
+// }
+
+// // ─── Divider ──────────────────────────────────────────────────────────────────
+
+// .divider {
+//   border: none;
+//   border-top: 1px solid $border;
+//   margin: 0 0 14px;
+// }
+
+// // ─── Platforms ────────────────────────────────────────────────────────────────
+
+// .platforms {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 7px;
+//   margin-bottom: 16px;
+//   flex: 1;
+// }
+
+// .platform {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   background: $surface-alt;
+//   padding: 8px 11px;
+//   border-radius: $radius-sm;
+//   border: 1px solid transparent;
+//   transition: border-color $transition, background $transition;
+
+//   &:hover {
+//     background: $accent-soft;
+//     border-color: rgba(91, 69, 245, 0.15);
+//   }
+// }
+
+// .platformLeft {
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+// }
+
+// .platformIcon {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 26px;
+//   height: 26px;
+//   background: white;
+//   border-radius: 6px;
+//   border: 1px solid $border;
+//   flex-shrink: 0;
+//   color: $ink-mid;
+// }
+
+// .platformName {
+//   font-size: 12.5px;
+//   font-weight: 500;
+//   color: $ink-mid;
+// }
+
+// .platformAudience {
+//   font-size: 12.5px;
+//   font-weight: 700;
+//   color: $ink;
+//   letter-spacing: -0.2px;
+// }
+
+// .morePlatforms {
+//   font-size: 11px;
+//   color: $ink-soft;
+//   text-align: center;
+//   margin: 2px 0 0;
+// }
+
+// // ─── CTA Button ───────────────────────────────────────────────────────────────
+
+// .button {
+//   display: block;
+//   text-align: center;
+//   text-decoration: none;
+//   background: $ink;
+//   color: white;
+//   border-radius: 999px;
+//   padding: 11px 16px;
+//   font-size: 13px;
+//   font-weight: 700;
+//   letter-spacing: 0.1px;
+//   transition: background $transition, letter-spacing $transition, box-shadow $transition;
+//   box-shadow: 0 2px 8px rgba(13, 15, 26, 0.15);
+
+//   &:hover {
+//     background: $accent;
+//     box-shadow: 0 4px 16px rgba(91, 69, 245, 0.35);
+//   }
+// }

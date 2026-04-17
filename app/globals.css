@@ -1,6 +1,40 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap');
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     scrollbar-width: none;
+}
+
+html, body {
+    font-family: 'Inter', sans-serif;
+    background: #ffffff;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Headings = more personality */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+    letter-spacing: -0.3px;
+}
+
+/* Buttons feel tighter + modern */
+button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Optional: better selection feel */
+::selection {
+    background: #7c3aed;
+    color: white;
 }
