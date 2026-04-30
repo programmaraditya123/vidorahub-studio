@@ -38,7 +38,9 @@ export default function Navbar() {
     const token = localStorage.getItem("token");
     setToken(token ?? "")
     setPicUrl(url ?? "")
-  },[]);
+  },[picUrl]);
+
+   
 
   
 
@@ -117,18 +119,31 @@ export default function Navbar() {
               Brands
             </button>
           </Link>
-          <button className={styles.mobileItem} onClick={() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userid");
-            localStorage.removeItem("username");
-            localStorage.removeItem("role");
-            localStorage.removeItem("email");
-            localStorage.removeItem("profilePicUrl");
-            router.replace("/login");
+
+           <Link href={"/profile"}>
+            <button
+              className={`${styles.mobileItem} ${
+                pathname === "/profile" ? styles.active : ""
+              }`}
+            >
+              Profile
+            </button>
+          </Link>
+
+
+          {/* <button className={styles.mobileItem} onClick={() => { */}
+            {/* // localStorage.removeItem("token");
+            // localStorage.removeItem("userid");
+            // localStorage.removeItem("username");
+            // localStorage.removeItem("role");
+            // localStorage.removeItem("email");
+            // localStorage.removeItem("profilePicUrl");
+            // router.replace("/profile"); */}
             
-          }}>
-            {token ? "Logout" : "Login"}
-          </button>
+          {/* }}> */}
+            {/* {token ? "Logout" : "Login"} */}
+            {/* Profile */}
+          {/* </button> */}
         </div>
       </header>
 
@@ -175,7 +190,7 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href="/signup"
+          href="/profile"
           className={`${styles.bottomItem} ${
             pathname.startsWith("/signup") ? styles.activeTab : ""
           }`}
