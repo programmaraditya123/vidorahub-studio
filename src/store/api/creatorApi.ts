@@ -1,4 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import type {
+  AddProductPayload,
+  AddProductResponse,
+  GetProductsResponse,
+  ProductMutationResponse,
+  UpdateProductPayload,
+} from "@/lib/products";
 import { axiosBaseQuery } from "./axiosBaseQuery";
 
 type Creator = {
@@ -24,7 +31,7 @@ export const creatorApi = createApi({
 
   baseQuery: axiosBaseQuery(),
 
-  tagTypes: ["Creator"],
+  tagTypes: ["Creator", "Product"],
 
   endpoints: (builder) => ({
     getCreator: builder.query<any, void>({
@@ -171,8 +178,61 @@ export const creatorApi = createApi({
         url: `/api/v1/getOneCreator/${id}`,
       }),
       providesTags: ["Creator"],
-    })
-  
+    }),
+
+    getProducts: builder.query<GetProductsResponse, void>({
+      query: () => ({
+        url: "/api/v1/getProducts",
+      }),
+      providesTags: (result) =>
+        result?.products?.length
+          ? [
+              { type: "Product", id: "LIST" },
+              ...result.products.map((p) => ({
+                type: "Product" as const,
+                id: p._id,
+              })),
+            ]
+          : [{ type: "Product", id: "LIST" }],
+    }),
+
+    addProduct: builder.mutation<AddProductResponse, AddProductPayload>({
+      query: (body) => ({
+        url: "/api/v1/addProduct",
+        method: "POST",
+        data: body,
+      }),
+      invalidatesTags: [
+        { type: "Product", id: "LIST" },
+        "Creator",
+      ],
+    }),
+
+    updateProduct: builder.mutation<
+      ProductMutationResponse,
+      { productId: string; body: UpdateProductPayload }
+    >({
+      query: ({ productId, body }) => ({
+        url: `/api/v1/updateProduct/${productId}`,
+        method: "PUT",
+        data: body,
+      }),
+      invalidatesTags: (_result, _error, { productId }) => [
+        { type: "Product", id: "LIST" },
+        { type: "Product", id: productId },
+      ],
+    }),
+
+    deleteProduct: builder.mutation<ProductMutationResponse, string>({
+      query: (productId) => ({
+        url: `/api/v1/deleteProduct/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (_result, _error, productId) => [
+        { type: "Product", id: "LIST" },
+        { type: "Product", id: productId },
+      ],
+    }),
   }),
   
 });
@@ -189,5 +249,9 @@ export const {
   useAddBrandMutation,
   useGetAllBrandsQuery,
   useGetBrandByIdQuery,
-  useGetCreatorByIdQuery
+  useGetCreatorByIdQuery,
+  useGetProductsQuery,
+  useAddProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } = creatorApi;

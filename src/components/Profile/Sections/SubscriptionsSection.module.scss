@@ -1,0 +1,139 @@
+.proCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  border-radius: 16px;
+  color: #fff;
+  margin-bottom: 28px;
+
+  strong {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+
+  button {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+.proIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proPrice {
+  text-align: right;
+
+  span {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  small {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+}
+
+.sectionTitle {
+  font-size: 16px;
+  color: #2d2a32;
+  margin-bottom: 12px;
+}
+
+.creatorList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.creatorRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #ede7f6;
+  border: 1px solid #ddd6fe;
+  border-radius: 12px;
+  flex-wrap: wrap;
+
+  strong {
+    display: block;
+    font-size: 14px;
+    color: #2d2a32;
+  }
+
+  span:not(.since) {
+    font-size: 12px;
+    color: #6b7280;
+  }
+}
+
+.avatar {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.since {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-left: auto;
+}
+
+.billRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3effa;
+  font-size: 13px;
+  color: #374151;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  strong {
+    display: block;
+    font-size: 14px;
+    color: #2d2a32;
+  }
+
+  span {
+    font-size: 12px;
+    color: #9ca3af;
+  }
+}
+
+.billAmount {
+  margin-left: auto;
+  font-weight: 600;
+  color: #6d28d9;
+}
+
+@media (max-width: 640px) {
+  .since {
+    margin-left: 0;
+    width: 100%;
+  }
+}

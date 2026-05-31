@@ -1,0 +1,79 @@
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.unreadBadge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #7c3aed;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.actions {
+  margin-bottom: 16px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #ede7f6;
+  border: 1px solid #ddd6fe;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.itemUnread {
+  background: #f8f5ff;
+  border-color: #c4b5fd;
+}
+
+.iconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #ddd6fe;
+  color: #6d28d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+
+  p {
+    font-size: 14px;
+    color: #2d2a32;
+  }
+
+  span {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+    display: block;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7c3aed;
+  flex-shrink: 0;
+}

@@ -1,0 +1,288 @@
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.storeBanner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #ede7f6 0%, #ddd6fe 100%);
+  border-radius: 16px;
+  border: 1px solid #c4b5fd;
+  color: #4c1d95;
+
+  strong {
+    display: block;
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 13px;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
+
+  button {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.listTitle {
+  font-size: 16px;
+  color: #2d2a32;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.count {
+  font-size: 13px;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.refreshBtn {
+  border: none;
+  background: #f3f4f6;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #ede9fe;
+    color: #7c3aed;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.productCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #ede7f6;
+  border: 1px solid #ddd6fe;
+  border-radius: 14px;
+  flex-wrap: wrap;
+}
+
+.productIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #7c3aed;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.productThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.productInfo {
+  flex: 1;
+  min-width: 140px;
+
+  strong {
+    display: block;
+    font-size: 14px;
+    color: #2d2a32;
+  }
+}
+
+.category {
+  display: block;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.errorState {
+  text-align: center;
+  padding: 32px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 14px;
+
+  p {
+    font-size: 14px;
+    color: #b91c1c;
+    margin-bottom: 12px;
+  }
+}
+
+.skeletonCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #f5f3ff;
+  border: 1px solid #ede9fe;
+  border-radius: 14px;
+}
+
+.skeletonThumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ede9fe 25%, #f5f3ff 50%, #ede9fe 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.skeletonLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonLine {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ede9fe 25%, #f5f3ff 50%, #ede9fe 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.skeletonLineShort {
+  width: 40%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.price {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+  color: #6d28d9;
+  margin-top: 4px;
+}
+
+.sales {
+  font-size: 12px;
+  color: #6b7280;
+  min-width: 70px;
+}
+
+.productActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.btnDanger {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #fecaca;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.copySuccess {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.copyError {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+@media (max-width: 640px) {
+  .storeBanner {
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+}

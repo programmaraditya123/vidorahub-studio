@@ -42,6 +42,28 @@
   }
 }
 
+.dashboardLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6d28d9;
+  background: #ddd6fe;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #c4b5fd;
+  }
+
+  span {
+    white-space: nowrap;
+  }
+}
+
 /* Menu item */
 .menuItem {
   display: flex;
@@ -61,6 +83,16 @@
   span {
     font-size: 14px;
     white-space: nowrap;
+  }
+}
+
+.active {
+  background: #7c3aed;
+  color: #fff;
+
+  &:hover {
+    background: #6d28d9;
+    transform: none;
   }
 }
 
@@ -95,6 +127,14 @@
   .logo {
     text-align: center;
     padding: 0;
+  }
+
+  .dashboardLink {
+    justify-content: center;
+
+    span {
+      display: none;
+    }
   }
 
   .menuItem {

@@ -1,0 +1,28 @@
+.shell {
+  height: calc(100vh - 134px);
+  overflow: hidden;
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f5f3fb;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c4b5fd;
+    border-radius: 10px;
+  }
+}
+
+.authWrap {
+  min-height: calc(100vh - 134px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f3fb;
+}

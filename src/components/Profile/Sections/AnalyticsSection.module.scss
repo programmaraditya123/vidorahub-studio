@@ -1,0 +1,151 @@
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.statTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.iconWrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ddd6fe;
+  color: #6d28d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.valueRow {
+  display: flex;
+  align-items: baseline;
+  margin-top: 8px;
+}
+
+.period {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+}
+
+.blockTitle {
+  font-size: 15px;
+  color: #2d2a32;
+  margin-bottom: 16px;
+}
+
+.chartPlaceholder {
+  min-height: 200px;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 160px;
+  padding: 0 4px;
+}
+
+.bar {
+  flex: 1;
+  background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+  border-radius: 6px 6px 2px 2px;
+  min-height: 8px;
+}
+
+.chartNote {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.platformList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.platformRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.progressTrack {
+  height: 8px;
+  background: #e9e3f7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #7c3aed;
+  border-radius: 999px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tableHead,
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 13px;
+}
+
+.tableHead {
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #ddd6fe;
+}
+
+.tableRow {
+  color: #374151;
+  border-bottom: 1px solid #f3effa;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
