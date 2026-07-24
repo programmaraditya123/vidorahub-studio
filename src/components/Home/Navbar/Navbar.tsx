@@ -2,12 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.scss";
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import a from '../../../images/heroimage.png'
-
-import { Home, LayoutDashboard, Search, Building2, User } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Building2, Home, LayoutDashboard, Menu, Search, User, X } from "lucide-react";
 import { useAuth } from "@/Context/AuthContext";
 
 export default function Navbar() {
@@ -15,14 +12,37 @@ export default function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { username } = useAuth();
-  const [picUrl,setPicUrl] = useState("");
-  const [token,setToken] = useState("");
-  const router = useRouter();
 
-  const toggleMenu = () => setOpen(!open);
+  const dashboardHref = username ? `/dashboard/${username}` : "/login";
+  const navItems = [
+    { label: "Home", href: "/", icon: Home, active: pathname === "/" },
+    {
+      label: "Dashboard",
+      href: dashboardHref,
+      icon: LayoutDashboard,
+      active: pathname.startsWith("/dashboard"),
+    },
+    {
+      label: "Creators",
+      href: "/search",
+      icon: Search,
+      active: pathname.startsWith("/search"),
+    },
+    {
+      label: "Brands",
+      href: "/brand",
+      icon: Building2,
+      active: pathname.startsWith("/brand"),
+    },
+    {
+      label: "Profile",
+      href: "/profile",
+      icon: User,
+      active: pathname.startsWith("/profile"),
+    },
+  ];
 
   useEffect(() => {
-    
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -34,171 +54,101 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const url = localStorage.getItem("profilePicUrl");
-    const token = localStorage.getItem("token");
-    setToken(token ?? "")
-    setPicUrl(url ?? "")
-  },[picUrl]);
-
-   
-
-  
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <>
       <header className={styles.navbar}>
-        {/* LEFT */}
         <div className={styles.left}>
           <div className={styles.logo}>
-            <Link href="/">
+            <Link href="/" onClick={() => setOpen(false)}>
               <span className={styles.logoText}>VidoraHub Studio</span>
             </Link>
           </div>
         </div>
 
-        {/* CENTER SEARCH */}
-        {/* <div className={styles.center}>
-          <input
-            className={styles.search}
-            placeholder="Search creators or brands..."
-          />
-        </div> */}
+        <nav className={styles.desktopNav} aria-label="Main navigation">
+          {navItems.map((item) => {
+            const Icon = item.icon;
 
-        {/* RIGHT */}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.navItem} ${item.active ? styles.active : ""}`}
+              >
+                <Icon size={17} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
         <div className={styles.right}>
-          <Link href={"https://about.vidorahub.com/"} target="_blank">
-            <button className={styles.iconBtn}>About</button>
+          <Link
+            href="https://about.vidorahub.com/"
+            target="_blank"
+            className={styles.aboutLink}
+          >
+            About
           </Link>
 
-          <div className={styles.avatar} onClick={toggleMenu}>
-            <Image src={picUrl || a} alt="avatar" width={36} height={36} />
-          </div>
+          <button
+            className={styles.hamburger}
+            type="button"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
 
-        {/* DROPDOWN MENU (UNCHANGED DESIGN) */}
+        <button
+          className={`${styles.mobileOverlay} ${open ? styles.showOverlay : ""}`}
+          type="button"
+          aria-label="Close navigation menu"
+          onClick={() => setOpen(false)}
+        />
+
         <div
           ref={menuRef}
           className={`${styles.mobileMenu} ${open ? styles.open : ""}`}
+          aria-hidden={!open}
         >
-          <Link href={"/"}>
+          <div className={styles.drawerHeader}>
+            <span>Menu</span>
             <button
-              className={`${styles.mobileItem} ${
-                pathname === "/" ? styles.active : ""
-              }`}
+              className={styles.closeButton}
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={() => setOpen(false)}
             >
-              Home
+              <X size={20} />
             </button>
-          </Link>
+          </div>
 
-          <Link href={`/dashboard/${username}`}>
-            <button
-              className={`${styles.mobileItem} ${
-                pathname === `/dashboard/${username}` ? styles.active : ""
-              }`}
-            >
-              Dashboard
-            </button>
-          </Link>
+          {navItems.map((item) => {
+            const Icon = item.icon;
 
-          <Link href={"/search"}>
-            <button
-              className={`${styles.mobileItem} ${
-                pathname === "/search" ? styles.active : ""
-              }`}
-            >
-              Creators
-            </button>
-          </Link>
-
-          <Link href={"/brand"}>
-            <button
-              className={`${styles.mobileItem} ${
-                pathname === "/brand" ? styles.active : ""
-              }`}
-            >
-              Brands
-            </button>
-          </Link>
-
-           <Link href={"/profile"}>
-            <button
-              className={`${styles.mobileItem} ${
-                pathname === "/profile" ? styles.active : ""
-              }`}
-            >
-              Profile
-            </button>
-          </Link>
-
-
-          {/* <button className={styles.mobileItem} onClick={() => { */}
-            {/* // localStorage.removeItem("token");
-            // localStorage.removeItem("userid");
-            // localStorage.removeItem("username");
-            // localStorage.removeItem("role");
-            // localStorage.removeItem("email");
-            // localStorage.removeItem("profilePicUrl");
-            // router.replace("/profile"); */}
-            
-          {/* }}> */}
-            {/* {token ? "Logout" : "Login"} */}
-            {/* Profile */}
-          {/* </button> */}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.mobileItem} ${item.active ? styles.mobileActive : ""}`}
+                onClick={() => setOpen(false)}
+              >
+                <Icon size={18} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </div>
       </header>
-
-      {/* NEW BOTTOM NAVIGATION (MOBILE ONLY) */}
-      <nav className={styles.bottomNav}>
-        <Link
-          href="/"
-          className={`${styles.bottomItem} ${
-            pathname === "/" ? styles.activeTab : ""
-          }`}
-        >
-          <Home size={20} />
-          <span>Home</span>
-        </Link>
-
-        <Link
-          href={`/dashboard/${username}`}
-          className={`${styles.bottomItem} ${
-            pathname.startsWith("/dashboard") ? styles.activeTab : ""
-          }`}
-        >
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </Link>
-
-        <Link
-          href="/search"
-          className={`${styles.bottomItem} ${
-            pathname.startsWith("/search") ? styles.activeTab : ""
-          }`}
-        >
-          <Search size={20} />
-          <span>Creators</span>
-        </Link>
-
-        <Link
-          href="/brand"
-          className={`${styles.bottomItem} ${
-            pathname.startsWith("/brand") ? styles.activeTab : ""
-          }`}
-        >
-          <Building2 size={20} />
-          <span>Brands</span>
-        </Link>
-
-        <Link
-          href="/profile"
-          className={`${styles.bottomItem} ${
-            pathname.startsWith("/signup") ? styles.activeTab : ""
-          }`}
-        >
-          <User size={20} />
-          <span>Profile</span>
-        </Link>
-      </nav>
     </>
   );
 }

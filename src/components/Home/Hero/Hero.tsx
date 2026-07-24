@@ -21,16 +21,18 @@ export default function Hero() {
         </p>
 
         <div className={styles.actions}>
-          <Link href={'/search'}>
-          <button className={styles.primary}>Find Creators</button>
+          <Link href="/search" className={styles.primary}>
+            <span>Find Creators</span>
           </Link>
-           <Link href={'/brand'}>
-          <button className={styles.primary}>Find Brands</button>
+          <Link href="/brand" className={styles.primary}>
+            <span>Find Brands</span>
           </Link>
-          <Link href={'/signup'}>
-          <button className={styles.secondary}>Register as Creator</button>
+          <Link href="/signup" className={styles.secondary}>
+            <span>Register as Creator</span>
           </Link>
-         
+          <Link href="/signup" className={styles.secondary}>
+            <span>Register as Brand</span>
+          </Link>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import styles from "./TrustedBrands.module.scss";
 
 export default function TrustedBrands() {
-  const brands = ["VidoraHub","ZYLOSIS"];
+  const brands = ["VidoraHub","ZYLOSIS","Ambemart","mrwaters"];
 
   return (
     <section className={styles.wrapper}>
