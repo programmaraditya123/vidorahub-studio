@@ -26,7 +26,7 @@ export default function Navbar() {
       label: "Creators",
       href: "/search",
       icon: Search,
-      active: pathname.startsWith("/search"),
+      active: pathname.startsWith("/search") || pathname.startsWith("/creator"),
     },
     {
       label: "Brands",

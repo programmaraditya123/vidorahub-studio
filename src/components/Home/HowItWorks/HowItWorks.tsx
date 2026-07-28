@@ -7,9 +7,9 @@ export default function HowItWorks() {
   return (
     <section className={styles.section}>
       <div className={styles.header}>
-        <h2>How VidoraHub Works</h2>
+        <h2>How VidoraHub Studio Works</h2>
         <p>
-          VidoraHub is the marketplace where brands and creators discover each
+          VidoraHub Studio is the marketplace where brands and creators discover each
           other, start conversations instantly, and collaborate on impactful
           campaigns through VidoraHub Studio.
         </p>
