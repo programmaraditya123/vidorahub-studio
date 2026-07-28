@@ -1,106 +1,55 @@
-"use client";
+import type { Metadata } from "next";
+import { notFound, permanentRedirect } from "next/navigation";
+import JsonLd from "@/components/seo/JsonLd";
+import { CreatorSemanticEntityBlocks } from "@/components/seo/SemanticEntityBlocks";
+import { getAllCreators, getCreatorById } from "@/lib/seo/data";
+import { creatorJsonLd } from "@/lib/seo/jsonLd";
+import { creatorMetadata, creatorPath } from "@/lib/seo/metadata";
+import { extractObjectId } from "@/lib/seo/slugs";
+import CreatorProfileClient from "./CreatorProfileClient";
 
-import { useParams } from "next/navigation";
-import { useGetCreatorByIdQuery } from "@/store/api/creatorApi";
+export const revalidate = 900;
 
-import CreatorProfileCard from "@/components/CreatorProfile/CreatorProfileCard/CreatorProfileCard";
-import FeaturedContent from "@/components/CreatorProfile/FeaturedContent/FeaturedContent";
-import BrandExperience from "@/components/CreatorProfile/FeaturedContent/BrandExperience";
-import Footer from "@/components/Creator/Footer/Footer";
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
 
-import styles from "../../page.module.css";
+export async function generateStaticParams() {
+  const creators = await getAllCreators(1000);
+  return creators.map((creator) => ({
+    slug: creatorPath(creator).split("/").pop() || creator._id,
+  }));
+}
 
-export default function Page() {
-  const params = useParams();
-  const creatorId = params?.slug as string;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const id = extractObjectId(slug);
+  if (!id) return {};
 
-  const { data, isLoading, isError } = useGetCreatorByIdQuery(creatorId);
+  const creator = await getCreatorById(id);
+  if (!creator) return {};
 
-  if (isLoading) return <p>Loading creator...</p>;
-  if (isError) return <p>Creator not found</p>;
+  return creatorMetadata(creator);
+}
 
-  const creator = data?.creator;
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+  const id = extractObjectId(slug);
+  if (!id) notFound();
 
-  /* ================= PLATFORM EXTRACTION ================= */
+  const creator = await getCreatorById(id);
+  if (!creator) notFound();
 
-  const instagram = creator?.platforms?.find(
-    (p: any) => p.platform.toLowerCase() === "instagram"
-  );
-
-  const youtube = creator?.platforms?.find(
-    (p: any) => p.platform.toLowerCase() === "youtube"
-  );
-
-  const whatsapp = creator?.platforms?.find(
-    (p: any) => p.platform.toLowerCase() === "whatsapp"
-  );
-
-  /* ================= SHOWCASE CONTENT ================= */
-
-  const showcase =
-    creator?.showCaseContent?.map((item: any) => ({
-      title: item.title,
-      description: item.platform,
-      image: item.thumbnailUrl,
-      views: item.views,
-      likes: "",
-      link : item?.link
-    })) || [];
-
-  /* ================= BRAND EXPERIENCE ================= */
-
-  const brands =
-    creator?.experience?.map((exp: any) => exp.name) || [];
-
-  const collaborations =
-    creator?.experience?.map((exp: any) => ({
-      title: `${exp.name} (${exp.campaign})`,
-      description: `${exp.deliverables} • ${exp.status}`,
-    })) || [];
+  const canonicalPath = creatorPath(creator);
+  if (`/creator/${slug}` !== canonicalPath) {
+    permanentRedirect(canonicalPath);
+  }
 
   return (
-    <div className={styles.page}>
-      <div className={styles.ProfileContainer}>
-        
-        {/* CREATOR PROFILE */}
-
-        <CreatorProfileCard
-          name={creator?.name}
-          avatar={creator?.profilePicUrl}
-          role={creator?.tags?.join(", ")}
-          location={creator?.location}
-          bio={creator?.bio}
-          instagram={instagram?.url}
-          whatsapp={whatsapp?.url}
-          igFollowers={instagram?.audience}
-          ytSubs={youtube?.audience}
-          // engagementRate={null}
-          platforms={creator?.platforms || []}
-        />
-
-        <div className={styles.secondContainer}>
-          
-          {/* SHOWCASE CONTENT */}
-
-          {showcase.length > 0 && (
-            <FeaturedContent content={showcase} />
-          )}
-
-          {/* BRAND EXPERIENCE */}
-
-          {brands.length > 0 && (
-            <BrandExperience
-              brandExperienceTitle="Brand Experience"
-              brands={brands}
-              collaborationsTitle="Previous Collaborations"
-              collaborations={collaborations}
-            />
-          )}
-
-        </div>
-      </div>
-
-      <Footer />
-    </div>
+    <>
+      <JsonLd data={creatorJsonLd(creator)} />
+      <CreatorProfileClient creatorId={id} />
+      <CreatorSemanticEntityBlocks creator={creator} />
+    </>
   );
 }

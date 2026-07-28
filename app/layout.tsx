@@ -4,7 +4,9 @@ import "./globals.css";
 import { ToastProvider } from "@/hooks/ToastProvider";
 import { AuthProvider } from "@/Context/AuthContext";
 import ReduxProvider from "@/store/provider";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { websiteJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: {
@@ -63,6 +65,22 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+
+  manifest: "/manifest.webmanifest",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-IN": "/",
+    },
+    types: {
+      "application/rss+xml": "/rss.xml",
+      "application/atom+xml": "/atom.xml",
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#111827",
 };
 
 export default function RootLayout({
@@ -73,6 +91,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <JsonLd data={websiteJsonLd()} />
         <AuthProvider>
         <ToastProvider>
         <Navbar/>

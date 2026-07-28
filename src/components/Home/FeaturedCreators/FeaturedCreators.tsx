@@ -8,6 +8,7 @@ import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
 import vidoraicon from "../../../../app/favicon.ico";
 import { useMemo, memo } from "react";
 import { useRouter } from "next/navigation";
+import { buildEntitySlug } from "@/lib/seo/slugs";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -86,7 +87,8 @@ const CreatorCard = memo(function CreatorCard({
 
   const Router = useRouter()
   const handleNavigate = () => {
-    const path =  `/creator/${creator._id ?? creator.id}`
+    const id = creator._id ?? creator.id;
+    const path = `/creator/${buildEntitySlug(creator.name, id || "")}`;
     Router.push(path);
 
   }
@@ -143,7 +145,10 @@ const CreatorCard = memo(function CreatorCard({
           )}
         </ul>
 
-        <Link href={`/creator/${creator._id ?? creator.id}`} className={styles.profileLink}>
+        <Link
+          href={`/creator/${buildEntitySlug(creator.name, creator._id ?? creator.id ?? "")}`}
+          className={styles.profileLink}
+        >
           View Profile
         </Link>
       </div>

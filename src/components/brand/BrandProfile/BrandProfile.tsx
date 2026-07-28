@@ -2,7 +2,6 @@
 
 import styles from "./BrandProfile.module.scss";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useGetBrandByIdQuery } from "@/store/api/creatorApi";
 
@@ -18,12 +17,12 @@ import {
   Copy,
 } from "lucide-react";
 
-export default function BrandProfile() {
-  const params = useParams();
-  const brandId = params?.slug as string;
- 
-  // console.log("Brand ID from URL:", brandId);
-  // console.log("params:", params)
+type Props = {
+  brandId: string;
+  canonicalPath?: string;
+};
+
+export default function BrandProfile({ brandId, canonicalPath }: Props) {
   const { data, isLoading, isError } = useGetBrandByIdQuery(brandId);
 
   const brand = data?.brand;
@@ -32,7 +31,7 @@ export default function BrandProfile() {
 
   const profileUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/brand/${brandId}`
+      ? `${window.location.origin}${canonicalPath || `/brand/${brandId}`}`
       : "";
 
   const copyLink = () => {

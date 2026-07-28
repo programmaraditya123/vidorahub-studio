@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./DiscoverBrands.module.scss";
 import { useGetAllBrandsQuery } from "@/store/api/creatorApi";
+import { buildEntitySlug } from "@/lib/seo/slugs";
 
 type Brand = {
   _id: string;
@@ -68,7 +69,7 @@ export default function DiscoverBrands() {
               {brand.bio || "No description available."}
             </p>
 
-            <Link href={`/brand/${brand._id}`}>
+            <Link href={`/brand/${buildEntitySlug(brand.name, brand._id)}`}>
               <button className={styles.button}>Visit Brand</button>
             </Link>
           </div>

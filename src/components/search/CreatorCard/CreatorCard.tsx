@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { platformConfig } from "@/components/utils/platformConfig";
 import { memo } from "react";
+import { buildEntitySlug } from "@/lib/seo/slugs";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -112,7 +113,7 @@ const CreatorCard = memo(function CreatorCard({
       </div>
 
       {/* CTA */}
-      <Link href={`/creator/${id}`} className={styles.button}>
+      <Link href={`/creator/${buildEntitySlug(name, id)}`} className={styles.button}>
         View Profile
       </Link>
     </article>
