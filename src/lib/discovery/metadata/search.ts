@@ -1,0 +1,1 @@
+export { searchMetadata } from "./shared";

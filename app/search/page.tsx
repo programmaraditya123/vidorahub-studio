@@ -2,7 +2,7 @@
 import CreatorFilters from '@/components/search/CreatorFilters/CreatorFilters'
 import styles from '../page.module.css'
 import type { Metadata } from 'next'
-import { searchMetadata } from '@/lib/seo/metadata'
+import { searchMetadata } from '@/lib/discovery'
 // import CreatorsGrid from '@/components/search/CreatorsGrid/CreatorsGrid'
 // import styles from '../../page.module.css'
 

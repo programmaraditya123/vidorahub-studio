@@ -1,50 +1,23 @@
-import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import BrandProfile from "@/components/brand/BrandProfile/BrandProfile";
 import Footer from "@/components/Creator/Footer/Footer";
-import JsonLd from "@/components/seo/JsonLd";
-import { getAllBrands, getBrandById } from "@/lib/seo/data";
-import { brandJsonLd } from "@/lib/seo/jsonLd";
-import { brandMetadata, brandPath } from "@/lib/seo/metadata";
-import { extractObjectId } from "@/lib/seo/slugs";
+import { Discovery, JsonLd, brandJsonLd } from "@/lib/discovery";
 import styles from "../../page.module.css";
 
 export const revalidate = 900;
+export const generateStaticParams = Discovery.metadata.generateBrandStaticParams;
+export const generateMetadata = Discovery.metadata.generateBrandMetadata;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const brands = await getAllBrands();
-  return brands.map((brand) => ({
-    slug: brandPath(brand).split("/").pop() || brand._id,
-  }));
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const id = extractObjectId(slug);
-  if (!id) return {};
-
-  const brand = await getBrandById(id);
-  if (!brand) return {};
-
-  return brandMetadata(brand);
-}
-
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const id = extractObjectId(slug);
-  if (!id) notFound();
+  const { id, brand, canonicalPath, redirectPath } = await Discovery.metadata.resolveBrandRoute(slug);
 
-  const brand = await getBrandById(id);
-  if (!brand) notFound();
-
-  const canonicalPath = brandPath(brand);
-  if (`/brand/${slug}` !== canonicalPath) {
-    permanentRedirect(canonicalPath);
-  }
+  if (!id || !brand || !canonicalPath) notFound();
+  if (redirectPath) permanentRedirect(redirectPath);
 
   return (
     <>

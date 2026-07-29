@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import CollectionPage from "@/components/seo/CollectionPage";
-import { INDEXABLE_STATES } from "@/lib/seo/constants";
-import { collectionMetadata } from "@/lib/seo/metadata";
+import { CollectionPage } from "@/lib/discovery";
+import { INDEXABLE_STATES } from "@/lib/discovery";
+import { collectionMetadata } from "@/lib/discovery";
 
 type PageProps = { params: Promise<{ slug: string }> };
 

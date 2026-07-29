@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import CollectionPage from "@/components/seo/CollectionPage";
-import { collectionMetadata } from "@/lib/seo/metadata";
+import { CollectionPage } from "@/lib/discovery";
+import { collectionMetadata } from "@/lib/discovery";
 
 export const metadata: Metadata = collectionMetadata("categories");
 

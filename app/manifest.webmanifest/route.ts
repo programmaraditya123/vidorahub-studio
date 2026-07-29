@@ -1,5 +1,5 @@
-import { SITE_NAME, SITE_URL } from "@/lib/seo/constants";
-import { textResponse } from "@/lib/seo/xml";
+import { SITE_NAME, SITE_URL } from "@/lib/discovery";
+import { textResponse } from "@/lib/discovery";
 
 export function GET() {
   return textResponse(

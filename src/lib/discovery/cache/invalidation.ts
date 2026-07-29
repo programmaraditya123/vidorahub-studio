@@ -1,0 +1,1 @@
+export { revalidateDiscoveryEntity } from "./revalidate";

@@ -1,33 +1,14 @@
-import LoginCard from "@/components/Login/LoginCard/LoginCard"
-import styles from '../page.module.css'
+import LoginCard from "@/components/Login/LoginCard/LoginCard";
 import type { Metadata } from "next";
+import { loginMetadata } from "@/lib/discovery";
+import styles from "../page.module.css";
 
-export const metadata: Metadata = {
-  title: "Login – VidoraHub Studio",
-  description:
-    "Login to VidoraHub Studio to upload videos, manage your creator profile, collaborate with brands, and grow your audience on VidoraHub.",
-  keywords: [
-    "VidoraHub login",
-    "creator login",
-    "video creator dashboard login",
-    "VidoraHub studio login",
-    "creator brand marketplace login",
-  ],
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+export const metadata: Metadata = loginMetadata();
 
-const page = () => {
+export default function Page() {
   return (
-    <>
     <div className={styles.page}>
-    <LoginCard/>
+      <LoginCard />
     </div>
-    
-    </>
-  )
+  );
 }
-
-export default page

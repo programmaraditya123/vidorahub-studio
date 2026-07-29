@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import CreatorFilters from "@/components/search/CreatorFilters/CreatorFilters";
-import { searchMetadata } from "@/lib/seo/metadata";
-import { titleizeSlug } from "@/lib/seo/slugs";
+import { searchMetadata } from "@/lib/discovery";
+import { titleizeSlug } from "@/lib/discovery";
 import styles from "../../page.module.css";
 
 type PageProps = {

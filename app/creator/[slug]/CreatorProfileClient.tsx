@@ -5,7 +5,7 @@ import CreatorProfileCard from "@/components/CreatorProfile/CreatorProfileCard/C
 import FeaturedContent from "@/components/CreatorProfile/FeaturedContent/FeaturedContent";
 import BrandExperience from "@/components/CreatorProfile/FeaturedContent/BrandExperience";
 import Footer from "@/components/Creator/Footer/Footer";
-import type { BrandExperience as BrandExperienceEntity, ShowcaseContent, SocialPlatform } from "@/lib/seo/types";
+import type { BrandExperience as BrandExperienceEntity, ShowcaseContent, SocialPlatform } from "@/lib/discovery";
 import styles from "../../page.module.css";
 
 type Props = {

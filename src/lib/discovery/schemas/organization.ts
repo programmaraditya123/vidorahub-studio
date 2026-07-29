@@ -1,0 +1,1 @@
+export { organizationJsonLd } from "./brand";

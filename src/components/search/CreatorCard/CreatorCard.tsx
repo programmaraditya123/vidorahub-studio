@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { platformConfig } from "@/components/utils/platformConfig";
 import { memo } from "react";
-import { buildEntitySlug } from "@/lib/seo/slugs";
+import { buildEntitySlug } from "@/lib/discovery";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
