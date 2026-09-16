@@ -1,0 +1,26 @@
+.modal {
+  max-height: min(92dvh, 880px);
+  outline: none;
+}
+
+.form { display: flex; flex-direction: column; min-height: 0; }
+.body { min-height: 0; overscroll-behavior: contain; }
+.fields { border: 0; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.legend { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #6d28d9; padding: 16px 0 8px; }
+.fieldError { color: #b91c1c; font-size: 12px; }
+.notice { padding: 12px; margin-bottom: 12px; border-radius: 10px; background: #f5f3ff; color: #5b21b6; font-size: 13px; line-height: 1.5; }
+.loading { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 40px 24px; color: #6b7280; text-align: center; font-size: 14px; }
+.spin { animation: spin 0.8s linear infinite; }
+.availability { display: flex; align-items: center; gap: 12px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px; padding: 14px; cursor: pointer; }
+.availability input { width: 18px; height: 18px; accent-color: #7c3aed; }
+.availability strong { display: block; font-size: 13px; color: #4c1d95; }
+.availability small { display: block; margin-top: 4px; font-size: 12px; color: #6b7280; }
+.footer { padding-bottom: max(22px, env(safe-area-inset-bottom)); }
+.confirm { width: 100%; display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: #92400e; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .modal { max-height: 94dvh; }
+  .fields input, .fields select, .fields textarea { font-size: 16px; min-width: 0; width: 100%; }
+  .availability input { width: 18px; flex-shrink: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .spin { animation-duration: 2s; } .modal { animation: none; } }

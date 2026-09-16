@@ -19,6 +19,7 @@ import DeleteProductModal from "./DeleteProductModal/DeleteProductModal";
 import { mapProductToStoreView, type ApiProduct } from "@/lib/products";
 import { buildStorefrontUrl, getCreatorIdFromStorage } from "@/lib/storefront";
 import { useGetProductsQuery } from "@/store/api/creatorApi";
+import StoreManagement from "./StoreFormModal/StoreManagement";
 
 function ProductListSkeleton() {
   return (
@@ -107,14 +108,17 @@ export default function StoreSection() {
             <h1>Store</h1>
             <p>Sell digital products, templates, and services to your audience.</p>
           </div>
-          <button
-            type="button"
-            className={shared.btnPrimary}
-            onClick={() => setShowAddModal(true)}
-          >
-            <Plus size={16} />
-            Add product
-          </button>
+          <div className={styles.headerActions}>
+            <StoreManagement />
+            <button
+              type="button"
+              className={shared.btnPrimary}
+              onClick={() => setShowAddModal(true)}
+            >
+              <Plus size={16} />
+              Add product
+            </button>
+          </div>
         </div>
       </header>
 
@@ -187,7 +191,7 @@ export default function StoreSection() {
           </div>
         ) : products.length === 0 ? (
           <p className={shared.empty}>
-            No products yet. Add your first item to open your store.
+            No products yet. Add your first item to your store.
           </p>
         ) : (
           products.map((product) => {

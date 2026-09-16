@@ -143,6 +143,7 @@ margin:20px;
 
 .logoWrapper {
   position: relative;
+  border-radius: 50%;
   width: 64px;
   height: 64px;
 }
@@ -172,4 +173,6 @@ margin:20px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:disabled { cursor: progress; }
 }

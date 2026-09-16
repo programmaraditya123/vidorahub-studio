@@ -1,16 +1,17 @@
 .sidebar {
-  height: calc(100vh - 134px);
+  height: 100%;
+  min-height: 0;
+  flex-shrink: 0;
   width: 240px;
   background: #ede7f6;
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   border-right: 1px solid #ddd6fe;
 
   /* smooth feel */
   transition: width 0.3s ease;
-//   overflow-y: scroll;
-//   position: fixed;
 }
 
 /* Logo */
@@ -25,7 +26,9 @@
 /* Menu scroll area */
 .menu {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior-y: none;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -122,6 +125,7 @@
   .sidebar {
     width: 70px;
     padding: 12px 8px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
 
   .logo {

@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Pencil, User } from "lucide-react";
 import { useState, useRef } from "react";
 import EditBrandModal from "../EditBrandModal/EditBrandModal";
-import { uploadProfileImage } from "@/lib/CreatorInfo";
+import { useProfileImageUpload } from "@/hooks/useProfileImageUpload";
+import UploadLoader from "@/components/ui/UploadLoader/UploadLoader";
 
 type Brand = {
   name: string;
@@ -25,24 +26,10 @@ export default function BrandProfileCard({
 
   const [open, setOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const { imageUrl, isUploading, handleImageChange } = useProfileImageUpload(logo);
 
   const handleImageClick = () => {
-    fileRef.current?.click();
-  };
-
-  const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      await uploadProfileImage(file);
-      window.location.reload();  
-    } catch (error) {
-      console.error("Upload failed");
-    }
+    if (!isUploading) fileRef.current?.click();
   };
 
   return (
@@ -64,13 +51,13 @@ export default function BrandProfileCard({
 
           {/* LOGO */}
 
-          <div className={styles.logoWrapper}>
+          <div className={styles.logoWrapper} aria-busy={isUploading}>
 
             <div className={styles.logo}>
 
-              {logo ? (
+              {imageUrl ? (
                 <Image
-                  src={logo}
+                  src={imageUrl}
                   alt="brand"
                   width={64}
                   height={64}
@@ -80,12 +67,16 @@ export default function BrandProfileCard({
               )}
 
             </div>
+            {isUploading && <UploadLoader />}
 
             {/* IMAGE EDIT BUTTON */}
 
             <button
               className={styles.logoEdit}
               onClick={handleImageClick}
+              type="button"
+              disabled={isUploading}
+              aria-label="Change profile picture"
             >
               <Pencil size={14} />
             </button>
@@ -95,7 +86,8 @@ export default function BrandProfileCard({
               ref={fileRef}
               hidden
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={handleImageChange}
+              disabled={isUploading}
             />
 
           </div>

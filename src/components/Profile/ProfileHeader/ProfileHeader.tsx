@@ -29,7 +29,7 @@ const ProfileHeader = () => {
   const fetchProfile = async () => {
     const response = await getUserProfileData();
 
-    console.log(response.data); // axios response body
+    // console.log(response.data); // axios response body
     setProfile(response.data.userData);
   };
 

@@ -20,10 +20,10 @@ export default function CreatorsGrid({
   return (
     <section className={styles.wrapper}>
 
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         <h2>Recommended Creators</h2>
         <p>Showing {total} creators</p>
-      </div>
+      </div> */}
 
       <div className={styles.grid}>
         {creators.map((creator) => (

@@ -21,7 +21,8 @@
     width: 100%;
 }
 .brandsContainer{
-    padding: 4rem;
+    padding: 2rem;
+    margin-top: -1.5rem;
 }
 
 @media (max-width : 600px){

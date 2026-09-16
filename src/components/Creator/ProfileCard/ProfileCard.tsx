@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import { Pencil, MapPin, User2Icon } from "lucide-react";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import { uploadProfileImage } from "@/lib/CreatorInfo";
+import { useProfileImageUpload } from "@/hooks/useProfileImageUpload";
+import UploadLoader from "@/components/ui/UploadLoader/UploadLoader";
 
 type profileProp = {
   name: string;
@@ -23,37 +24,22 @@ export default function ProfileCard({
   profilePicUrl,
 }: profileProp) {
   const [open, setOpen] = useState(false);
-  const [preview, setPreview] = useState<string | null>(profilePicUrl || null);
+  const { imageUrl, isUploading, handleImageChange } = useProfileImageUpload(profilePicUrl);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const openFilePicker = () => {
-    fileInputRef.current?.click();
+    if (!isUploading) fileInputRef.current?.click();
   };
-
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setPreview(imageUrl);
-    await uploadProfileImage(file);
-    
-
-    // later upload API here
-    // uploadProfileImage(file)
-  };
-//   console.log("preview", preview);
-//  console.log("profilePicUrl", profilePicUrl);
 
   return (
     <>
       <div className={styles.card}>
         <div className={styles.left}>
-          <div className={styles.avatarBox}>
-            {profilePicUrl ? (
+          <div className={styles.avatarBox} aria-busy={isUploading}>
+            {imageUrl ? (
               <Image
-                src={profilePicUrl}
+                src={imageUrl}
                 alt="avatar"
                 width={84}
                 height={84}
@@ -62,11 +48,15 @@ export default function ProfileCard({
             ) : (
               <User2Icon size={84} />
             )}
+            {isUploading && <UploadLoader />}
 
             {/* EDIT IMAGE BUTTON */}
             <button
               className={styles.avatarEdit}
               onClick={openFilePicker}
+              type="button"
+              disabled={isUploading}
+              aria-label="Change profile picture"
             >
               <Pencil size={12} />
             </button>
@@ -78,6 +68,7 @@ export default function ProfileCard({
               accept="image/*"
               hidden
               onChange={handleImageChange}
+              disabled={isUploading}
             />
           </div>
 

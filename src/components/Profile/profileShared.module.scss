@@ -1,5 +1,7 @@
 .section {
   padding: 24px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  width: 100%;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -144,6 +146,7 @@
 @media (max-width: 768px) {
   .section {
     padding: 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 
   .grid2,

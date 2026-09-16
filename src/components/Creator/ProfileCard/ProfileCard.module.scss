@@ -40,6 +40,8 @@
 }
 
 .avatar {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -185,8 +187,8 @@
 
 .avatarEdit {
   position: absolute;
-  bottom: -4px;
-  right: -4px;
+  bottom: 2px;
+  right: 2px;
 
   width: 26px;
   height: 26px;
@@ -206,6 +208,10 @@
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
 }
 
-.avatarEdit:hover {
+.avatarEdit:disabled {
+  cursor: progress;
+}
+
+.avatarEdit:hover:not(:disabled) {
   transform: scale(1.05);
 }

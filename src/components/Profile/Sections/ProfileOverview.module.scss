@@ -10,11 +10,12 @@
 
 .quickGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .quickCard {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -23,6 +24,11 @@
   border: 1px solid #ddd6fe;
   border-radius: 14px;
   transition: transform 0.2s, box-shadow 0.2s;
+
+  > div:not(.quickIcon) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 
   &:hover {
     transform: translateY(-2px);
@@ -112,6 +118,11 @@
 }
 
 @media (max-width: 768px) {
+  .quickCard {
+    gap: 10px;
+    padding: 12px;
+  }
+
   .quickGrid,
   .activityRow {
     grid-template-columns: 1fr;

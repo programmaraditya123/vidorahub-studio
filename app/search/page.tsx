@@ -27,10 +27,6 @@ const page = () => {
      <>
      <div className={styles.page}>
      <main>
-     <header>
-      <h1>Creator Search</h1>
-      <p>Search creators by category, platform, location, followers, language and brand fit.</p>
-     </header>
      <CreatorFilters/>
      </main>
      

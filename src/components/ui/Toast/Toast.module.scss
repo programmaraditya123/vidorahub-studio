@@ -1,6 +1,10 @@
 .toast {
+  z-index: 10000;
+  max-width: calc(100vw - 32px);
+  width: max-content;
+  overflow-wrap: anywhere;
   position: fixed;
-  bottom: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   
@@ -20,6 +24,12 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 
   animation: slideUp 0.3s ease;
+
+  svg { flex-shrink: 0; }
+}
+
+.success {
+  border-left: 4px solid #22c55e;
 }
 
 .error {
