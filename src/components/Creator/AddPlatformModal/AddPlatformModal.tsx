@@ -1,5 +1,7 @@
 "use client";
 
+import ModalPortal from "@/components/ModalPortal/ModalPortal";
+
 import styles from "./AddPlatformModal.module.scss";
 import { useState, useEffect } from "react";
 import { useAddCreatorPlatformMutation } from "@/store/api/creatorApi";
@@ -63,6 +65,7 @@ export default function AddPlatformModal({
   };
 
   return (
+    <ModalPortal>
     <div className={styles.overlay} onClick={close}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h3>{editData ? "Update Platform" : "Add Platform"}</h3>
@@ -118,5 +121,6 @@ export default function AddPlatformModal({
         </div>
       </div>
     </div>
+    </ModalPortal>
   );
 }

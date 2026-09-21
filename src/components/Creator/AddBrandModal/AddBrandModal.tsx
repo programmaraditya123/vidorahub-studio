@@ -1,5 +1,7 @@
 "use client";
 
+import ModalPortal from "@/components/ModalPortal/ModalPortal";
+
 import { useAddExperienceMutation } from "@/store/api/creatorApi";
 import styles from "./AddBrandModal.module.scss";
 import { X } from "lucide-react";
@@ -55,6 +57,7 @@ export default function AddBrandModal({ close }: AddBrandModalProps) {
   };
 
   return (
+    <ModalPortal>
     <div className={styles.overlay} onClick={close}>
       <div
         className={styles.modal}
@@ -144,5 +147,6 @@ export default function AddBrandModal({ close }: AddBrandModalProps) {
         </div>
       </div>
     </div>
+    </ModalPortal>
   );
 }

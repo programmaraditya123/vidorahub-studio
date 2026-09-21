@@ -1,5 +1,7 @@
 "use client";
 
+import ModalPortal from "@/components/ModalPortal/ModalPortal";
+
 import { useAddShowcaseContentMutation } from "@/store/api/creatorApi";
 import styles from "./ShowcaseModal.module.scss";
 import { X } from "lucide-react";
@@ -66,6 +68,7 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
   };
 
   return (
+    <ModalPortal>
     <div className={styles.overlay} onClick={close}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 
@@ -157,5 +160,6 @@ export default function ShowcaseModal({ close }: { close: () => void }) {
 
       </div>
     </div>
+    </ModalPortal>
   );
 }

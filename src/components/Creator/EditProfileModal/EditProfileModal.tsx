@@ -1,5 +1,7 @@
 "use client";
 
+import ModalPortal from "@/components/ModalPortal/ModalPortal";
+
 import { useState } from "react";
 import styles from "./EditProfileModal.module.scss";
 import { X } from "lucide-react";
@@ -77,6 +79,7 @@ export default function EditProfileModal({
   };
 
   return (
+    <ModalPortal>
     <div className={styles.overlay} onClick={close}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         
@@ -153,5 +156,6 @@ export default function EditProfileModal({
 
       </div>
     </div>
+    </ModalPortal>
   );
 }
