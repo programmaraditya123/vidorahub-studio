@@ -1,3 +1,34 @@
+:global(html):has(.authPage),
+:global(body):has(.authPage) {
+    height: 100dvh;
+    overflow: clip !important;
+    overscroll-behavior: none;
+}
+
+:global(body):has(.authPage) {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+}
+
+.authPage {
+    position: fixed;
+    inset: calc(70px + env(safe-area-inset-top)) 0 0;
+    min-height: 0;
+    padding: clamp(8px, 2vh, 24px) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    display: flex;
+    align-items: safe center;
+    justify-content: center;
+    overflow: clip;
+    overscroll-behavior: none;
+}
+
+@media (max-width: 900px) {
+    .authPage {
+        top: calc(64px + env(safe-area-inset-top));
+    }
+}
+
 .page{
     height: 85vh;
     overflow-y: scroll;

@@ -9,8 +9,9 @@ import { useState } from "react";
 import { userLogin } from "@/lib/LoginRegisterApis";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/Context/AuthContext";
+import GoogleAuthButton from "../GoogleAuthButton/GoogleAuthButton";
 
-export default function LoginCard() {
+export default function LoginCard({ googleClientId }: { googleClientId?: string }) {
   // console.log("SignupCard component rendered");
   const [showPassword, setShowPassword] = useState(false);
   const[email,setEmail] = useState("")
@@ -93,6 +94,7 @@ export default function LoginCard() {
           Enter your credentials to access your studio
         </p>
 
+        <GoogleAuthButton clientId={googleClientId} />
         <div className={styles.form}>
           <label>Email Address</label>
 

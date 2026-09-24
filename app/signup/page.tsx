@@ -7,8 +7,8 @@ export const metadata: Metadata = signupMetadata();
 
 export default function Page() {
   return (
-    <div className={styles.page}>
-      <SignupCard />
+    <div className={styles.authPage}>
+      <SignupCard googleClientId={process.env.GOOGLE_CLIENT_ID} />
     </div>
   );
 }

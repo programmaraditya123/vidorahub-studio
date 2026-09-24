@@ -12,11 +12,11 @@ export default function Hero() {
         <span className={styles.badge}>CREATOR ECONOMY PLATFORM</span>
 
         <h1 className={styles.title}>
-          India's #1 <span>Creator-Brand</span> Marketplace
+          Discover <span>Creators and Brands</span>
         </h1>
 
         <p className={styles.desc}>
-          Connecting high-growth brands with premium creators in seconds.
+          Explore public portfolios and find potential collaboration partners.
           Discover, connect, and collaborate without the friction.
         </p>
 
@@ -24,7 +24,7 @@ export default function Hero() {
           <Link href="/search" className={styles.primary}>
             <span>Find Creators</span>
           </Link>
-          <Link href="/brand" className={styles.primary}>
+          <Link href="/brands" className={styles.primary}>
             <span>Find Brands</span>
           </Link>
           <Link href="/signup" className={styles.secondary}>

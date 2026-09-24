@@ -9,7 +9,6 @@ ${paths
   .map(
     (path) => `  <sitemap>
     <loc>${escapeXml(absoluteUrl(path))}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>`,
   )
   .join("\n")}
@@ -17,22 +16,21 @@ ${paths
 }
 
 export function urlset(urls: SitemapUrl[]): string {
+  urls = [...new Map(urls.map((entry) => [absoluteUrl(entry.loc), entry])).values()];
+  if (urls.length > 50000) throw new Error("Sitemap exceeds 50,000 URLs; split into child sitemaps.");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${urls
   .map(
     (url) => `  <url>
     <loc>${escapeXml(absoluteUrl(url.loc))}</loc>
-    ${url.lastmod ? `<lastmod>${escapeXml(url.lastmod)}</lastmod>` : ""}
+    ${url.lastmod && Number.isFinite(Date.parse(url.lastmod)) ? `<lastmod>${escapeXml(new Date(url.lastmod).toISOString())}</lastmod>` : ""}
     ${url.changefreq ? `<changefreq>${url.changefreq}</changefreq>` : ""}
     ${url.priority ? `<priority>${url.priority.toFixed(1)}</priority>` : ""}
 ${(url.images || [])
   .map(
     (image) => `    <image:image>
       <image:loc>${escapeXml(image.loc)}</image:loc>
-      ${image.title ? `<image:title>${escapeXml(image.title)}</image:title>` : ""}
-      ${image.caption ? `<image:caption>${escapeXml(image.caption)}</image:caption>` : ""}
-      ${image.license ? `<image:license>${escapeXml(image.license)}</image:license>` : ""}
     </image:image>`,
   )
   .join("\n")}

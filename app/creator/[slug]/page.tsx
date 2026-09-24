@@ -25,7 +25,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <JsonLd data={creatorJsonLd(creator)} />
-      <CreatorProfileClient creatorId={id} />
+      <CreatorProfileClient creatorId={id} initialCreator={creator} />
       <CreatorSemanticEntityBlocks creator={creator} />
     </>
   );

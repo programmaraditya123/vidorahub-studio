@@ -1,7 +1,8 @@
 import { DISCOVERY_CACHE } from "../config/cache";
+import { createHash } from "node:crypto";
 
 function etag(body: string): string {
-  return `"${Buffer.from(body).toString("base64url").slice(0, 27)}"`;
+  return `"${createHash("sha256").update(body).digest("hex")}"`;
 }
 
 export function xmlResponse(body: string, maxAge = DISCOVERY_CACHE.sitemap): Response {
@@ -9,7 +10,6 @@ export function xmlResponse(body: string, maxAge = DISCOVERY_CACHE.sitemap): Res
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control": `public, max-age=${maxAge}, s-maxage=${maxAge}, stale-while-revalidate=${DISCOVERY_CACHE.staleWhileRevalidate}`,
-      "Last-Modified": new Date().toUTCString(),
       ETag: etag(body),
     },
   });
@@ -20,7 +20,6 @@ export function textResponse(body: string, contentType = "text/plain; charset=ut
     headers: {
       "Content-Type": contentType,
       "Cache-Control": `public, max-age=${DISCOVERY_CACHE.text}, s-maxage=${DISCOVERY_CACHE.text}, stale-while-revalidate=${DISCOVERY_CACHE.staleWhileRevalidate}`,
-      "Last-Modified": new Date().toUTCString(),
       ETag: etag(body),
     },
   });

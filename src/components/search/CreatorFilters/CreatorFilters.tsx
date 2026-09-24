@@ -8,7 +8,7 @@ import CreatorsGrid from "../CreatorsGrid/CreatorsGrid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
 
-export default function CreatorFilters() {
+export default function CreatorFilters({ initialFilters = {} }: { initialFilters?: { niche?: string; location?: string } }) {
 
   const router = useRouter();
   const params = useSearchParams();
@@ -20,15 +20,15 @@ export default function CreatorFilters() {
   /* UI STATE */
 
   const [name, setName] = useState(params.get("name") || "");
-  const [niche, setNiche] = useState(params.get("niche") || "All Niches");
-  const [location, setLocation] = useState(params.get("location") || "");
+  const [niche, setNiche] = useState(params.get("niche") || params.get("category") || initialFilters.niche || "All Niches");
+  const [location, setLocation] = useState(params.get("location") || initialFilters.location || "");
 
   /* APPLIED FILTERS */
 
   const [filters, setFilters] = useState({
     name: params.get("name") || "",
-    niche: params.get("niche") || "All Niches",
-    location: params.get("location") || "",
+    niche: params.get("niche") || params.get("category") || initialFilters.niche || "All Niches",
+    location: params.get("location") || initialFilters.location || "",
   });
 
   const [page, setPage] = useState(1);

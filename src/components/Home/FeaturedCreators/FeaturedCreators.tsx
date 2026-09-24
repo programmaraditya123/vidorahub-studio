@@ -8,7 +8,7 @@ import { useGetAllCreatorsQuery } from "@/store/api/creatorApi";
 import vidoraicon from "../../../../app/favicon.ico";
 import { useMemo, memo } from "react";
 import { useRouter } from "next/navigation";
-import { buildEntitySlug } from "@/lib/discovery";
+import { buildEntitySlug } from "@/lib/discovery/urls/slug";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

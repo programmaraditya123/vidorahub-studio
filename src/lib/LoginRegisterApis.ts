@@ -50,6 +50,18 @@ export async function userLogin(payload:LoginPayload){
     return data
 }
 
+export type GoogleLoginResponse = {
+    success: boolean;
+    message?: string;
+    token?: string;
+    user?: { name: string; email: string; userSerialNumber: string | number; userId: string };
+};
+
+export async function googleLogin(token: string) {
+    const { data } = await http.post<GoogleLoginResponse>("/api/v1/google-login", { token });
+    return data;
+}
+
 export async function CheckSession(){
     try {
         const {data} = await http.get<Sessionresponse>("/api/v1/check-session")

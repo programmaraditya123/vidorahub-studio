@@ -23,7 +23,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <JsonLd data={brandJsonLd(brand)} />
       <div className={styles.page}>
-        <BrandProfile brandId={id} canonicalPath={canonicalPath} />
+        <BrandProfile brandId={id} canonicalPath={canonicalPath} initialBrand={brand} />
         <Footer />
       </div>
     </>

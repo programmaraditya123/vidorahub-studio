@@ -1,103 +1,32 @@
 import Link from "next/link";
-import {
-  INDEXABLE_CATEGORIES,
-  INDEXABLE_CITIES,
-  INDEXABLE_PLATFORMS,
-  INDEXABLE_STATES,
-} from "../config/seo";
+import { getCollection, collectionTitle, collectionValues } from "../search/collections";
 import { titleizeSlug } from "../utils/slugify";
+import { itemListJsonLd } from "../schemas/search";
+import JsonLd from "./JsonLd";
+import styles from "./DiscoveryPage.module.scss";
 
-type Props = {
-  kind: "creators" | "brands" | "categories" | "platforms" | "cities" | "states";
-  slug?: string;
-};
+type Props = { kind: "creators" | "brands" | "categories" | "platforms" | "cities" | "states"; slug?: string };
 
-const related = {
-  creators: INDEXABLE_CATEGORIES.map((item) => `/categories/${item}`),
-  brands: INDEXABLE_CATEGORIES.map((item) => `/categories/${item}`),
-  categories: INDEXABLE_CATEGORIES.map((item) => `/categories/${item}`),
-  platforms: INDEXABLE_PLATFORMS.map((item) => `/platforms/${item}`),
-  cities: INDEXABLE_CITIES.map((item) => `/cities/${item}`),
-  states: INDEXABLE_STATES.map((item) => `/states/${item}`),
-};
-
-export default function CollectionPage({ kind, slug }: Props) {
-  const label = slug ? titleizeSlug(slug) : titleizeSlug(kind);
-  const singular = kind.replace(/s$/, "");
-  const searchHref =
-    kind === "categories"
-      ? `/search?category=${encodeURIComponent(label)}`
-      : kind === "platforms"
-        ? `/search?platform=${encodeURIComponent(label)}`
-        : kind === "cities"
-          ? `/search?location=${encodeURIComponent(label)}`
-          : "/search";
-
-  return (
-    <main>
-      <header>
-        <h1>{label} Creators and Brands</h1>
-        <p>
-          Discover {label.toLowerCase()} creator profiles, brand collaboration opportunities, social
-          platforms, locations and portfolio signals on VidoraHub Studio.
-        </p>
-      </header>
-
-      <section>
-        <h2>Find {label} Profiles</h2>
-        <p>
-          VidoraHub Studio structures each public {singular} page as an entity with canonical URLs,
-          metadata, JSON-LD, breadcrumbs, social profiles, audience details and collaboration
-          context for search engines and AI assistants.
-        </p>
-        <Link href={searchHref}>Browse matching profiles</Link>
-      </section>
-
-      <section>
-        <h2>Popular Segments</h2>
-        <ul>
-          {related[kind].map((path) => (
-            <li key={path}>
-              <Link href={path}>{titleizeSlug(path.split("/").pop() || "")}</Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <nav aria-label="Entity relationships">
-        <h2>Related Discovery Pages</h2>
-        <ul>
-          <li>
-            <Link href="/creators">Creators</Link>
-          </li>
-          <li>
-            <Link href="/brands">Brands</Link>
-          </li>
-          <li>
-            <Link href="/categories">Categories</Link>
-          </li>
-          <li>
-            <Link href="/platforms">Platforms</Link>
-          </li>
-          <li>
-            <Link href="/cities">Cities</Link>
-          </li>
-          <li>
-            <Link href="/states">States</Link>
-          </li>
-        </ul>
-      </nav>
-
-      {slug && (
-        <section>
-          <h2>Answer Summary</h2>
-          <p>
-            {label} is an indexable VidoraHub Studio entity page for discovering creators and
-            brands. It connects public profiles to categories, platforms, cities, states and search
-            pages using crawlable internal links.
-          </p>
-        </section>
-      )}
-    </main>
-  );
+export default async function CollectionPage({ kind, slug }: Props) {
+  const profiles = await getCollection(kind, slug);
+  const title = collectionTitle(kind, slug);
+  return <main className={styles.page}>
+    <h1>{title}</h1>
+    <p>Browse public {kind === "brands" ? "brand" : "creator"} profiles on VidoraHub Studio. Review the information each member has shared before choosing a collaboration partner.</p>
+    {profiles.length > 0 ? <>
+      <JsonLd data={itemListJsonLd(title, profiles.map(profile => profile.path))} />
+      <ul className={styles.grid}>{profiles.map(profile => <li key={profile.path}>
+        <h2><Link href={profile.path}>{profile.name}</Link></h2>
+        {profile.location && <p>{profile.location}</p>}
+        {profile.description && <p>{profile.description}</p>}
+      </li>)}</ul>
+    </> : <p>No matching public profiles are currently listed. Explore another category or location.</p>}
+    {collectionValues[kind] && <nav aria-label="Browse more groups"><h2>Explore more</h2><ul className={styles.links}>
+      {collectionValues[kind].map(value => <li key={value}><Link href={"/" + kind + "/" + value}>{titleizeSlug(value)}</Link></li>)}
+    </ul></nav>}
+    <nav aria-label="Discovery directories"><ul className={styles.links}>
+      {["creators", "brands", "categories", "platforms", "cities", "states"].map(value => <li key={value}><Link href={"/" + value}>{titleizeSlug(value)}</Link></li>)}
+      <li><Link href="/search">Search creators</Link></li>
+    </ul></nav>
+  </main>;
 }

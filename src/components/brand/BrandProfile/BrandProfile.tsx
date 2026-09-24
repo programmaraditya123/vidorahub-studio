@@ -19,13 +19,14 @@ import {
 
 type Props = {
   brandId: string;
+  initialBrand?: import("@/lib/discovery/types").BrandEntity;
   canonicalPath?: string;
 };
 
-export default function BrandProfile({ brandId, canonicalPath }: Props) {
+export default function BrandProfile({ brandId, canonicalPath, initialBrand }: Props) {
   const { data, isLoading, isError } = useGetBrandByIdQuery(brandId);
 
-  const brand = data?.brand;
+  const brand = data?.brand || initialBrand;
 
   const [shareOpen, setShareOpen] = useState(false);
 
@@ -38,8 +39,8 @@ export default function BrandProfile({ brandId, canonicalPath }: Props) {
     navigator.clipboard.writeText(profileUrl);
   };
 
-  if (isLoading) return <p className={styles.loading}>Loading brand...</p>;
-  if (isError || !brand)
+  if (isLoading && !brand) return <p className={styles.loading}>Loading brand...</p>;
+  if (!brand)
     return <p className={styles.error}>Brand not found</p>;
 
   return (
@@ -55,14 +56,14 @@ export default function BrandProfile({ brandId, canonicalPath }: Props) {
           <div className={styles.brandInfo}>
             <div className={styles.logoWrapper}>
               <Image
-                src={brand.profilePicUrl || "/brand-logo.png"}
+                src={brand.profilePicUrl || "/favicon.ico"}
                 alt={brand.name}
                 width={80}
                 height={80}
                 className={styles.logo}
               />
 
-              <CheckCircle size={18} className={styles.verify} />
+              
             </div>
 
             <div>

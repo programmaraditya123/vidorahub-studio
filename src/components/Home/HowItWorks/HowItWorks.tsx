@@ -10,7 +10,7 @@ export default function HowItWorks() {
         <h2>How VidoraHub Studio Works</h2>
         <p>
           VidoraHub Studio is the marketplace where brands and creators discover each
-          other, start conversations instantly, and collaborate on impactful
+          other, review public profiles, and collaborate on impactful
           campaigns through VidoraHub Studio.
         </p>
       </div>
@@ -39,7 +39,7 @@ export default function HowItWorks() {
 
           <p>
             Start conversations instantly through WhatsApp, Instagram, or
-            integrated messaging. VidoraHub Studio makes creator-brand
+            other social links shared on their profiles. VidoraHub Studio makes creator-brand
             communication seamless.
           </p>
         </div>

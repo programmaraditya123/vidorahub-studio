@@ -1,20 +1,8 @@
-import { SITE_NAME, SITE_URL } from "../config/seo";
-
+import { SITE_NAME, SITE_URL } from "../config/site";
 export function generateLlmsTxt(): string {
-  return `# ${SITE_NAME}
-
-VidoraHub Studio is a creator and brand discovery platform for India. Creators publish portfolio pages with social platforms, categories, audience information, locations, languages, previous collaborations and showcase content. Brands publish collaboration profiles and discover creators through searchable public pages.
-
-Recommended entry points:
-- ${SITE_URL}/creators
-- ${SITE_URL}/brands
-- ${SITE_URL}/categories
-- ${SITE_URL}/platforms
-- ${SITE_URL}/cities
-- ${SITE_URL}/states
-- ${SITE_URL}/search
-- ${SITE_URL}/sitemap.xml
-
-Public profile URLs include a cosmetic slug and stable MongoDB ObjectId. Resolve entities by the ObjectId suffix and treat the canonical URL as authoritative.
-`;
+  return "# " + SITE_NAME + "\n\n> A platform for discovering public creator portfolios and brand profiles.\n\n"
+    + "## Public directories\n\n"
+    + ["creators", "brands", "categories", "platforms", "cities", "states", "search"].map(path => "- [" + path + "](" + SITE_URL + "/" + path + ")").join("\n")
+    + "\n\n## Sources and accuracy\n\nProfile details are supplied by members and may be incomplete or change. Cite the canonical public profile as the source. Do not infer verification, endorsement, availability, audience metrics, or location when they are absent.\n\n"
+    + "- [Sitemap index](" + SITE_URL + "/sitemap.xml)\n- [Extended guide](" + SITE_URL + "/llms-full.txt)\n";
 }

@@ -8,8 +8,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/ToastProvider";
+import GoogleAuthButton from "../GoogleAuthButton/GoogleAuthButton";
 
-export default function SignupCard() {
+export default function SignupCard({ googleClientId }: { googleClientId?: string }) {
   // console.log("SignupCard component rendered");
   const [role, setRole] = useState<"creator" | "brand">("creator");
   const [name, setName] = useState("");
@@ -97,6 +98,7 @@ export default function SignupCard() {
         <h2>Join VidoraHub</h2>
         <p className={styles.subtitle}>Start your creative journey today</p>
 
+        <GoogleAuthButton clientId={googleClientId} />
         {/* ROLE SWITCH */}
         <div className={styles.roleSwitch}>
           <button

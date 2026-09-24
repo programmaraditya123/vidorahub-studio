@@ -1,0 +1,7 @@
+.page { max-width: 1120px; margin: 0 auto; padding: clamp(20px, 4vw, 48px); line-height: 1.6; overflow-wrap: anywhere; }
+.page h1 { font-size: clamp(24px, 4vw, 36px); margin-bottom: 12px; }
+.page h2 { font-size: 20px; margin: 16px 0 8px; }
+.page a { color: #6d28d9; text-decoration: underline; text-underline-offset: 3px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; list-style: none; margin: 24px 0; }
+.grid > li { border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; }
+.links { display: flex; flex-wrap: wrap; gap: 12px 24px; list-style: none; margin: 20px 0; }

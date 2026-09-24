@@ -1,50 +1,5 @@
-export const ALLOWED_BOTS = [
-  "Googlebot",
-  "Googlebot-News",
-  "Googlebot-Image",
-  "Bingbot",
-  "DuckDuckBot",
-  "Yandex",
-  "Applebot",
-  "ClaudeBot",
-  "Claude-Web",
-  "GPTBot",
-  "OAI-SearchBot",
-  "ChatGPT-User",
-  "CCBot",
-  "PerplexityBot",
-  "Amazonbot",
-  "Bytespider",
-  "facebookexternalhit",
-  "LinkedInBot",
-  "Slackbot",
-  "Discordbot",
-  "Pinterestbot",
-  "Twitterbot",
-];
-
-export const PUBLIC_BOT_DISALLOW = [
-  "/dashboard",
-  "/login",
-  "/signup",
-  "/profile/edit",
-  "/profile/settings",
-  "/profile/notifications",
-  "/profile/messages",
-  "/settings",
-  "/notifications",
-  "/messages",
-  "/api",
-  "/private",
-  "/admin",
-];
-
-export const DEFAULT_BOT_DISALLOW = [
-  "/dashboard",
-  "/login",
-  "/signup",
-  "/profile",
-  "/api",
-  "/private",
-  "/admin",
-];
+// A single policy applies equally to search crawlers and AI crawlers.
+// Public noindex pages remain crawlable so their metadata can be read.
+export const ALLOWED_BOTS: string[] = [];
+export const PUBLIC_BOT_DISALLOW = ["/api/", "/private/", "/admin/"];
+export const DEFAULT_BOT_DISALLOW = PUBLIC_BOT_DISALLOW;

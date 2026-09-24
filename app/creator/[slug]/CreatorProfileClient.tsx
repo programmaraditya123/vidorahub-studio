@@ -10,15 +10,15 @@ import styles from "../../page.module.css";
 
 type Props = {
   creatorId: string;
+  initialCreator: import("@/lib/discovery/types").CreatorEntity;
 };
 
-export default function CreatorProfileClient({ creatorId }: Props) {
+export default function CreatorProfileClient({ creatorId, initialCreator }: Props) {
   const { data, isLoading, isError } = useGetCreatorByIdQuery(creatorId);
 
-  if (isLoading) return <p>Loading creator...</p>;
-  if (isError) return <p>Creator not found</p>;
 
-  const creator = data?.creator;
+
+  const creator = data?.creator || initialCreator;
 
   const instagram = creator?.platforms?.find(
     (p: SocialPlatform) => p.platform?.toLowerCase() === "instagram",

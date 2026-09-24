@@ -1,47 +1,21 @@
-import { SITE_NAME, SITE_URL } from "../config/seo";
+import { SITE_NAME, SITE_URL } from "../config/site";
 import type { BrandEntity } from "../types";
 import { absoluteUrl } from "../urls/canonical";
 import { brandPath } from "../urls/brand";
-
+import { publicUrl, validDate } from "../utils/evidence";
+import { breadcrumbJsonLd } from "./breadcrumb";
 export function brandJsonLd(brand: BrandEntity) {
   const url = absoluteUrl(brandPath(brand));
   const name = brand.name || "Brand";
-
-  return [
-    {
-      "@context": "https://schema.org",
-      "@type": ["Organization", "Brand"],
-      "@id": `${url}#brand`,
-      name,
-      url,
-      image: brand.profilePicUrl || brand.logoUrl,
-      logo: brand.logoUrl || brand.profilePicUrl,
-      description: brand.bio,
-      address: brand.location,
-      industry: brand.category,
-      contactPoint: {
-        "@type": "ContactPoint",
-        contactType: "creator collaborations",
-        url,
-      },
+  return [{ "@context": "https://schema.org", "@type": "ProfilePage", "@id": url + "#profile", url,
+    dateCreated: validDate(brand.createdAt), dateModified: validDate(brand.updatedAt),
+    mainEntity: { "@type": "Organization", "@id": url + "#brand", name, url,
+      identifier: brand._id, image: publicUrl(brand.profilePicUrl || brand.logoUrl),
+      logo: publicUrl(brand.logoUrl || brand.profilePicUrl), description: brand.bio, address: brand.location,
+      sameAs: publicUrl(brand.website) ? [publicUrl(brand.website)] : undefined,
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Brands", item: absoluteUrl("/brands") },
-        { "@type": "ListItem", position: 3, name, item: url },
-      ],
-    },
-  ];
+  }, breadcrumbJsonLd([{ name: "Home", item: SITE_URL }, { name: "Brands", item: absoluteUrl("/brands") }, { name, item: url }])];
 }
-
 export function organizationJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-  };
+  return { "@context": "https://schema.org", "@type": "Organization", "@id": SITE_URL + "#organization", name: SITE_NAME, url: SITE_URL };
 }

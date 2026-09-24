@@ -1,59 +1,39 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { notFound, permanentRedirect } from "next/navigation";
 import CreatorFilters from "@/components/search/CreatorFilters/CreatorFilters";
-import { searchMetadata } from "@/lib/discovery";
-import { titleizeSlug } from "@/lib/discovery";
-import styles from "../../page.module.css";
+import { resolveSearchLanding, searchLandingProfiles } from "@/lib/discovery/search/landing";
+import { titleizeSlug } from "@/lib/discovery/utils/slugify";
+import { creatorPath } from "@/lib/discovery/urls/creator";
+import { absoluteUrl } from "@/lib/discovery/urls/canonical";
+import { DEFAULT_OG_IMAGE } from "@/lib/discovery/config/social";
+import styles from "@/lib/discovery/components/DiscoveryPage.module.scss";
 
-type PageProps = {
-  params: Promise<{ segments: string[] }>;
-};
-
-function filtersFromSegments(segments: string[]) {
-  const [first, second] = segments;
-  return {
-    category: first?.replace(/-creators$/, ""),
-    location: second,
-    creatorType: first === "ugc-creators" ? "UGC" : undefined,
-    platform: first?.endsWith("-creators") && first !== "ugc-creators" ? first.replace(/-creators$/, "") : undefined,
-  };
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+type Props = { params: Promise<{ segments: string[] }> };
+async function resolve(params: Props["params"]) {
   const { segments } = await params;
-  return searchMetadata(filtersFromSegments(segments));
+  const landing = resolveSearchLanding(segments);
+  if (!landing) notFound();
+  if (landing.redirect) permanentRedirect(landing.redirect);
+  const category = landing.category!;
+  const city = landing.city!;
+  return { category, city, profiles: await searchLandingProfiles(category, city), path: "/search/" + category + "/" + city,
+    title: titleizeSlug(category) + " Creators in " + titleizeSlug(city) };
 }
-
-export default async function Page({ params }: PageProps) {
-  const { segments } = await params;
-  const label = segments.map(titleizeSlug).join(" ");
-
-  return (
-    <div className={styles.page}>
-      <main>
-        <header>
-          <h1>{label} Creators</h1>
-          <p>
-            Browse {label.toLowerCase()} creator profiles with structured
-            portfolio, audience, platform, location and collaboration signals.
-          </p>
-        </header>
-        <CreatorFilters />
-        <nav aria-label="Related searches">
-          <h2>Related Searches</h2>
-          <ul>
-            <li>
-              <Link href="/search/fashion/delhi">Fashion creators in Delhi</Link>
-            </li>
-            <li>
-              <Link href="/search/youtube-creators">YouTube creators</Link>
-            </li>
-            <li>
-              <Link href="/search/ugc-creators">UGC creators</Link>
-            </li>
-          </ul>
-        </nav>
-      </main>
-    </div>
-  );
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { title, path, profiles } = await resolve(params);
+  const description = "Browse public profiles for " + title.toLowerCase() + " on VidoraHub Studio.";
+  return { title, description, alternates: { canonical: path }, robots: { index: profiles.length > 0, follow: true },
+    openGraph: { title, description, url: absoluteUrl(path), images: [DEFAULT_OG_IMAGE] },
+    twitter: { card: "summary_large_image", title, description, images: [DEFAULT_OG_IMAGE] } };
+}
+export default async function Page({ params }: Props) {
+  const { title, category, city, profiles } = await resolve(params);
+  return <main className={styles.page}><h1>{title}</h1>
+    <p>Review the niches, locations and portfolios members have shared to find potential collaboration partners.</p>
+    <ul className={styles.links}>{profiles.map(creator => <li key={creator._id}><Link href={creatorPath(creator)}>{creator.name || creator.username || "Creator"}</Link></li>)}</ul>
+    {!profiles.length && <p>No matching public profiles are currently listed.</p>}
+    <Suspense fallback={<p>Loading search controls?</p>}><CreatorFilters key={category + city} initialFilters={{ niche: titleizeSlug(category), location: titleizeSlug(city) }} /></Suspense>
+  </main>;
 }

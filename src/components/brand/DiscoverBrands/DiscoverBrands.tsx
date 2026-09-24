@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./DiscoverBrands.module.scss";
 import { useGetAllBrandsQuery } from "@/store/api/creatorApi";
-import { buildEntitySlug } from "@/lib/discovery";
+import { buildEntitySlug } from "@/lib/discovery/urls/slug";
 
 type Brand = {
   _id: string;

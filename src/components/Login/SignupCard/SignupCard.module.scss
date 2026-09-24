@@ -1,3 +1,5 @@
+@use "../authLayout";
+
 .wrapper {
   width: 100%;
   max-width: 1100px;
@@ -212,3 +214,5 @@
     display: none;
   }
 }
+
+@include authLayout.layout;

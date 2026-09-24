@@ -8,6 +8,11 @@ export const DISCOVERY_CACHE = {
 
 export const DISCOVERY_REVALIDATE_PATHS = [
   "/sitemap.xml",
+  "/page-sitemap.xml",
+  "/",
+  "/creators",
+  "/brands",
+  "/search",
   "/creator-sitemap.xml",
   "/brand-sitemap.xml",
   "/category-sitemap.xml",

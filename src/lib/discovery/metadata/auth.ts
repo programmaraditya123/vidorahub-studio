@@ -1,65 +1,9 @@
 import type { Metadata } from "next";
-
-export function loginMetadata(): Metadata {
-  return {
-    title: "Login - VidoraHub Studio",
-    description:
-      "Login to VidoraHub Studio to upload videos, manage your creator profile, collaborate with brands, and grow your audience on VidoraHub.",
-    keywords: [
-      "VidoraHub login",
-      "creator login",
-      "video creator dashboard login",
-      "VidoraHub studio login",
-      "creator brand marketplace login",
-    ],
-    robots: {
-      index: false,
-      follow: false,
-    },
-  };
+import { DEFAULT_OG_IMAGE } from "../config/social";
+function authMetadata(title: string, description: string, path: string): Metadata {
+  return { title, description, robots: { index: false, follow: true }, alternates: { canonical: path },
+    openGraph: { title, description, url: path, type: "website", images: [DEFAULT_OG_IMAGE] },
+    twitter: { card: "summary_large_image", title, description, images: [DEFAULT_OG_IMAGE] } };
 }
-
-export function signupMetadata(): Metadata {
-  return {
-    title: "Create Your Creator Account - VidoraHub Studio",
-    description:
-      "Sign up for VidoraHub Studio and start your journey as a creator. Upload videos, manage your content, collaborate with brands, and grow your audience on the VidoraHub creator platform.",
-    keywords: [
-      "VidoraHub signup",
-      "create creator account",
-      "video creator platform signup",
-      "creator brand marketplace",
-      "influencer platform signup",
-      "creator collaboration platform",
-      "youtube alternative for creators",
-    ],
-    robots: {
-      index: false,
-      follow: false,
-    },
-    openGraph: {
-      title: "Create Your Creator Account - VidoraHub Studio",
-      description: "Join VidoraHub Studio to upload videos, collaborate with brands, and grow as a creator.",
-      url: "https://studio.vidorahub.com/signup",
-      siteName: "VidoraHub",
-      type: "website",
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: "VidoraHub Studio Creator Platform",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Create Your Creator Account - VidoraHub Studio",
-      description: "Start creating, uploading videos, and collaborating with brands on VidoraHub.",
-      images: ["/og-image.png"],
-    },
-    alternates: {
-      canonical: "https://studio.vidorahub.com/signup",
-    },
-  };
-}
+export function loginMetadata() { return authMetadata("Login", "Log in to manage your creator or brand profile on VidoraHub Studio.", "/login"); }
+export function signupMetadata() { return authMetadata("Create an Account", "Create a creator or brand account on VidoraHub Studio.", "/signup"); }

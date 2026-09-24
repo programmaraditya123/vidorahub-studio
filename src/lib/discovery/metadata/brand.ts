@@ -23,7 +23,7 @@ export function brandMetadata(brand: BrandEntity): Metadata {
   const image = brand.profilePicUrl || brand.logoUrl || DEFAULT_OG_IMAGE;
 
   return {
-    title: `${name} | ${category} Brand | ${SITE_NAME}`,
+    title: `${name} | Brand Profile`,
     description,
     keywords: [
       name,
@@ -43,7 +43,7 @@ export function brandMetadata(brand: BrandEntity): Metadata {
       description,
       url: absoluteUrl(path),
       siteName: SITE_NAME,
-      images: [{ url: image, width: 1200, height: 630, alt: `${name} brand profile` }],
+      images: [{ url: image, alt: `${name} brand profile` }],
       type: "website",
       locale: SITE_LOCALE,
     },
@@ -66,10 +66,10 @@ export async function generateBrandStaticParams() {
 export async function generateBrandMetadata({ params }: BrandPageProps): Promise<Metadata> {
   const { slug } = await params;
   const id = extractObjectId(slug);
-  if (!id) return {};
+  if (!id) return { robots: { index: false, follow: false } };
 
   const brand = await getBrandById(id);
-  return brand ? brandMetadata(brand) : {};
+  return brand ? brandMetadata(brand) : { robots: { index: false, follow: false } };
 }
 
 export async function resolveBrandRoute(slug: string) {

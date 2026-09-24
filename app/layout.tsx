@@ -6,7 +6,9 @@ import ReduxProvider from "@/store/provider";
 import type { Metadata, Viewport } from "next";
 import { homepageMetadata, JsonLd, websiteJsonLd } from "@/lib/discovery";
 
-export const metadata: Metadata = homepageMetadata();
+// Page-specific canonicals belong to pages, not the inherited root layout.
+const { alternates: _alternates, ...rootMetadata } = homepageMetadata();
+export const metadata: Metadata = rootMetadata;
 
 export const viewport: Viewport = {
   themeColor: "#111827",

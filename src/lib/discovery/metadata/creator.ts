@@ -14,7 +14,7 @@ type CreatorPageProps = {
 export function creatorMetadata(creator: CreatorEntity): Metadata {
   const name = creator.name || creator.username || "Creator";
   const category = creator.tags?.[0] || "Creator";
-  const location = creator.location || creator.city || creator.state || "India";
+  const location = creator.location || creator.city || creator.state || "";
   const path = creatorPath(creator);
   const description = compactDescription(
     creator.bio ||
@@ -24,7 +24,7 @@ export function creatorMetadata(creator: CreatorEntity): Metadata {
   const image = creator.profilePicUrl || DEFAULT_OG_IMAGE;
 
   return {
-    title: `${name} | ${category} Creator | ${SITE_NAME}`,
+    title: `${name} | Creator Profile`,
     description,
     keywords: [
       name,
@@ -46,7 +46,7 @@ export function creatorMetadata(creator: CreatorEntity): Metadata {
       description,
       url: absoluteUrl(path),
       siteName: SITE_NAME,
-      images: [{ url: image, width: 1200, height: 630, alt: `${name} creator profile` }],
+      images: [{ url: image, alt: `${name} creator profile` }],
       type: "profile",
       locale: SITE_LOCALE,
     },
@@ -69,10 +69,10 @@ export async function generateCreatorStaticParams() {
 export async function generateCreatorMetadata({ params }: CreatorPageProps): Promise<Metadata> {
   const { slug } = await params;
   const id = extractObjectId(slug);
-  if (!id) return {};
+  if (!id) return { robots: { index: false, follow: false } };
 
   const creator = await getCreatorById(id);
-  return creator ? creatorMetadata(creator) : {};
+  return creator ? creatorMetadata(creator) : { robots: { index: false, follow: false } };
 }
 
 export async function resolveCreatorRoute(slug: string) {

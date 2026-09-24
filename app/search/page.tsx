@@ -2,6 +2,7 @@
 import CreatorFilters from '@/components/search/CreatorFilters/CreatorFilters'
 import styles from '../page.module.css'
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { searchMetadata } from '@/lib/discovery'
 // import CreatorsGrid from '@/components/search/CreatorsGrid/CreatorsGrid'
 // import styles from '../../page.module.css'
@@ -27,7 +28,9 @@ const page = () => {
      <>
      <div className={styles.page}>
      <main>
-     <CreatorFilters/>
+     <h1>Search Creators</h1>
+     <p>Find public creator profiles by name, niche and location.</p>
+     <Suspense fallback={<p>Loading search controls?</p>}><CreatorFilters/></Suspense>
      </main>
      
      </div>

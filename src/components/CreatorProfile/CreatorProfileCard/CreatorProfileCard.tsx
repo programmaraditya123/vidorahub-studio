@@ -138,7 +138,7 @@ export default function CreatorProfileCard({
 
         {/* Name & role */}
         <div className={styles.identity}>
-          {name && <h2 className={styles.name}>{name}</h2>}
+          {name && <h1 className={styles.name}>{name}</h1>}
           {role && <span className={styles.roleBadge}>{role}</span>}
         </div>
 
