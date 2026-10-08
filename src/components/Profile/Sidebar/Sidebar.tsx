@@ -14,10 +14,12 @@ import {
   CreditCard,
   LayoutDashboard,
   LogOut,
+  Upload,
 } from "lucide-react";
 
 const menuItems = [
   { href: "/profile", label: "Profile", icon: User, exact: true },
+  { href: "/profile/uploads", label: "Uploads", icon: Upload },
   { href: "/profile/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/profile/store", label: "Store", icon: Store },
   { href: "/profile/brand-deals", label: "Brand Deals", icon: Handshake },

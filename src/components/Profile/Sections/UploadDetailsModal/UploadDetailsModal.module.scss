@@ -1,0 +1,8 @@
+.modal { max-height: 92dvh; outline: none; }
+.form { display: flex; flex-direction: column; min-height: 0; }
+.fields { border: 0; min-width: 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+.fields .frozen { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; &:focus { background: #f3f4f6; border-color: #c4b5fd; box-shadow: none; } }
+.notice { margin-top: 18px; padding: 12px; background: #f5f3ff; color: #5b21b6; border-radius: 10px; font-size: 13px; }
+.error { margin-top: 16px; color: #b91c1c; font-size: 13px; }
+.confirm { width: 100%; font-size: 13px; color: #92400e; p { margin-bottom: 12px; } div { display: flex; justify-content: flex-end; gap: 12px; } }
+@media (max-width: 640px) { .fields input, .fields textarea { width: 100%; min-width: 0; font-size: 16px; } }
