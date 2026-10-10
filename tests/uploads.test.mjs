@@ -74,3 +74,59 @@ test("failed title updates do not report success", async () => {
   const api = uploadsWithClient({ post: async () => { throw error; } });
   await assert.rejects(api.updateVideoTitle("video-123", "Updated title"), reason => reason === error);
 });
+
+test("description updates post only video_id and the exact description through http3", async () => {
+  for (const description of ["  Updated description\nwith another line  ", ""]) {
+    const api = uploadsWithClient({ post: async (url, payload) => {
+      assert.equal(url, "/api/creator/updateVideoDescription");
+      assert.equal(payload.video_id, "video-123");
+      assert.equal(payload.description, description);
+      assert.deepEqual(Object.keys(payload).sort(), ["description", "video_id"]);
+      return { data: { _id: "video-123", description } };
+    } });
+    assert.equal(await api.updateVideoDescription("video-123", description), "Description updated successfully.");
+  }
+});
+
+test("tag updates post video_id and the singular tag array, including an empty array", async () => {
+  for (const tags of [["travel", "food"], []]) {
+    const api = uploadsWithClient({ post: async (url, payload) => {
+      assert.equal(url, "/api/creator/updateTags");
+      assert.equal(payload.video_id, "video-123");
+      assert.deepEqual(payload.tag, tags);
+      assert.deepEqual(Object.keys(payload).sort(), ["tag", "video_id"]);
+      return { data: { _id: "video-123", tags } };
+    } });
+    assert.equal(await api.updateVideoTags("video-123", tags), "Tags updated successfully.");
+  }
+});
+
+test("tag updates use the server success message", async () => {
+  const api = uploadsWithClient({ post: async () => ({ data: { success: true, message: "Tags saved" } }) });
+  assert.equal(await api.updateVideoTags("video-123", ["travel"]), "Tags saved");
+});
+
+test("failed tag updates do not report success", async () => {
+  for (const data of [null, false, { success: false, message: "Video not found" }, { ok: false }]) {
+    const api = uploadsWithClient({ post: async () => ({ data }) });
+    await assert.rejects(api.updateVideoTags("video-123", ["travel"]), /Video not found|Could not update the tags/);
+  }
+  const error = { status: 403, message: "Permission denied" };
+  const api = uploadsWithClient({ post: async () => { throw error; } });
+  await assert.rejects(api.updateVideoTags("video-123", ["travel"]), reason => reason === error);
+});
+
+test("description updates use the server success message", async () => {
+  const api = uploadsWithClient({ post: async () => ({ data: { success: true, message: "Description saved" } }) });
+  assert.equal(await api.updateVideoDescription("video-123", "Updated description"), "Description saved");
+});
+
+test("failed description updates do not report success", async () => {
+  for (const data of [null, false, { success: false, message: "Video not found" }, { ok: false }]) {
+    const api = uploadsWithClient({ post: async () => ({ data }) });
+    await assert.rejects(api.updateVideoDescription("video-123", "Updated description"), /Video not found|Could not update the description/);
+  }
+  const error = { status: 403, message: "Permission denied" };
+  const api = uploadsWithClient({ post: async () => { throw error; } });
+  await assert.rejects(api.updateVideoDescription("video-123", "Updated description"), reason => reason === error);
+});

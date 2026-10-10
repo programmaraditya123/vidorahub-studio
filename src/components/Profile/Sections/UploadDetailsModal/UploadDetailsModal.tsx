@@ -123,9 +123,9 @@ export default function UploadDetailsModal({ upload, field, close, onSaved, save
           {!saveDetails && <p className={local.notice} role="status">Saving upload details is currently unavailable.</p>}
           {error && <p className={local.error} role="alert">{error}</p>}
         </div>
-        <div className={styles.footer}>
-          {confirmClose ? <div className={local.confirm}><p>Discard your unsaved changes?</p><div><button type="button" className={styles.cancel} onClick={() => setConfirmClose(false)}>Keep editing</button><button type="button" className={styles.submit} onClick={close}>Discard changes</button></div></div>
-            : <><button type="button" className={styles.cancel} onClick={requestClose} disabled={saving}>Cancel</button><button type="submit" className={styles.submit} disabled={saving || !dirty || !saveDetails}>{saving ? "Saving…" : `Update ${config.label.toLowerCase()}`}</button></>}
+        <div className={`${styles.footer} ${local.footer}`}>
+          {confirmClose ? <div className={local.confirm}><p>Discard your unsaved changes?</p><div><button type="button" className={styles.cancel} onClick={() => setConfirmClose(false)}>Keep editing</button><button type="button" className={styles.save} onClick={close}>Discard changes</button></div></div>
+            : <><button type="button" className={styles.cancel} onClick={requestClose} disabled={saving}>Cancel</button><button type="submit" className={styles.save} disabled={saving || !dirty || !saveDetails}>{saving ? "Saving…" : `Update ${config.label.toLowerCase()}`}</button></>}
         </div>
       </form>
     </div>

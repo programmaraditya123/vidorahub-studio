@@ -55,6 +55,32 @@ export async function updateVideoTitle(videoId: string, title: string): Promise<
   return message || "Title updated successfully.";
 }
 
+export async function updateVideoDescription(videoId: string, description: string): Promise<string> {
+  const { data } = await http3.post<unknown>("/api/creator/updateVideoDescription", {
+    video_id: videoId,
+    description,
+  });
+  const body = data && typeof data === "object" ? data as Record<string, unknown> : undefined;
+  const message = typeof body?.message === "string" ? body.message.trim() : "";
+  if (data == null || data === false || body?.success === false || body?.ok === false) {
+    throw new Error(message || "Could not update the description. Please try again.");
+  }
+  return message || "Description updated successfully.";
+}
+
+export async function updateVideoTags(videoId: string, tags: string[]): Promise<string> {
+  const { data } = await http3.post<unknown>("/api/creator/updateTags", {
+    video_id: videoId,
+    tag: tags,
+  });
+  const body = data && typeof data === "object" ? data as Record<string, unknown> : undefined;
+  const message = typeof body?.message === "string" ? body.message.trim() : "";
+  if (data == null || data === false || body?.success === false || body?.ok === false) {
+    throw new Error(message || "Could not update the tags. Please try again.");
+  }
+  return message || "Tags updated successfully.";
+}
+
 export function uploadErrorMessage(error: unknown) {
   if (error && typeof error === "object" && "message" in error && typeof error.message === "string") {
     return error.message;

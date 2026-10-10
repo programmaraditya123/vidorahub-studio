@@ -3,13 +3,17 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Clock, Eye, Heart, MessageCircle, Pencil, RefreshCw, ThumbsDown, Upload } from "lucide-react";
 import { useCreatorUploads } from "@/hooks/useCreatorUploads";
-import { formatUploadDate, formatUploadDuration, updateVideoTitle, type CreatorUpload, type SaveUploadDetails, type UploadEditableField } from "@/lib/uploads";
+import { formatUploadDate, formatUploadDuration, updateVideoTitle, updateVideoDescription, updateVideoTags, type CreatorUpload, type SaveUploadDetails, type UploadEditableField } from "@/lib/uploads";
 import UploadDetailsModal from "./UploadDetailsModal/UploadDetailsModal";
 import { editableUploadFields, uploadFields } from "./UploadDetailsModal/uploadFields";
 import shared from "../profileShared.module.scss";
 import styles from "./UploadsSection.module.scss";
 
-const saveTitle: SaveUploadDetails = (id, details) => updateVideoTitle(id, details.title ?? "");
+const saveUploadDetails: Record<UploadEditableField, SaveUploadDetails> = {
+  title: (id, details) => updateVideoTitle(id, details.title ?? ""),
+  description: (id, details) => updateVideoDescription(id, details.description ?? ""),
+  tags: (id, details) => updateVideoTags(id, details.tags ?? []),
+};
 
 export default function UploadsSection() {
   const { data, loading, error, page, goToPage, refresh } = useCreatorUploads();
@@ -53,6 +57,6 @@ export default function UploadsSection() {
       <span aria-live="polite">Page {data.page} of {data.total_pages}</span>
       <button type="button" className={shared.btnSecondary} disabled={loading || !data.has_next || page >= data.total_pages} onClick={() => goToPage(page + 1)}>Next <ChevronRight size={16} /></button>
     </nav>}
-    {editing && <UploadDetailsModal key={`${editing.upload._id}-${editing.field}`} upload={editing.upload} field={editing.field} saveDetails={editing.field === "title" ? saveTitle : undefined} close={() => setEditing(null)} onSaved={() => { setEditing(null); refresh(); }} />}
+    {editing && <UploadDetailsModal key={`${editing.upload._id}-${editing.field}`} upload={editing.upload} field={editing.field} saveDetails={saveUploadDetails[editing.field]} close={() => setEditing(null)} onSaved={() => { setEditing(null); refresh(); }} />}
   </div>;
 }
