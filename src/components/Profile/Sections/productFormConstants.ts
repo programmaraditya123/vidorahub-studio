@@ -1,13 +1,3 @@
-export const PRODUCT_CATEGORIES = [
-  "Digital download",
-  "Template",
-  "Course",
-  "Service",
-  "Merchandise",
-  "Preset / Pack",
-  "Other",
-] as const;
-
 export const PRODUCT_CURRENCIES = [
   { code: "USD", label: "USD ($)" },
   { code: "EUR", label: "EUR (€)" },
@@ -28,7 +18,7 @@ export type ProductImageItem = {
 };
 
 export type ProductFieldErrors = Partial<
-  Record<"name" | "price" | "currency" | "images", string>
+  Record<"name" | "price" | "currency" | "images" | "category" | "subcategory" | "stock", string>
 >;
 
 export function imagesFromUrls(urls: string[]): ProductImageItem[] {

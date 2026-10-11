@@ -14,19 +14,36 @@ export type ProductRating = {
   count: number;
 };
 
+export type ProductTaxonomy = { _id: string; name: string };
+export type ProductTaxonomyReference = string | ProductTaxonomy | null;
+export type ProductTaxonomyResponse = {
+  success: boolean;
+  count: number;
+  data: ProductTaxonomy[];
+};
+
+export function productTaxonomyId(value?: ProductTaxonomyReference): string {
+  return typeof value === "string" ? value : value?._id ?? "";
+}
+
+export function productTaxonomyName(value?: ProductTaxonomyReference): string | undefined {
+  return typeof value === "object" && value ? value.name : undefined;
+}
+
 export type ApiProduct = {
   _id: string;
   creatorId: string;
   name: string;
   description?: string;
-  category?: string;
+  category?: ProductTaxonomyReference;
+  subcategory?: ProductTaxonomyReference;
   tags?: string[];
   price: number;
   currency: string;
   images: string[];
   status: string;
   brand?: string;
-  stock?: number;
+  stock?: number | null;
   analytics?: ProductAnalytics;
   rating?: ProductRating;
   shippingRequired?: boolean;
@@ -49,9 +66,10 @@ export type AddProductResponse = {
 export type ProductFormPayload = {
   name: string;
   description?: string;
-  category?: string;
+  category: string;
+  subcategory: string;
   price: number;
-  stock?: number;
+  stock?: number | null;
   images: string[];
   brand?: string;
   currency: string;
@@ -59,7 +77,8 @@ export type ProductFormPayload = {
 
 export type AddProductPayload = ProductFormPayload;
 
-export type UpdateProductPayload = ProductFormPayload;
+export type UpdateProductPayload = Partial<ProductFormPayload>;
+export type UpdateProductResponse = AddProductResponse;
 
 export type ProductMutationResponse = {
   success: boolean;
@@ -79,6 +98,7 @@ export type StoreProductView = {
   sales: number;
   imageUrl?: string;
   category?: string;
+  subcategory?: string;
 };
 
 const CURRENCY_SYMBOL: Record<string, string> = {
@@ -134,7 +154,8 @@ export function mapProductToStoreView(product: ApiProduct): StoreProductView {
     statusKind: kind,
     sales: product.analytics?.purchases ?? 0,
     imageUrl: product.images[0],
-    category: product.category,
+    category: productTaxonomyName(product.category),
+    subcategory: productTaxonomyName(product.subcategory),
   };
 }
 

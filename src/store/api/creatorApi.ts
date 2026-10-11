@@ -5,6 +5,8 @@ import type {
   GetProductsResponse,
   ProductMutationResponse,
   UpdateProductPayload,
+  UpdateProductResponse,
+  ProductTaxonomyResponse,
 } from "@/lib/products";
 import { axiosBaseQuery } from "./axiosBaseQuery";
 
@@ -180,6 +182,21 @@ export const creatorApi = createApi({
       providesTags: ["Creator"],
     }),
 
+    getProductCategories: builder.query<ProductTaxonomyResponse, void>({
+      query: () => ({ url: "/api/v1/categories", params: { isActive: true } }),
+    }),
+
+    getProductSubcategories: builder.query<ProductTaxonomyResponse, string>({
+      query: (categoryId) => ({
+        url: `/api/v1/categories/${encodeURIComponent(categoryId)}/subcategories`,
+      }),
+    }),
+
+    getAllProducts: builder.query<GetProductsResponse, string>({
+      query: (creatorId) => ({ url: `/api/v1/allProducts/${encodeURIComponent(creatorId)}` }),
+      providesTags: [{ type: "Product", id: "LIST" }],
+    }),
+
     getProducts: builder.query<GetProductsResponse, void>({
       query: () => ({
         url: "/api/v1/getProducts",
@@ -209,7 +226,7 @@ export const creatorApi = createApi({
     }),
 
     updateProduct: builder.mutation<
-      ProductMutationResponse,
+      UpdateProductResponse,
       { productId: string; body: UpdateProductPayload }
     >({
       query: ({ productId, body }) => ({
@@ -251,6 +268,9 @@ export const {
   useGetBrandByIdQuery,
   useGetCreatorByIdQuery,
   useGetProductsQuery,
+  useGetAllProductsQuery,
+  useGetProductCategoriesQuery,
+  useGetProductSubcategoriesQuery,
   useAddProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,

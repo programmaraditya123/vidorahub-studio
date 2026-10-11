@@ -1,0 +1,95 @@
+.dropdown { min-width: 0; }
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  min-height: 46px;
+  border: 1px solid #e5e7eb;
+  border-radius: 11px;
+  background: #fafafa;
+  color: #8b5cf6;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:hover:not(.disabled) { border-color: #c4b5fd; }
+  &:focus-within, &.expanded {
+    border-color: #8b5cf6;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, .12);
+  }
+  > svg { flex-shrink: 0; }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #8b5cf6;
+    cursor: pointer;
+    svg { transition: transform .2s; }
+  }
+  &.invalid { border-color: #f87171; background: #fef2f2; }
+  &.disabled { opacity: .6; background: #f3f4f6; cursor: not-allowed; }
+}
+
+.dropdown .control .input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  &:disabled { cursor: not-allowed; }
+}
+
+.rotated { transform: rotate(180deg); }
+.panel {
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid #ede9fe;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(76, 29, 149, .09);
+}
+.caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 9px 10px;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 600;
+  span { padding: 2px 6px; border-radius: 5px; color: #7c3aed; background: #f5f3ff; }
+}
+.options { max-height: 190px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ddd6fe transparent; }
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  span { overflow-wrap: anywhere; }
+  svg { flex-shrink: 0; }
+  &.highlighted { background: #f5f3ff; color: #6d28d9; }
+  &[aria-selected="true"] { color: #7c3aed; font-weight: 600; background: #ede9fe; }
+}
+.empty { margin: 0; padding: 16px 10px; color: #6b7280; font-size: 12px; line-height: 1.5; text-align: center; }
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

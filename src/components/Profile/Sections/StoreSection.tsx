@@ -214,7 +214,9 @@ export default function StoreSection() {
                 <div className={styles.productInfo}>
                   <strong>{product.name}</strong>
                   {product.category && (
-                    <span className={styles.category}>{product.category}</span>
+                    <span className={styles.category}>
+                      {[product.category, product.subcategory].filter(Boolean).join(" / ")}
+                    </span>
                   )}
                   <span className={styles.price}>{product.priceLabel}</span>
                 </div>

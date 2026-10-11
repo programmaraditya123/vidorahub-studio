@@ -67,8 +67,8 @@ export default function DeleteProductModal({
 
         <h3 id="delete-product-title">Remove product?</h3>
         <p>
-          <strong>{productName}</strong> will be hidden from your store. You can
-          list it again later if needed.
+          <strong>{productName}</strong> will be marked inactive and hidden from
+          your store.
         </p>
 
         {(error as { message?: string })?.message && (

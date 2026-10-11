@@ -11,10 +11,11 @@ import {
 import {
   useAddProductMutation,
   useUpdateProductMutation,
+  useGetProductCategoriesQuery,
+  useGetProductSubcategoriesQuery,
 } from "@/store/api/creatorApi";
-import { uploadProductImage, type ApiProduct } from "@/lib/products";
+import { productTaxonomyId, uploadProductImage, type ApiProduct } from "@/lib/products";
 import {
-  PRODUCT_CATEGORIES,
   PRODUCT_CURRENCIES,
   MAX_PRODUCT_IMAGES,
   MAX_PRODUCT_DESCRIPTION,
@@ -23,6 +24,7 @@ import {
   type ProductImageItem,
 } from "../productFormConstants";
 import styles from "../AddProductModal/AddProductModal.module.scss";
+import TaxonomyDropdown from "./TaxonomyDropdown";
 
 type ProductFormModalProps = {
   mode: "create" | "edit";
@@ -37,7 +39,8 @@ function initFormState(product?: ApiProduct) {
   return {
     name: product?.name ?? "",
     description: product?.description ?? "",
-    category: product?.category ?? PRODUCT_CATEGORIES[0],
+    category: productTaxonomyId(product?.category),
+    subcategory: productTaxonomyId(product?.subcategory),
     brand: product?.brand ?? "",
     price: product?.price != null ? String(product.price) : "",
     currency: product?.currency ?? "USD",
@@ -60,6 +63,7 @@ export default function ProductFormModal({
   const [name, setName] = useState(initial.name);
   const [description, setDescription] = useState(initial.description);
   const [category, setCategory] = useState(initial.category);
+  const [subcategory, setSubcategory] = useState(initial.subcategory);
   const [brand, setBrand] = useState(initial.brand);
   const [price, setPrice] = useState(initial.price);
   const [currency, setCurrency] = useState(initial.currency);
@@ -70,13 +74,22 @@ export default function ProductFormModal({
   const [fieldErrors, setFieldErrors] = useState<ProductFieldErrors>({});
   const [formError, setFormError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const categoriesQuery = useGetProductCategoriesQuery();
+  const subcategoriesQuery = useGetProductSubcategoriesQuery(category, { skip: !category });
+  const categories = categoriesQuery.currentData?.data ?? [];
+  // currentData prevents options from a previously selected category being shown.
+  const subcategories = subcategoriesQuery.currentData?.data ?? [];
+  const taxonomyLoading = categoriesQuery.isFetching || (!!category && subcategoriesQuery.isFetching);
+  const taxonomyFailed = categoriesQuery.isError || (!!category && subcategoriesQuery.isError);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [addProduct, { isLoading: isAdding }] = useAddProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
   const isSaving = isAdding || isUpdating;
-  const isBusy = isSaving || images.some((img) => img.uploading);
+  const isBusy = isSubmitting || isSaving || images.some((img) => img.uploading);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -181,9 +194,15 @@ export default function ProductFormModal({
 
     if (!name.trim()) errors.name = "Product name is required";
 
-    const priceNum = parseFloat(price);
-    if (!price.trim() || Number.isNaN(priceNum) || priceNum <= 0) {
-      errors.price = "Enter a valid price greater than 0";
+    const priceNum = Number(price);
+    if (!price.trim() || !Number.isFinite(priceNum) || priceNum < 0) {
+      errors.price = "Enter a valid non-negative price";
+    }
+
+    if (!categories.some((item) => item._id === category)) errors.category = "Select an active category";
+    if (!subcategories.some((item) => item._id === subcategory)) errors.subcategory = "Select a subcategory for this category";
+    if (!unlimitedStock && (!stock.trim() || !Number.isSafeInteger(Number(stock)) || Number(stock) < 0)) {
+      errors.stock = "Enter a non-negative whole number";
     }
 
     if (!currency) errors.currency = "Currency is required";
@@ -194,26 +213,27 @@ export default function ProductFormModal({
   };
 
   const buildPayload = (imageUrls: string[]) => {
-    const priceNum = parseFloat(price);
+    const priceNum = Number(price);
     const stockNum =
       !unlimitedStock && stock.trim() !== ""
-        ? parseInt(stock, 10)
-        : undefined;
+        ? Number(stock)
+        : null;
 
     return {
       name: name.trim(),
-      description: description.trim() || undefined,
-      category: category || undefined,
+      description: description.trim(),
+      category,
+      subcategory,
       price: priceNum,
-      stock:
-        stockNum !== undefined && !Number.isNaN(stockNum) ? stockNum : undefined,
+      stock: stockNum,
       images: imageUrls,
-      brand: brand.trim() || undefined,
+      brand: brand.trim(),
       currency,
     };
   };
 
   const handleSubmit = async () => {
+    if (isBusy || taxonomyLoading || taxonomyFailed) return;
     setFormError("");
     setSuccessMessage("");
 
@@ -224,6 +244,7 @@ export default function ProductFormModal({
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const imageUrls = await uploadAllImages();
 
@@ -248,6 +269,8 @@ export default function ProductFormModal({
         (err as { message?: string })?.message ||
         `Failed to ${isEdit ? "update" : "create"} product. Please try again.`;
       setFormError(message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -287,7 +310,7 @@ export default function ProductFormModal({
         </div>
 
         <div className={styles.body}>
-          <div className={styles.form}>
+          <fieldset className={styles.form} disabled={isBusy || !!successMessage} style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}>
             <div
               className={`${styles.field} ${fieldErrors.images ? styles.fieldError : ""}`}
             >
@@ -433,21 +456,65 @@ export default function ProductFormModal({
             </div>
 
             <div className={styles.row2}>
-              <div className={styles.field}>
-                <label htmlFor="product-category">Category</label>
-                <select
+              <div className={`${styles.field} ${fieldErrors.category ? styles.fieldError : ""}`}>
+                <label htmlFor="product-category">Category *</label>
+                <TaxonomyDropdown
                   id="product-category"
+                  kind="category"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  {PRODUCT_CATEGORIES.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
+                  options={categories}
+                  placeholder="Select category"
+                  emptyMessage="No active categories available."
+                  loading={categoriesQuery.isFetching}
+                  disabled={isBusy || !!successMessage || categoriesQuery.isError}
+                  invalid={!!fieldErrors.category}
+                  onChange={(value) => {
+                    setCategory(value);
+                    setSubcategory("");
+                    setFieldErrors((p) => ({ ...p, category: undefined, subcategory: undefined }));
+                  }}
+                />
+                {fieldErrors.category && <span className={styles.hint} role="alert">{fieldErrors.category}</span>}
+                {!categoriesQuery.isFetching && !categoriesQuery.isError && categories.length === 0 && (
+                  <span className={styles.hint}>No active categories available.</span>
+                )}
               </div>
 
+              <div className={`${styles.field} ${fieldErrors.subcategory ? styles.fieldError : ""}`}>
+                <label htmlFor="product-subcategory">Subcategory *</label>
+                <TaxonomyDropdown
+                  id="product-subcategory"
+                  kind="subcategory"
+                  value={subcategory}
+                  options={subcategories}
+                  placeholder={category ? "Select subcategory" : "Choose a category first"}
+                  emptyMessage="No active subcategories available."
+                  loading={!!category && subcategoriesQuery.isFetching}
+                  disabled={isBusy || !!successMessage || !category || subcategoriesQuery.isError}
+                  invalid={!!fieldErrors.subcategory}
+                  onChange={(value) => {
+                    setSubcategory(value);
+                    setFieldErrors((p) => ({ ...p, subcategory: undefined }));
+                  }}
+                />
+                {fieldErrors.subcategory && <span className={styles.hint} role="alert">{fieldErrors.subcategory}</span>}
+                {category && !subcategoriesQuery.isFetching && !subcategoriesQuery.isError && subcategories.length === 0 && (
+                  <span className={styles.hint}>No active subcategories available for this category.</span>
+                )}
+              </div>
+            </div>
+
+            {taxonomyFailed && (
+              <div className={`${styles.alert} ${styles.alertError}`} role="alert">
+                <span>Could not load categories or subcategories.</span>
+                <button type="button" onClick={() => {
+                  if (categoriesQuery.isError) void categoriesQuery.refetch();
+                  if (category && subcategoriesQuery.isError) void subcategoriesQuery.refetch();
+                }}>Try again</button>
+              </div>
+            )}
+
+            <div className={styles.row2}>
               <div className={styles.field}>
                 <label htmlFor="product-brand">Brand (optional)</label>
                 <input
@@ -524,9 +591,11 @@ export default function ProductFormModal({
                   step="1"
                   value={stock}
                   placeholder="Quantity available"
+                  aria-invalid={!!fieldErrors.stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
               )}
+              {fieldErrors.stock && <span className={styles.hint} role="alert">{fieldErrors.stock}</span>}
             </div>
 
             {formError && (
@@ -545,7 +614,7 @@ export default function ProductFormModal({
                 <span>{successMessage}</span>
               </div>
             )}
-          </div>
+          </fieldset>
         </div>
 
         <div className={styles.footer}>
@@ -567,7 +636,7 @@ export default function ProductFormModal({
               type="button"
               className={styles.save}
               onClick={handleSubmit}
-              disabled={isBusy}
+              disabled={isBusy || taxonomyLoading || taxonomyFailed || !!successMessage}
             >
               {isBusy && <span className={styles.spinner} aria-hidden />}
               {isSaving
